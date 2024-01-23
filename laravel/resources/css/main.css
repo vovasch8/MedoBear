@@ -196,3 +196,16 @@ footer li, footer p {
     border-radius: 10px;
     padding: 5px;
 }
+
+#searchCities, #searchWarehouses {
+    border-color: lightgray;
+}
+
+.btn-close {
+    color: lightgray!important;
+    background: red!important;
+}
+
+#warehouses {
+    display: none;
+}

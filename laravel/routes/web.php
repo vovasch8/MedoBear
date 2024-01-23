@@ -22,6 +22,9 @@ Route::get('cart', [\App\Http\Controllers\CartController::class, 'showCart'])->n
 Route::post('/addProduct', [\App\Http\Controllers\CartController::class, 'addProduct'])->name('addProduct');
 Route::post('/deleteProduct', [\App\Http\Controllers\CartController::class, 'deleteProduct'])->name('deleteProduct');
 
+Route::post('/getCities', [\App\Http\Controllers\NovaPoshtaController::class, 'getCities'])->name('getCities');
+Route::post('/getWarehouses', [\App\Http\Controllers\NovaPoshtaController::class, 'getWarehouses'])->name('getWarehouses');
+
 Route::post('/addPromocode', [\App\Http\Controllers\CartController::class, 'addPromocode'])->name('addPromocode');
 
 Route::get('/dashboard', function () {

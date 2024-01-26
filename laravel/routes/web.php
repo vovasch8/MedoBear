@@ -25,6 +25,9 @@ Route::post('/deleteProduct', [\App\Http\Controllers\CartController::class, 'del
 Route::post('/getCities', [\App\Http\Controllers\NovaPoshtaController::class, 'getCities'])->name('getCities');
 Route::post('/getWarehouses', [\App\Http\Controllers\NovaPoshtaController::class, 'getWarehouses'])->name('getWarehouses');
 
+Route::post('/getUkrPoshtaCities', [\App\Http\Controllers\UkrPoshtaController::class, 'getCities'])->name('getUkrPoshtaCities');
+Route::post('/getPostOffices', [\App\Http\Controllers\UkrPoshtaController::class, 'getPostOffices'])->name('getPostOffices');
+
 Route::post('/addPromocode', [\App\Http\Controllers\CartController::class, 'addPromocode'])->name('addPromocode');
 
 Route::get('/dashboard', function () {

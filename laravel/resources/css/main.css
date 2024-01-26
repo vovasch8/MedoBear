@@ -197,7 +197,7 @@ footer li, footer p {
     padding: 5px;
 }
 
-#searchCities, #searchWarehouses {
+#searchCities, #searchWarehouses, #searchUkrPoshtaCities, #searchPostOffices {
     border-color: lightgray;
 }
 
@@ -206,6 +206,24 @@ footer li, footer p {
     background: red!important;
 }
 
-#warehouses {
+#warehouses, #postOffices, .ukr-poshta-block {
     display: none;
 }
+
+.search-input {
+    border-radius: 0px 10px 10px 0px!important;
+    border-color: lightgray!important;
+}
+
+.search-icon {
+    font-size: larger;
+}
+
+.search-block {
+    min-width: 100%;
+}
+
+#courier-nova-poshta, #courier-ukr-poshta {
+    display: none;
+}
+

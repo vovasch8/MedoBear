@@ -44,7 +44,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="exampleModalLabel">Оформленя замовлення</h5>
+                    <h5 class="modal-title fw-bold" id="exampleModalLabel"><i class="fas fa-box form-icon"></i> Оформленя замовлення</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -61,34 +61,122 @@
                         </span>
                             <input type="text" class="form-control input-form" placeholder="Телефон">
                         </div>
-                        <div class="poshta-block mb-3 mt-1 text-center">
-                            <input type="radio" class="btn-check" name="options-base" id="option5" autocomplete="off" checked>
-                            <label class="btn" for="option5"><i class="fas fa-store"></i> Нова пошта</label>
+                        <div class="poshta-block mb-3 mt-1 d-flex justify-content-center border-bottom pb-2">
+                            <input type="radio" class="btn-check" name="options-base" id="novaPoshta" autocomplete="off" checked>
+                            <label id="novaPoshtaLabel" class="btn d-flex" for="novaPoshta"><img width="30px" height="30px" src="{{ asset("storage") . "/icons/nova.png" }}" alt="nova poshta">&nbsp; Нова пошта</label>
 
-                            <input type="radio" class="btn-check" name="options-base" id="option6" autocomplete="off">
-                            <label class="btn" for="option6"><i class="fas fa-store-alt"></i> Укр пошта</label>
-                            <hr class="mt-1">
+                            <input type="radio" class="btn-check" name="options-base" id="ukrPoshta" autocomplete="off">
+                            <label id="ukrPoshtaLabel" class="btn d-flex" for="ukrPoshta"><img width="20px" height="22px" src="{{ asset("storage") . "/icons/ukr.png" }}" alt="nova poshta">&nbsp; Укр пошта</label>
                         </div>
-
-                        <div class="input-group mb-3">
-                            <span class="form-icon"><i class="fas fa-city"></i></span>
-                            <input data-url="{{ route("getCities") }}" id="searchCities" type="search"
-                                   class="form-control" placeholder="Населений пункт">
-                            <button id="cityDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="true" aria-expanded="false"></button>
-                            <ul class="cities-select dropdown-menu">
-                                <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
-                            </ul>
+                        <div class="nova-poshta-block">
+                            <div class="nova-poshta-type-delivery d-flex justify-content-center mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input novaRadios" type="radio" name="novaOptions" id="novaWarehouse" value="warehouse" checked>
+                                    <label class="form-check-label" for="novaWarehouse">У відділення/поштомат</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input novaRadios" type="radio" name="novaOptions" id="novaCourier" value="courier">
+                                    <label class="form-check-label" for="novaCourier">Кур'єром</label>
+                                </div>
+                            </div>
+                            <div id="cities" class="input-group mb-3">
+                                <span id="cityDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                      data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-city search-icon"></i></span>
+                                <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getCities") }}" id="searchCities" type="search"
+                                       class="form-control search-input" placeholder="Населений пункт">
+                                <ul class="cities-select dropdown-menu search-block">
+                                    <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
+                                </ul>
+                            </div>
+                            <div id="warehouses" class="input-group mb-3">
+                                <span id="warehousesDrop" class="btn btn-warning dropdown-toggle"
+                                      data-bs-toggle="dropdown"
+                                      data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-warehouse search-icon"></i></span>
+                                <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getWarehouses") }}" id="searchWarehouses" type="search"
+                                       class="form-control search-input" placeholder="Введіть № відділення/поштомату або вулицю!">
+                                <ul class="warehouses-select dropdown-menu search-block">
+                                    <li><a class="dropdown-item disabled" href="#">Введіть № відділення/поштомату або вулицю!</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="courier-nova-poshta">
+                                <div class="input-group mb-3">
+                                <span id="cityCourierDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                      data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-city search-icon"></i></span>
+                                    <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getCities") }}" id="searchCourierCities" type="search"
+                                           class="form-control search-input" placeholder="Населений пункт">
+                                    <ul class="cities-courier-select dropdown-menu search-block">
+                                        <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
+                                    </ul>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="btn btn-warning form-icon"><i class="fas fa-road"></i></span>
+                                    <input type="text" class="form-control input-form" placeholder="Вулиця">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="btn btn-warning form-icon"><i class="fas fa-building"></i></span>
+                                    <input type="text" class="form-control input-form" placeholder="Будинок">
+                                </div>
+                                <div class="input-group ">
+                                    <span class="btn btn-warning form-icon"><i class="fas fa-window-restore"></i></span>
+                                    <input type="text" class="form-control input-form" placeholder="Квартира">
+                                </div>
+                            </div>
                         </div>
-                        <div id="warehouses" class="input-group mb-3">
-                            <span class="form-icon"><i class="fas fa-warehouse"></i></span>
-                            <input data-url="{{ route("getWarehouses") }}" id="searchWarehouses" type="search"
-                                   class="form-control" placeholder="Відділення чи вулиця">
-                            <button id="warehousesDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
-                                    data-bs-auto-close="true" aria-expanded="false"></button>
-                            <ul class="warehouses-select dropdown-menu">
-                                <li><a class="dropdown-item disabled" href="#">Введіть відділення чи вулицю!</a></li>
-                            </ul>
+                        <div class="ukr-poshta-block">
+                            <div class="ukr-poshta-type-delivery d-flex justify-content-center mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input ukrRadios" type="radio" name="ukrOptions" id="ukrPostOfiice" value="postOffice" checked>
+                                    <label class="form-check-label" for="ukrPostOfiice">У відділення </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input ukrRadios" type="radio" name="ukrOptions" id="ukrCourier" value="courier">
+                                    <label class="form-check-label" for="ukrCourier">Кур'єром</label>
+                                </div>
+                            </div>
+                            <div id="ukrCities" class="input-group mb-3">
+                                <span id="ukrPoshtaCityDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                      data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-city search-icon"></i></span>
+                                <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getUkrPoshtaCities") }}" id="searchUkrPoshtaCities" type="search"
+                                       class="form-control search-input" placeholder="Населений пункт">
+                                <ul class="ukr-poshta-cities-select dropdown-menu search-block">
+                                    <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
+                                </ul>
+                            </div>
+                            <div id="postOffices" class="input-group mb-3">
+                                <span id="postOfficesDrop" class="btn btn-warning dropdown-toggle"
+                                      data-bs-toggle="dropdown"
+                                      data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-warehouse search-icon"></i></span>
+                                <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getPostOffices") }}" id="searchPostOffices" type="search"
+                                       class="form-control search-input" placeholder="Індекс">
+                                <ul class="post-offices-select dropdown-menu search-block">
+                                    <li><a class="dropdown-item disabled" href="#">Введіть індекс відділення!</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="courier-ukr-poshta">
+                                <div class="input-group mb-3">
+                                     <span id="ukrPoshtaCourierCityDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                      data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-city search-icon"></i></span>
+                                    <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getUkrPoshtaCities") }}" id="searchUkrPoshtaCities" type="search"
+                                           class="form-control search-input" placeholder="Населений пункт">
+                                    <ul class="ukr-poshta-courier-cities-select dropdown-menu search-block">
+                                        <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
+                                    </ul>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="btn btn-warning form-icon"><i class="fas fa-road"></i></span>
+                                    <input type="text" class="form-control input-form" placeholder="Вулиця">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="btn btn-warning form-icon"><i class="fas fa-building"></i></span>
+                                    <input type="text" class="form-control input-form" placeholder="Будинок">
+                                </div>
+                                <div class="input-group ">
+                                    <span class="btn btn-warning form-icon"><i class="fas fa-window-restore"></i></span>
+                                    <input type="text" class="form-control input-form" placeholder="Квартира">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

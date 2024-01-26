@@ -227,3 +227,7 @@ footer li, footer p {
     display: none;
 }
 
+#error-block {
+    color: red;
+}
+

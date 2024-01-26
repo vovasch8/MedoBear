@@ -30,6 +30,8 @@ Route::post('/getPostOffices', [\App\Http\Controllers\UkrPoshtaController::class
 
 Route::post('/addPromocode', [\App\Http\Controllers\CartController::class, 'addPromocode'])->name('addPromocode');
 
+Route::post('/createOrder', [\App\Http\Controllers\OrderController::class, 'createOrder'])->name('createOrder');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

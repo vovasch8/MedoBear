@@ -115,4 +115,6 @@ return [
         ],
     ],
 
+    'mail_for_order' => 'vovasch8@gmail.com',
+
 ];

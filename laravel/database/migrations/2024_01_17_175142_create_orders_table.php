@@ -17,10 +17,17 @@ return new class extends Migration
             $table->id();
             $table->string("pip");
             $table->string('phone');
-            $table->string("city");
-            $table->string("ukr_poshta");
-            $table->string("nova_poshta");
-            $table->integer("discount");
+            $table->string('type_poshta');
+            $table->string("ukr_city")->default(null);
+            $table->string("ukr_post_office")->default(null);
+            $table->string("nova_city")->default(null);
+            $table->string("nova_warehouse")->default(null);
+            $table->boolean("courier")->default(false);
+            $table->string("street")->default(null);
+            $table->string("house")->default(null);
+            $table->string("room")->default(null);
+            $table->string("price");
+            $table->string("promocode")->default(null);
             $table->timestamps();
         });
     }

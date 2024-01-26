@@ -100,6 +100,40 @@ $(document).ready(function () {
         }
     });
 
+    $("#searchCourierCities").keyup(function (event) {
+        event.preventDefault();
+        let city = $("#searchCourierCities").val();
+        let url = $("#searchCourierCities").attr("data-url");
+        let dropdownEl = new bootstrap.Dropdown(document.getElementById("cityCourierDrop"));
+
+        if (city.length > 2) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {"_token": $('meta[name="csrf-token"]').attr('content'), "city": city},
+                success: function (response) {
+                    let data = response['data'][0]['Addresses']
+                    let select = "";
+                    for (let i = 0; i < data.length; i++) {
+                        select += "<li><a " +
+                            "onclick='let search = document.getElementById(`searchCourierCities`); search.setAttribute(`disabled`, ``);" +
+                            "search.value = this.textContent;" +
+                            "document.querySelector(`.cities-courier-select`).style.display = `none`; '" +
+                            "class=\"dropdown-item city-li\" href=\"#\">" + data[i]["Present"]
+                            + "</a></li>";
+                    }
+                    $(".cities-courier-select").html(select.length ? select : "<li ><a class=\"dropdown-item disabled\" href=\"#\">Невірний населений пункт!</a></li>");
+                    dropdownEl.show();
+                    $("#searchCourierCities").focus();
+                }
+            });
+        } else {
+            dropdownEl.hide();
+            $("#searchCourierCities").focus();
+            $(".cities-courier-select").html("<li ><a class=\"dropdown-item disabled\" href=\"#\">Введіть населений пункт!</a></li>");
+        }
+    });
+
     $("#searchWarehouses").keyup(function (event) {
         event.preventDefault();
         let warehouse = $("#searchWarehouses").val();
@@ -204,6 +238,47 @@ $(document).ready(function () {
         }
     });
 
+    $("#searchUkrPoshtaCourierCities").keyup(function (event) {
+        event.preventDefault();
+        let city = $("#searchUkrPoshtaCourierCities").val();
+        let url = $("#searchUkrPoshtaCourierCities").attr("data-url");
+        let dropdownEl = new bootstrap.Dropdown(document.getElementById("ukrPoshtaCourierCityDrop"));
+
+        if (city.length > 2) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {"_token": $('meta[name="csrf-token"]').attr('content'), "city": city},
+                success: function (response) {
+                    let select = "";
+                    for (let i = 0; i < response.length; i++) {
+                        select += "<li><a " +
+                            "onclick='let search = document.getElementById(`searchUkrPoshtaCourierCities`); search.setAttribute(`disabled`, ``);" +
+                            "search.value = this.textContent;" +
+                            "document.querySelector(`.ukr-poshta-courier-cities-select`).style.display = `none`; '" +
+                            "class=\"dropdown-item city-li\" href=\"#\">"
+                            + response[i].SHORTCITYTYPE_UA
+                            + " "
+                            + response[i].CITY_UA
+                            + " "
+                            + response[i].DISTRICT_UA
+                            + " р. "
+                            + response[i].REGION_UA
+                            + " обл."
+                            + "</a></li>";
+                    }
+                    $(".ukr-poshta-courier-cities-select").html(select.length ? select : "<li ><a class=\"dropdown-item disabled\" href=\"#\">Невірний населений пункт!</a></li>");
+                    dropdownEl.show();
+                    $("#searchUkrPoshtaCourierCities").focus();
+                }
+            });
+        } else {
+            dropdownEl.hide();
+            $("#searchUkrPoshtaCourierCities").focus();
+            $(".ukr-poshta-courier-cities-select").html("<li ><a class=\"dropdown-item disabled\" href=\"#\">Введіть населений пункт!</a></li>");
+        }
+    });
+
     $("#searchPostOffices").keyup(function (event) {
         event.preventDefault();
         let zipCode = $("#searchPostOffices").val();
@@ -236,6 +311,63 @@ $(document).ready(function () {
             dropdownEl.hide();
             $("#searchPostOffices").focus();
             $(".post-offices-select").html("<li ><a class=\"dropdown-item disabled\" href=\"#\">Введіть індекс відділення!</a></li>");
+        }
+    });
+
+    // ----------Create Order-------------------------------
+    $("#btn-order").click(function () {
+        let url = $("#btn-order").attr("data-url");
+        let errors = [];
+        let pip = $("[name='pip']").val() ? $("[name='pip']").val() : errors.push("*Заповніть поле Повного імені!");
+        let phone = $("[name='phone']").val() ? $("[name='phone']").val() : errors.push("*Заповніть поле Номер телефону!");
+        let poshta = {};
+        if ($("#novaPoshta").prop('checked')) {
+            poshta.type_poshta = $("#novaPoshta").val();
+            if ($("#novaCourier").prop('checked')) {
+                poshta.type_delivery = $("#novaCourier").val();
+                ($("#searchCourierCities").val() && $("#searchCourierCities").attr("disabled") !== undefined ) ? poshta.nova_city = $("#searchCourierCities").val() : errors.push("*Виберіть населений пункт!");
+                $("[name='nova_street']").val() ? poshta.street = $("[name='nova_street']").val() : errors.push("*Заповніть поле Вулиця!");
+                $("[name='nova_house']").val() ? poshta.house = $("[name='nova_house']").val() : errors.push("*Заповніть поле Будинок!");
+                poshta.room = $("[name='nova_room']").val();
+            } else {
+                poshta.type_delivery = $("#novaWarehouse").val();
+                ($("#searchCities").val() && $("#searchCities").attr("disabled") !== undefined ) ? poshta.nova_city = $("#searchCities").val() : errors.push("*Виберіть населений пункт!");
+                ($("#searchWarehouses").val() && $("#searchWarehouses").attr("disabled")) ? poshta.nova_warehouse = $("#searchWarehouses").val() : errors.push("*Виберіть відділення!");
+            }
+        } else {
+            poshta.type_poshta = $("#ukrPoshta").val();
+            if ($("#ukrCourier").prop('checked')) {
+                poshta.type_delivery = $("#ukrCourier").val();
+                ($("#searchUkrPoshtaCourierCities").val() && $("#searchUkrPoshtaCourierCities").attr("disabled") !== undefined) ? poshta.ukr_city = $("#searchUkrPoshtaCourierCities").val() : errors.push("*Виберіть населений пункт!");
+                $("[name='ukr_street']").val() ? poshta.street = $("[name='ukr_street']").val() : errors.push("*Заповніть поле Вулиця!");
+                $("[name='ukr_house']").val() ? poshta.house = $("[name='ukr_house']").val() : errors.push("*Заповніть поле Будинок!");
+                poshta.room = $("[name='ukr_room']").val();
+            } else {
+                poshta.type_delivery = $("#ukrPostOfiice").val();
+                ($("#searchUkrPoshtaCities").val() && $("#searchUkrPoshtaCities").attr("disabled") !== undefined) ? poshta.ukr_city = $("#searchUkrPoshtaCities").val() : errors.push("*Виберіть населений пункт!");
+                ($("#searchPostOffices").val() && $("#searchPostOffices").attr("disabled") !== undefined) ? poshta.ukr_post_office = $("#searchPostOffices").val() : errors.push("*Виберіть відділення!");
+            }
+        }
+
+        if (!errors.length) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    "_token": $('meta[name="csrf-token"]').attr('content'),
+                    "pip": pip,
+                    "phone": phone,
+                    "poshta": poshta
+                },
+                success: function (response) {
+                    $("#error-block").addClass("d-none");
+                    console.log(response);
+                }
+            });
+        } else {
+            let listErrors = errors.join("<br>");
+            $("#error-block").html("<span style='font-weight: bold;'>Ви не заповнили всі дані:</span> <br>" + listErrors);
+            $("#error-block").addClass("alert alert-danger");
         }
     });
 });

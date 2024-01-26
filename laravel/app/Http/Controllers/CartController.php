@@ -125,4 +125,22 @@ class CartController extends Controller
 
         return $totalPrice;
     }
+
+    public static function getProducts() {
+        $products = [];
+        if (session()->has("products")) {
+            $products = session("products");
+        }
+
+        return $products;
+    }
+
+    public static function getPromocode() {
+        $promocode = [];
+        if (session()->has("promocode")) {
+            $promocode = session('promocode');
+        }
+
+        return $promocode;
+    }
 }

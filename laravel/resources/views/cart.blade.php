@@ -53,19 +53,19 @@
                         <span class="form-icon">
                             <i class="fas fa-user"></i>
                         </span>
-                            <input type="text" class="form-control input-form" placeholder="ПІП">
+                            <input type="text" class="form-control input-form" name="pip" placeholder="ПІП" required>
                         </div>
                         <div class="input-group mb-3">
                         <span class="form-icon">
                             <i class="fas fa-phone"></i>
                         </span>
-                            <input type="text" class="form-control input-form" placeholder="Телефон">
+                            <input type="phone" class="form-control input-form" name="phone" placeholder="Телефон" required>
                         </div>
                         <div class="poshta-block mb-3 mt-1 d-flex justify-content-center border-bottom pb-2">
-                            <input type="radio" class="btn-check" name="options-base" id="novaPoshta" autocomplete="off" checked>
+                            <input type="radio" class="btn-check" name="typePoshta" id="novaPoshta" value="novaPoshta" autocomplete="off" checked>
                             <label id="novaPoshtaLabel" class="btn d-flex" for="novaPoshta"><img width="30px" height="30px" src="{{ asset("storage") . "/icons/nova.png" }}" alt="nova poshta">&nbsp; Нова пошта</label>
 
-                            <input type="radio" class="btn-check" name="options-base" id="ukrPoshta" autocomplete="off">
+                            <input type="radio" class="btn-check" name="typePoshta" id="ukrPoshta" value="ukrPoshta" autocomplete="off">
                             <label id="ukrPoshtaLabel" class="btn d-flex" for="ukrPoshta"><img width="20px" height="22px" src="{{ asset("storage") . "/icons/ukr.png" }}" alt="nova poshta">&nbsp; Укр пошта</label>
                         </div>
                         <div class="nova-poshta-block">
@@ -83,7 +83,7 @@
                                 <span id="cityDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
                                       data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-city search-icon"></i></span>
                                 <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getCities") }}" id="searchCities" type="search"
-                                       class="form-control search-input" placeholder="Населений пункт">
+                                       class="form-control search-input" placeholder="Населений пункт" required>
                                 <ul class="cities-select dropdown-menu search-block">
                                     <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
                                 </ul>
@@ -93,7 +93,7 @@
                                       data-bs-toggle="dropdown"
                                       data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-warehouse search-icon"></i></span>
                                 <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getWarehouses") }}" id="searchWarehouses" type="search"
-                                       class="form-control search-input" placeholder="Введіть № відділення/поштомату або вулицю!">
+                                       class="form-control search-input" placeholder="Введіть № відділення/поштомату або вулицю!" required>
                                 <ul class="warehouses-select dropdown-menu search-block">
                                     <li><a class="dropdown-item disabled" href="#">Введіть № відділення/поштомату або вулицю!</a>
                                     </li>
@@ -104,22 +104,22 @@
                                 <span id="cityCourierDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
                                       data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-city search-icon"></i></span>
                                     <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getCities") }}" id="searchCourierCities" type="search"
-                                           class="form-control search-input" placeholder="Населений пункт">
+                                           class="form-control search-input" placeholder="Населений пункт" required>
                                     <ul class="cities-courier-select dropdown-menu search-block">
                                         <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
                                     </ul>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="btn btn-warning form-icon"><i class="fas fa-road"></i></span>
-                                    <input type="text" class="form-control input-form" placeholder="Вулиця">
+                                    <input type="text" name="nova_street" class="form-control input-form" placeholder="Вулиця" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="btn btn-warning form-icon"><i class="fas fa-building"></i></span>
-                                    <input type="text" class="form-control input-form" placeholder="Будинок">
+                                    <input type="text" name="nova_house" class="form-control input-form" placeholder="Будинок" required>
                                 </div>
-                                <div class="input-group ">
+                                <div class="input-group mb-3">
                                     <span class="btn btn-warning form-icon"><i class="fas fa-window-restore"></i></span>
-                                    <input type="text" class="form-control input-form" placeholder="Квартира">
+                                    <input type="text" name="nova_room" class="form-control input-form" placeholder="Квартира">
                                 </div>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                                 <span id="ukrPoshtaCityDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
                                       data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-city search-icon"></i></span>
                                 <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getUkrPoshtaCities") }}" id="searchUkrPoshtaCities" type="search"
-                                       class="form-control search-input" placeholder="Населений пункт">
+                                       class="form-control search-input" placeholder="Населений пункт" required>
                                 <ul class="ukr-poshta-cities-select dropdown-menu search-block">
                                     <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
                                 </ul>
@@ -148,7 +148,7 @@
                                       data-bs-toggle="dropdown"
                                       data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-warehouse search-icon"></i></span>
                                 <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getPostOffices") }}" id="searchPostOffices" type="search"
-                                       class="form-control search-input" placeholder="Індекс">
+                                       class="form-control search-input" placeholder="Індекс" required>
                                 <ul class="post-offices-select dropdown-menu search-block">
                                     <li><a class="dropdown-item disabled" href="#">Введіть індекс відділення!</a>
                                     </li>
@@ -158,30 +158,31 @@
                                 <div class="input-group mb-3">
                                      <span id="ukrPoshtaCourierCityDrop" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
                                       data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-city search-icon"></i></span>
-                                    <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getUkrPoshtaCities") }}" id="searchUkrPoshtaCities" type="search"
-                                           class="form-control search-input" placeholder="Населений пункт">
+                                    <input autocomplete="off" oncontextmenu="return false;" data-url="{{ route("getUkrPoshtaCities") }}" id="searchUkrPoshtaCourierCities" type="search"
+                                           class="form-control search-input" placeholder="Населений пункт" required>
                                     <ul class="ukr-poshta-courier-cities-select dropdown-menu search-block">
                                         <li><a class="dropdown-item disabled" href="#">Введіть населений пункт!</a></li>
                                     </ul>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="btn btn-warning form-icon"><i class="fas fa-road"></i></span>
-                                    <input type="text" class="form-control input-form" placeholder="Вулиця">
+                                    <input type="text" class="form-control input-form" name="ukr_street" placeholder="Вулиця" required>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="btn btn-warning form-icon"><i class="fas fa-building"></i></span>
-                                    <input type="text" class="form-control input-form" placeholder="Будинок">
+                                    <input type="text" class="form-control input-form" name="ukr_house" placeholder="Будинок" required>
                                 </div>
-                                <div class="input-group ">
+                                <div class="input-group mb-3">
                                     <span class="btn btn-warning form-icon"><i class="fas fa-window-restore"></i></span>
-                                    <input type="text" class="form-control input-form" placeholder="Квартира">
+                                    <input type="text" class="form-control input-form" name="ukr_room" placeholder="Квартира">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <span class="d-block w-100" id="error-block"></span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning btn-order"><i class="fas fa-shipping-fast"></i> Оформити</button>
+                    <button id="btn-order" data-url="{{ route("createOrder") }}" type="button" class="btn btn-warning btn-order"><i class="fas fa-shipping-fast"></i> Оформити</button>
                 </div>
             </div>
         </div>

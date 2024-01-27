@@ -1,8 +1,21 @@
 $(document).ready(function () {
 
     // ---------------Catalog------------------------
-    $('.btn-cart').click(function (event) {
-        event.stopPropagation();
+    $('.btn-add-product').click(function (event) {
+        event.preventDefault();
+        let url = $(this).attr("data-url");
+        let idProduct = $(this).closest('.card').attr('id');
+        idProduct = idProduct.substr(2);
+
+        $.ajax({
+            type:'POST',
+            url: url,
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_product" : idProduct},
+            success: function (response) {
+                $("#productCounter").css("display", "inline-block")
+                $("#productCounter").text(response);
+            }
+        });
     });
 
     // ----------------Cart----------------------------------

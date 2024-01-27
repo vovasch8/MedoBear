@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\SiteController::class, 'showCatalog'])->name('catalog');
-Route::get('category/{id}', [\App\Http\Controllers\SiteController::class, 'showCatalog'])->name('currentCatalog');
-Route::get('product/{id}', [\App\Http\Controllers\SiteController::class, 'showProduct'])->name('product');
-Route::get('cart', [\App\Http\Controllers\CartController::class, 'showCart'])->name('cart');
+Route::get('/category/{id}', [\App\Http\Controllers\SiteController::class, 'showCatalog'])->name('currentCatalog');
+Route::get('/product/{id}', [\App\Http\Controllers\SiteController::class, 'showProduct'])->name('product');
+Route::get('/cart', [\App\Http\Controllers\CartController::class, 'showCart'])->name('cart');
 
 Route::post('/addProduct', [\App\Http\Controllers\CartController::class, 'addProduct'])->name('addProduct');
 Route::post('/deleteProduct', [\App\Http\Controllers\CartController::class, 'deleteProduct'])->name('deleteProduct');
@@ -31,6 +31,10 @@ Route::post('/getPostOffices', [\App\Http\Controllers\UkrPoshtaController::class
 Route::post('/addPromocode', [\App\Http\Controllers\CartController::class, 'addPromocode'])->name('addPromocode');
 
 Route::post('/createOrder', [\App\Http\Controllers\OrderController::class, 'createOrder'])->name('createOrder');
+
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+Route::get('/admin-charts', [\App\Http\Controllers\AdminController::class, 'charts'])->name('admin-charts');
+Route::get('/admin-tables', [\App\Http\Controllers\AdminController::class, 'tables'])->name('admin-tables');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

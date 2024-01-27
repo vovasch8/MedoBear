@@ -20,7 +20,7 @@
                                     <span class="count">Кількість: {{ $product->count }}</span>
                                     <div class="d-flex justify-content-between align-items-center btn-block">
                                         <span class="fw-bold price text-warning">{{$product->price}} грн</span>
-                                        <button onclick="event.preventDefault(); addProduct(this);" class="btn btn-cart btn-warning text-body-secondary"><i
+                                        <button data-url="{{ route('addProduct') }}" class="btn-add-product btn btn-warning text-body-secondary"><i
                                                 class="fas fa-shopping-basket"></i> Купити
                                         </button>
                                     </div>
@@ -34,19 +34,3 @@
     </div>
 @endsection
 
-<script>
-    function addProduct (el){
-        let idProduct = $(el).closest('.card').attr('id');
-        idProduct = idProduct.substr(2);
-
-        $.ajax({
-            type:'POST',
-            url:"{{ route('addProduct') }}",
-            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_product" : idProduct},
-            success: function (response) {
-                $("#productCounter").css("display", "inline-block")
-                $("#productCounter").text(response);
-            }
-        });
-    }
-</script>

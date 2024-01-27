@@ -83,11 +83,9 @@ header, footer {
     background-color: #2d3748;
 }
 
-footer {
-     position: absolute;
-     left: 0;
-     bottom: 0;
-     width: 100%;
+#content {
+    min-height: calc(100vh - 304.5px);
+    padding-bottom: 10px;
 }
 
 footer li, footer p {

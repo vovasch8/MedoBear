@@ -15,19 +15,19 @@
                              src="{{$product->image}}" alt="MedoBear">
                     </div>
                     <div class="col-6">
-                        <h5 class="card-text fw-semibold">{{ $product->name }}</h5>
-                        <span class="count">Кількість: {{ $product->count }}</span>
-                        <br>
-                        <br>
-                        <span class="fw-bold">Опис</span>
-                        <p>{{ $product->description }}</p>
-                        <div class="justify-content-between align-items-center btn-block">
-                            <span class="fw-bold">Ціна: </span><span class="fw-bold price text-warning">{{$product->price}} грн</span>
+                        <div id="p-{{ $product->id }}" class="card p-3 mb-1">
+                            <h5 class="card-text fw-semibold">{{ $product->name }}</h5>
+                            <span class="count">Кількість: {{ $product->count }}</span>
                             <br>
-                            <br>
-                            <button id="btn-cart" class="btn btn-warning text-body-secondary"><i
-                                    class="fas fa-shopping-basket"></i> Купити
-                            </button>
+                            <span class="fw-bold">Опис</span>
+                            <p>{{ $product->description }}</p>
+                            <div class="p-1">
+                                <span class="fw-bold">Ціна:&nbsp;</span>
+                                <span class="fw-bold price text-warning">{{$product->price}} грн</span>
+                                <button data-url="{{ route('addProduct') }}" class="btn btn-add-product btn-warning text-body-secondary float-end"><i
+                                        class="fas fa-shopping-basket"></i> Купити
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

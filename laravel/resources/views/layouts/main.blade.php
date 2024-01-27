@@ -23,7 +23,9 @@
 
     @include("layouts.header")
 
-    @yield("content")
+    <div id="content">
+        @yield("content")
+    </div>
 
     @include("layouts.footer")
 

@@ -1,5 +1,9 @@
 @extends("layouts.admin")
 
+@section("head")
+    @vite(['resources/css/styles.css', 'resources/js/scripts.js', 'resources/js/chart-area.js', 'resources/js/chart-bar.js', 'resources/js/chart-bar.js', 'resources/js/chart-pie.js'])
+@endsection
+
 @section("content")
     <main>
         <div class="container-fluid px-4">

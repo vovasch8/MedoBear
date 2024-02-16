@@ -31,10 +31,15 @@ Route::post('/getPostOffices', [\App\Http\Controllers\UkrPoshtaController::class
 Route::post('/addPromocode', [\App\Http\Controllers\CartController::class, 'addPromocode'])->name('addPromocode');
 
 Route::post('/createOrder', [\App\Http\Controllers\OrderController::class, 'createOrder'])->name('createOrder');
+Route::post('/getOrderProducts', [\App\Http\Controllers\OrderController::class, 'getOrderProducts'])->name('getOrderProducts');
 
 Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
 Route::get('/admin-charts', [\App\Http\Controllers\AdminController::class, 'charts'])->name('admin-charts');
 Route::get('/admin-tables', [\App\Http\Controllers\AdminController::class, 'tables'])->name('admin-tables');
+
+Route::post('/admin-add-category', [\App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
+Route::post('/admin-add-product', [\App\Http\Controllers\ProductController::class, 'addProduct'])->name('addProduct');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

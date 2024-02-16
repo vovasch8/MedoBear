@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OrderMail;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProducts;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -69,5 +71,24 @@ class OrderController extends Controller
         }
 
         return true;
+    }
+
+    public function updateOrder() {
+
+    }
+
+    public function deleteOrder() {
+
+    }
+
+    public function getOrderProducts(Request $request) {
+        $orderId = intval($request->id_order);
+        $products = [];
+
+        if ($orderId) {
+            $products = DB::table("products")->join("order_products", "products.id", "=", "productId")->where("orderId", "=", $orderId)->select("products.id", "products.name", "products.image", "products.price", "order_products.orderId", "order_products.count", "products.count AS count_substance")->get();
+        }
+
+        return $products;
     }
 }

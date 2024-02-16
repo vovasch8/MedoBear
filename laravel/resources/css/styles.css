@@ -11263,3 +11263,59 @@ body {
 .pointer {
     cursor: pointer;
 }
+
+.promo-icon {
+    font-size: large;
+    color: #FFC107FF;
+}
+
+.add-category-block, .add-product-block {
+    display: none;
+    position: absolute;
+    background: white;
+    border-radius: 5px;
+    width: 300px;
+    padding: 8px;
+    z-index: 2;
+    margin-left: 280px;
+    margin-top: -42px;
+    opacity: 95%;
+}
+
+/** Tables **/
+#edit-form {
+    position: absolute;
+    background: white;
+    display: none;
+    width: 250px!important;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+#old-text {
+    display: none;
+}
+
+#edit-input, #edit-btn {
+    height: 40px;
+}
+
+tbody td {
+    cursor: pointer;
+}
+
+#edit-order-block {
+    display: none;
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background: cornsilk;
+}
+
+#saveOrderBtn {
+    border-radius: 0px 5px 5px 0px;
+}

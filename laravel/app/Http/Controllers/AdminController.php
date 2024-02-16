@@ -24,7 +24,8 @@ class AdminController extends Controller
     }
 
     public function tables() {
+        $orders = Order::all()->sortByDesc("id");
 
-        return view("admin.tables");
+        return view("admin.tables", ["orders" => $orders]);
     }
 }

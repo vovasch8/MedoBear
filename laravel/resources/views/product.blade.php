@@ -12,7 +12,7 @@
                 <div class="row pe-5">
                     <div class="col-6">
                         <img width="100%" height="225px" class="bd-placeholder-img card-img-top product-img"
-                             src="{{$product->image}}" alt="MedoBear">
+                             src="{{isset($product->images[0]) ? $product->images[0] : ''}}" alt="MedoBear">
                     </div>
                     <div class="col-6">
                         <div id="p-{{ $product->id }}" class="card p-3 mb-1">

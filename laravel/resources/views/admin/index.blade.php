@@ -1,5 +1,9 @@
 @extends("layouts.admin")
 
+@section("head")
+    @vite(['resources/css/styles.css', 'resources/js/scripts.js', 'resources/js/chart-area.js', 'resources/js/chart-bar.js', 'resources/js/chart-bar.js', 'resources/js/datatables-simple.js', 'resources/js/chart-pie.js'])
+@endsection
+
 @section("content")
     <main>
         <div class="container-fluid px-4">
@@ -11,11 +15,25 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-primary text-white mb-4 d-flex">
                         <div class="card-body">Категорії
-                            <div class="small text-white float-end pointer"><i class="fas fa-plus"></i></div>
+                            <div id="add-category-plus" class="small text-white float-end pointer"><i class="fas fa-plus"></i></div>
+                            <div class="add-category-block card">
+                                <div class="card-header fw-bold bg-dark text-white mb-2 d-flex justify-content-between"><span>Додавання категорії: </span><div class="category-loader"></div></div>
+                                <div class="d-block">
+                                    <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-name-category-input">
+                                    <input placeholder="Іконка" type="file" accept="image/*" class="form-control mb-2" id="add-image-category-input">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" checked id="isActiveCategory">
+                                            <label class="form-check-label" for="isActiveCategory">Активна</label>
+                                        </div>
+                                        <button id="add-category-btn" data-url="{{ route("addCategory") }}" class="btn btn-dark float-end">Додати</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-footer">
+                        <div id="add-category-footer" class="card-footer">
                             @foreach($categories as $category)
-                                <div id="c-{{ $category->id }}" class="card bg-primary p-2 mb-1 pointer">
+                                <div id="c-{{ $category->id }}" class="card text-white bg-primary p-2 mb-1 pointer">
                                     {{ $category->name }}
                                 </div>
                             @endforeach
@@ -25,11 +43,37 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-warning text-white mb-4 d-flex">
                         <div class="card-body">Продукти
-                            <div class="small text-white float-end pointer"><i class="fas fa-plus"></i></div>
+                            <div id="add-product-plus" class="small text-white float-end pointer"><i class="fas fa-plus"></i></div>
+                            <div class="add-product-block card">
+                                <div class="card-header fw-bold bg-dark text-white mb-2 d-flex justify-content-between"><span>Додавання продукту: </span><div class="product-loader"></div></div>
+                                <div class="d-block">
+                                    <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-product-name">
+                                    <textarea name="description" class="form-control mb-2" id="add-product-description" placeholder="Опис" rows="3"></textarea>
+                                    <div class="input-group mb-2">
+                                        <input id="add-product-count" type="text" class="form-control" name="count" placeholder="Кількість">
+                                        <input id="add-product-price" type="text" class="form-control" name="price" placeholder="Ціна">
+                                    </div>
+                                    <h6>Категорія: </h6>
+                                    <select id="add-product-category" name="product-category" class="form-select mb-2">
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <h6>Фото: </h6>
+                                    <input placeholder="Фото" type="file" multiple accept="image/*" class="form-control mb-2" id="add-product-image">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" checked id="is-active-product">
+                                            <label class="form-check-label" for="isActiveProduct">Активний</label>
+                                        </div>
+                                        <button id="add-product-btn" data-url="{{ route("addProduct") }}" class="btn btn-dark float-end">Додати</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-footer">
+                        <div id="add-product-footer" class="card-footer">
                             @foreach($products as $product)
-                                <div id="c-{{ $product->id }}" class="card bg-warning p-2 mb-1 pointer">
+                                <div id="p-{{ $product->id }}" class="card text-white bg-warning p-2 mb-1 pointer">
                                     {{ $product->name }}
                                 </div>
                             @endforeach
@@ -39,11 +83,11 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-success text-white mb-4 d-flex">
                         <div class="card-body">Замовлення
-                            <div class="small text-white float-end pointer"><i class="fas fa-angle-right"></i></div>
+                            <div class="small text-white float-end pointer"><a class="text-white text-decoration-none" href="#datatablesSimple"><i class="fas fa-angle-right"></i></a></div>
                         </div>
                         <div class="card-footer">
                             @foreach($lastOrders as $order)
-                                <div id="c-{{ $order->id }}" class="card bg-success p-2 mb-1 pointer">
+                                <div id="o-{{ $order->id }}" class="card text-white bg-success p-2 mb-1 pointer">
                                     Замовлення #{{ $order->id }}
                                 </div>
                             @endforeach
@@ -96,6 +140,7 @@
                             <th>Адреса</th>
                             <th>Товари</th>
                             <th>Ціна замовлення</th>
+                            <th>Дата</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -106,6 +151,7 @@
                             <th>Адреса</th>
                             <th>Товари</th>
                             <th>Ціна замовлення</th>
+                            <th>Дата</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -129,8 +175,11 @@
                                              @else src="{{ asset("storage") . "/icons/ukr.png" }}" class="icon-ukr"
                                              @endif alt="{{ $order->id }}"> Адереса
                                     </button></td>
-                                <td></td>
-                                <td>{{ $order->price }}</td>
+                                <td>
+                                    <button data-url="{{ route("getOrderProducts") }}" type="button" class="btn btn-outline-dark btn-order-products" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fa-solid fa-box"></i> Замовленя</button>
+                                </td>
+                                <td>{{ $order->price }} @if($order->promocode)<i class="fa-brands fa-gg-circle tooltipPromo promo-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="З промокодом: {{ $order->promocode }}"></i>@endif</td>
+                                <td>{{ $order->created_at }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -139,5 +188,23 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="productModalLabel"><i class="fa-solid fa-box"></i> Замовлені товари</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="product-body" class="modal-body" data-product-url="{{ route("product", "") }}">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark btn-order_products" data-bs-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 

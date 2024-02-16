@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Medobear Admin</title>
+    <title>Admin</title>
     <link rel="icon" type="image/x-icon" href="{{asset("storage") . '/logo.png'}}">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    @vite(['resources/css/styles.css', 'resources/js/scripts.js', 'resources/js/chart-area-demo.js', 'resources/js/chart-bar-demo.js', 'resources/js/chart-bar-demo.js', 'resources/js/datatables-simple-demo.js', 'resources/js/chart-pie-demo.js'])
+    @yield("head")
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
 </head>

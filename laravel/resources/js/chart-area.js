@@ -4,10 +4,16 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
+var w1 = document.querySelector("#myAreaChart").getAttribute("data-w1");
+var w2 = document.querySelector("#myAreaChart").getAttribute("data-w2");
+var w3 = document.querySelector("#myAreaChart").getAttribute("data-w3");
+var w4 = document.querySelector("#myAreaChart").getAttribute("data-w4");
+var w5 = document.querySelector("#myAreaChart").getAttribute("data-w5");
+var count_days = document.querySelector("#myAreaChart").getAttribute("data-count-days");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["1 Тиждень", "2 Тиждень", "3 Тиждень", "4 Тиждень"],
+    labels: ["7 Днів", "14 Днів", "21 Днів", "28 Днів", count_days + " Днів"],
     datasets: [{
       label: "Sessions",
       lineTension: 0.3,
@@ -20,7 +26,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBackgroundColor: "rgba(2,117,216,1)",
       pointHitRadius: 50,
       pointBorderWidth: 2,
-      data: [10, 25, 17, 34, 29, 5, 19],
+      data: [w1, w2, w3, w4, w5],
     }],
   },
   options: {
@@ -39,7 +45,7 @@ var myLineChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 50,
+          max: 20,
           maxTicksLimit: 5
         },
         gridLines: {

@@ -73,6 +73,46 @@ class OrderController extends Controller
         return true;
     }
 
+    public function addProductToOrder(Request $request) {
+        $orderProductsModel = new OrderProducts();
+        $idOrder = intval($request->id_order);
+        $idProduct = intval($request->id_product);
+        $count = intval($request->count);
+
+        $productOfOrder = $orderProductsModel->all()->where("orderId", "=", $idOrder)->where("productId", "=", $idProduct)->first();
+
+        if (empty($productOfOrder)) {
+            $orderProductsModel->orderId = $idOrder;
+            $orderProductsModel->productId = $idProduct;
+            $orderProductsModel->count = $count;
+            $orderProductsModel->save();
+
+            $products = DB::table("products")->join("order_products", "products.id", "=", "productId")->where("orderId", "=", $idOrder)->where("productId", "=", $idProduct)->select("products.id", "products.name", "products.price", "order_products.orderId", "order_products.count", "products.count AS count_substance")->get();
+            return Product::getProductsWithImages($products);
+        } else {
+            $productOfOrder->count = $count;
+            $productOfOrder->save();
+
+            $products = DB::table("products")->join("order_products", "products.id", "=", "productId")->where("orderId", "=", $idOrder)->where("productId", "=", $idProduct)->select("products.id", "products.name", "products.price", "order_products.orderId", "order_products.count", "products.count AS count_substance")->get();
+            return Product::getProductsWithImages($products);
+        }
+    }
+
+    public function removeProductFromOrder(Request $request) {
+        $orderProductsModel = new OrderProducts();
+        $idOrder = intval($request->id_order);
+        $idProduct = intval($request->id_product);
+        $product = DB::table('order_products')->where('orderId', '=', $idOrder)->where("productId", "=", $idProduct)->first();
+
+        if (!empty($product)) {
+            DB::table('order_products')->where('orderId', '=', $idOrder)->where("productId", "=", $idProduct)->delete();
+
+            return $idProduct;
+        }
+
+        return false;
+    }
+
     public function updateOrder() {
 
     }
@@ -86,9 +126,9 @@ class OrderController extends Controller
         $products = [];
 
         if ($orderId) {
-            $products = DB::table("products")->join("order_products", "products.id", "=", "productId")->where("orderId", "=", $orderId)->select("products.id", "products.name", "products.image", "products.price", "order_products.orderId", "order_products.count", "products.count AS count_substance")->get();
+            $products = DB::table("products")->join("order_products", "products.id", "=", "productId")->where("orderId", "=", $orderId)->select("products.id", "products.name", "products.price", "order_products.orderId", "order_products.count", "products.count AS count_substance")->get();
         }
 
-        return $products;
+        return Product::getProductsWithImages($products);
     }
 }

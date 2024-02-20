@@ -43,7 +43,7 @@ $(document).ready(function () {
                 let productsSelect = "";
                 let urlProduct = $(".modal-body").attr("data-product-url");
                 for (let item of response) {
-                    productsSelect += "<div style='height: 120px; background: cornsilk!important;' class='card d-block mb-3'>" +
+                    productsSelect += "<div id='p-" + item.id + "' style='height: 120px; background: cornsilk!important;' class='card d-block mb-3'>" +
                         "<img class='float-start d-block me-2' width='150px' height='120px' src='" + item.image +"'>" +
                         "<div class='d-block'><a href='" + urlProduct + "/" + item.id + "' class='mt-1 fw-bold text-decoration-none text-dark d-block'>" + item.name + " " + item.count_substance + "</a>" +
                         "---<span class='d-block fw-bold'><span class='text-warning'>Кількість:</span> " + item.count + " шт</span>" +
@@ -51,6 +51,7 @@ $(document).ready(function () {
                         "</div>";
                 }
                 $(".modal-body").html(productsSelect);
+                $(".modal-body").attr("data-order", idOrder);
             }
         });
     });

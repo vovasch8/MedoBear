@@ -30,7 +30,7 @@
                         <div id="edit-form" class="input-group">
                             <span id="old-text"></span>
                             <input id="edit-input" type="text" class="form-control w-75" placeholder="Редагування">
-                            <button id="edit-btn" class="btn btn-dark w-25"><i class="fa-solid fa-shield"></i></button>
+                            <button id="edit-btn" class="btn btn-dark w-25"><i class="fa-solid fa-greater-than fs-6"></i></button>
                         </div>
                     </div>
                     <table id="datatablesSimple">
@@ -100,19 +100,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="me-2 ms-2">
-                    <div id="edit-order-block" class="me-2 ms-2 mt-2">
-                        <h6 class="text-center">Редагування замовлення</h6>
+                    <div id="edit-order-block" class="mt-2">
+                        <h6 class="text-center">Редагування замовлення <i class="fa-solid fa-circle-xmark pointer"></i></h6>
                         <div class="input-group mt-2">
                             <input id="idProductOrderAdd" class="form-control" type="text" placeholder="ID товару">
                             <input id="countProductOrder" class="form-control" type="number" min="1" placeholder="Кількість">
-                            <button id="saveOrderBtn" class="btn btn-dark">+</button>
+                            <button id="addProductsBtnToOrder" class="btn btn-dark" data-url="{{ route("addProductToOrder") }}">+</button>
                             <span style="width: 10px"></span>
                             <input id="idProductOrderDelete" type="text" class="form-control" placeholder="ID товару">
-                            <button class="btn btn-danger">-</button>
+                            <button id="removeProductBtnFromOrder" class="btn btn-danger" data-url="{{ route("removeProductFromOrder") }}">-</button>
                         </div>
                     </div>
                 </div>
-                <div id="product-body" class="modal-body" data-product-url="{{ route("product", "") }}">
+                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("product", "") }}">
 
                 </div>
                 <div class="modal-footer">

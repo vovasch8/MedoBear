@@ -39,6 +39,8 @@ Route::get('/admin-tables', [\App\Http\Controllers\AdminController::class, 'tabl
 
 Route::post('/admin-add-category', [\App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
 Route::post('/admin-add-product', [\App\Http\Controllers\ProductController::class, 'addProduct'])->name('addProduct');
+Route::post('/admin-add-product-to-order', [\App\Http\Controllers\OrderController::class, 'addProductToOrder'])->name('addProductToOrder');
+Route::post('/admin-remove-product-from-order', [\App\Http\Controllers\OrderController::class, 'removeProductFromOrder'])->name('removeProductFromOrder');
 
 
 Route::get('/dashboard', function () {

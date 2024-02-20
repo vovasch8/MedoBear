@@ -83,7 +83,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-success text-white mb-4 d-flex">
                         <div class="card-body">Замовлення
-                            <div class="small text-white float-end pointer"><a class="text-white text-decoration-none" href="#datatablesSimple"><i class="fas fa-angle-right"></i></a></div>
+                            <div class="small text-white float-end pointer"><a class="text-white text-decoration-none" href="#order-table"><i class="fas fa-angle-right"></i></a></div>
                         </div>
                         <div class="card-footer">
                             @foreach($lastOrders as $order)
@@ -112,7 +112,12 @@
                             <i class="fas fa-chart-area me-1"></i>
                             Останні продажі за місяць
                         </div>
-                        <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                        <div class="card-body">
+                            <canvas data-w1="{{ $countOrdersThisMonth['week1'] }}" data-w2="{{ $countOrdersThisMonth['week2'] }}" data-w3="{{ $countOrdersThisMonth['week3'] }}"
+                                    data-w4="{{ $countOrdersThisMonth['week4'] }}" data-w5="{{ $countOrdersThisMonth['week5'] }}" data-count-days="{{ $countOrdersThisMonth["count_days"] }}"
+                                    id="myAreaChart" width="100%" height="40">
+                            </canvas>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-6">
@@ -121,11 +126,11 @@
                             <i class="fas fa-chart-bar me-1"></i>
                             Останні продажі за 6 місяців
                         </div>
-                        <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                        <div class="card-body"><canvas <?php $i = 1;?> @foreach($countOrdersBy6Month as $key => $m) data-m{{$i}}="{{$key}}" data-mv{{$i}}="{{$m}}" <?php $i++; ?>@endforeach id="myBarChart" width="100%" height="40"></canvas></div>
                     </div>
                 </div>
             </div>
-            <div class="card mb-4">
+            <div id="order-table" class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
                     Замовлення
@@ -197,7 +202,7 @@
                     <h1 class="modal-title fs-5" id="productModalLabel"><i class="fa-solid fa-box"></i> Замовлені товари</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="product-body" class="modal-body" data-product-url="{{ route("product", "") }}">
+                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("product", "") }}">
 
                 </div>
                 <div class="modal-footer">

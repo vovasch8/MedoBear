@@ -11,7 +11,7 @@
             <div class="col-9">
                 <div class="row pe-5">
                     @foreach($products as $product)
-                        <div class="col-4">
+                        <div class="col-4 mb-4">
                             <a href="{{ route('product', $product->id)  }}" id="p-{{$product->id}}" class="card shadow-sm product">
                                 <img width="100%" height="225px" class="bd-placeholder-img card-img-top"
                                      src="{{ asset("storage") . "/products/" . $product->id . "/" . (isset($product->images[0]) ? $product->images[0] : '')}}" alt="MedoBear">

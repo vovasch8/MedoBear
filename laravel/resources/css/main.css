@@ -51,17 +51,29 @@ body {
     font-size: large;
 }
 
-#signIn, #cart {
+.icon-block {
+    display: inline-block;
+    width: 50px;
+}
+
+#signIn, #cart, #dashboard {
     cursor: pointer;
     font-size: x-large;
     font-weight: bold;
 }
 
 #signIn i:hover {
+    position: absolute;
+    font-size: xx-large;
+}
+
+#dashboard i:hover {
+    position: absolute;
     font-size: xx-large;
 }
 
 #cart i:hover {
+    position: absolute;
     font-size: xx-large;
 }
 
@@ -231,4 +243,105 @@ footer li, footer p {
 
 .main-color {
     background-color: #2d3748;
+}
+
+.main-text-color {
+   color: #2d3748!important;
+}
+
+.border-radius-10 {
+    border-radius: 10px;
+    border: 3px solid #ffc106!important;
+}
+
+.bg-main {
+    background: #2d3748;
+}
+
+@keyframes float {
+    0% {
+        box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+        transform: translatey(0px);
+    }
+    50% {
+        box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+        transform: translatey(-40px);
+    }
+    100% {
+        box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+        transform: translatey(0px);
+    }
+}
+
+@keyframes title-medobear {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.1);
+    }
+    60%, 100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes wiggle {
+    0%, 7% {
+        transform: rotateZ(0);
+    }
+    15% {
+        transform: rotateZ(-15deg);
+    }
+    20% {
+        transform: rotateZ(10deg);
+    }
+    25% {
+        transform: rotateZ(-10deg);
+    }
+    30% {
+        transform: rotateZ(6deg);
+    }
+    35% {
+        transform: rotateZ(-4deg);
+    }
+    40%, 100% {
+        transform: rotateZ(0);
+    }
+}
+
+.effect {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+
+.second-color {
+    color: #ffc106;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    box-sizing: border-box;
+    border: 5px white solid;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+    transform: translatey(0px);
+    animation: float 2s ease-in-out infinite;
+}
+
+.contact-block:hover {
+    animation: wiggle 2s linear infinite;
+    cursor: pointer;
+}
+
+.border-bottom-second {
+    border-bottom: 3px solid #ffc106!important;
+}
+
+.bg-second {
+    background: #ffc106;
 }

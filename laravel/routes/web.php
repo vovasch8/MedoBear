@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\SiteController::class, 'showCatalog'])->name('catalog');
 Route::get('/category/{id}', [\App\Http\Controllers\SiteController::class, 'showCatalog'])->name('currentCatalog');
 Route::get('/product/{id}', [\App\Http\Controllers\SiteController::class, 'showProduct'])->name('product');
+Route::get('/partnership', [\App\Http\Controllers\SiteController::class, 'showPartnership'])->name('partnership');
+Route::get('/contacts', [\App\Http\Controllers\SiteController::class, 'showContacts'])->name('contacts');
+Route::post('/handle-message', [\App\Http\Controllers\SiteController::class, 'sendMessage'])->name('sendMessage');
 Route::get('/cart', [\App\Http\Controllers\CartController::class, 'showCart'])->name('cart');
 
 Route::post('/addProduct', [\App\Http\Controllers\CartController::class, 'addProduct'])->name('addProduct');
@@ -33,24 +36,30 @@ Route::post('/addPromocode', [\App\Http\Controllers\CartController::class, 'addP
 Route::post('/createOrder', [\App\Http\Controllers\OrderController::class, 'createOrder'])->name('createOrder');
 Route::post('/getOrderProducts', [\App\Http\Controllers\OrderController::class, 'getOrderProducts'])->name('getOrderProducts');
 
-Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
-Route::get('/admin-charts', [\App\Http\Controllers\AdminController::class, 'charts'])->name('admin-charts');
-Route::get('/admin-tables', [\App\Http\Controllers\AdminController::class, 'tables'])->name('admin-tables');
-
-Route::post('/admin-add-category', [\App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
-Route::post('/admin-add-product', [\App\Http\Controllers\ProductController::class, 'addProduct'])->name('addProduct');
-Route::post('/admin-add-product-to-order', [\App\Http\Controllers\OrderController::class, 'addProductToOrder'])->name('addProductToOrder');
-Route::post('/admin-remove-product-from-order', [\App\Http\Controllers\OrderController::class, 'removeProductFromOrder'])->name('removeProductFromOrder');
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\CabinetController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+    Route::get('/admin-charts', [\App\Http\Controllers\AdminController::class, 'charts'])->name('admin-charts');
+    Route::get('/admin-tables', [\App\Http\Controllers\AdminController::class, 'tables'])->name('admin-tables');
+
+    Route::post('/admin-add-category', [\App\Http\Controllers\CategoryController::class, 'addCategory'])->name('addCategory');
+    Route::post('/admin-add-product', [\App\Http\Controllers\ProductController::class, 'addProduct'])->name('addProduct');
+    Route::post('/admin-add-product-to-order', [\App\Http\Controllers\OrderController::class, 'addProductToOrder'])->name('addProductToOrder');
+    Route::post('/admin-remove-product-from-order', [\App\Http\Controllers\OrderController::class, 'removeProductFromOrder'])->name('removeProductFromOrder');
+
+    Route::get('/admin-products-table', [\App\Http\Controllers\AdminController::class, 'productsTable'])->name('productsTable');
+    Route::get('/admin-messages-table', [\App\Http\Controllers\AdminController::class, 'messagesTable'])->name('messagesTable');
+    Route::get('/admin-categories-table', [\App\Http\Controllers\AdminController::class, 'categoriesTable'])->name('categoriesTable');
+    Route::get('/admin-users-table', [\App\Http\Controllers\AdminController::class, 'usersTable'])->name('usersTable');
+
+    Route::post('/admin-edit-table-column', [\App\Http\Controllers\AdminController::class, 'editColumnTable'])->name('editColumnTable');
 });
 
 require __DIR__.'/auth.php';

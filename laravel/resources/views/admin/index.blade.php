@@ -97,10 +97,14 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-danger text-white mb-4 d-flex">
                         <div class="card-body">Повідомлення
-                            <div class="small text-white float-end pointer"><i class="fas fa-angle-right"></i></div>
+                            <div class="small text-white float-end pointer"><a class="text-white text-decoration-none" href="{{ route("admin-tables") }}"><i class="fas fa-angle-right"></i></a></div>
                         </div>
                         <div class="card-footer">
-
+                            @foreach($messages as $message)
+                                <div id="m-{{ $message->id }}" class="card text-white bg-danger p-2 mb-1 pointer">
+                                    {{ $message->subject }}
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

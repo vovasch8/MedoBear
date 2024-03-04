@@ -1,6 +1,6 @@
 @extends("layouts.main")
 
-@section("title") Кабінет @endsection
+@section("title") Співробітництво @endsection
 
 @section("content")
     <div class="row">

@@ -47,4 +47,16 @@ class Order extends Model
 
         return $countOrdersBy6Month;
     }
+
+    public function getMostPopularProducts() {
+        $mostPopularProducts = DB::table("order_products")
+            ->join("products", "products.id", "=", "order_products.productId")
+            ->select('name', 'productId', DB::raw('count(*) as count'))
+            ->groupBy("productId")
+            ->orderBy("count", "DESC")
+            ->take(5)
+            ->get();
+
+        return $mostPopularProducts;
+    }
 }

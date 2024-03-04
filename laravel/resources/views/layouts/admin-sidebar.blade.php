@@ -16,11 +16,18 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Таблиці
                 </a>
+                <div class="sb-sidenav-menu-heading">Основне</div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a style="cursor: pointer;" class="nav-link" onclick="event.preventDefault(); this.closest('form').submit();">
+                        <div class="sb-nav-link-icon"><i class="fas fa-sign-in"></i></div>
+                        Вийти
+                    </a>
+                </form>
             </div>
         </div>
         <div class="sb-sidenav-footer">
-            <div class="small">Користувач:</div>
-            Medobear
+            <div class="small">Користувач: @auth{{ \Illuminate\Support\Facades\Auth::user()->name }}@endauth</div>
         </div>
     </nav>
 </div>

@@ -7,14 +7,40 @@
 
     <ul class="nav col-12 col-md-auto  justify-content-center mb-md-0 w-nav">
         <li><a href="{{ route('catalog') }}" class="nav-link px-2 text-warning fw-bold">Каталог товарів</a></li>
-        <li><a href="#" class="nav-link px-2 text-warning fw-bold">Співробітництво</a></li>
+        <li><a href="{{ route('partnership') }}" class="nav-link px-2 text-warning fw-bold">Співробітництво</a></li>
         <li><a href="#" class="nav-link px-2 text-warning fw-bold">Про нас</a></li>
-        <li><a href="#" class="nav-link px-2 text-warning fw-bold">Контакти</a></li>
+        <li><a href="{{ route('contacts') }}" class="nav-link px-2 text-warning fw-bold">Контакти</a></li>
     </ul>
 
 
-    <div class="col-md-3 text-end">
-        <a href="{{ route('cart') }}" id="cart" class="me-2 text-warning  me-5"><i class="fas fa-shopping-basket"></i><span style="@if(session()->has('products')) display:inline-block; @endif" id="productCounter">{{ \App\Http\Controllers\CartController::countItems() }}</span></a>
-        <a id="signIn" class="me-2 text-warning  me-5"><i class="fas fa-sign-in-alt"></i></a>
+    <div class="col-md-3">
+        <div class="d-flex justify-content-end">
+            <div class="icon-block">
+                <a href="{{ route('cart') }}" id="cart" class="text-warning"><i class="fas fa-shopping-basket"></i><span style="@if(session()->has('products')) display:inline-block; @endif" id="productCounter">{{ \App\Http\Controllers\CartController::countItems() }}</span></a>
+            </div>
+            @auth
+                <div class="dropdown me-3">
+                    <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ route("profile.edit") }}">Профіль</a></li>
+                        <li><a class="dropdown-item" href="{{ route("dashboard") }}">Кабінет</a></li>
+                        @can("view-manager", \Illuminate\Support\Facades\Auth::user())
+                            <li><a class="dropdown-item" href="{{ route("admin") }}">Адмін панель</a></li>
+                        @endcan
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <li onclick="event.preventDefault(); this.closest('form').submit();"><a class="dropdown-item" href="#">Вийти</a></li>
+                        </form>
+                    </ul>
+                </div>
+            @else
+                <div class="icon-block">
+                    <a id="signIn" href="{{ route('login') }}" class="text-warning"><i class="fas fa-sign-in-alt"></i></a>
+                </div>
+            @endauth
+        </div>
     </div>
 </header>

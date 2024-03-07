@@ -7,14 +7,14 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Панель
                 </a>
+                <a class="nav-link" href="{{ route("admin-tables") }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                    Дані
+                </a>
                 <div class="sb-sidenav-menu-heading">Статистика</div>
                 <a class="nav-link" href="{{ route("admin-charts") }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Графіки
-                </a>
-                <a class="nav-link" href="{{ route("admin-tables") }}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Таблиці
                 </a>
                 <div class="sb-sidenav-menu-heading">Основне</div>
                 <form method="POST" action="{{ route('logout') }}">

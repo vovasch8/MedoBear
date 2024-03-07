@@ -14,7 +14,7 @@ class SiteController extends Controller
 {
     public function showCatalog($category = 1) {
         $categories = Category::all()->where("active", "=", true);
-        $products = Product::all()->where("category_id", "=", $category)->take(12);
+        $products = Product::all()->where("category_id", "=", $category)->where("active", "=", true)->take(12);
 
         $products = Product::getProductsWithImages($products);
 

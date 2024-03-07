@@ -48,11 +48,13 @@ class ProductController extends Controller
         return $product;
     }
 
-    public function updateProduct() {
+    public function changeProductStatus(Request $request) {
+        $id = intval($request->id);
+        $product = Product::find($id);
 
-    }
+        $product->active = intval($request->value);
+        $product->save();
 
-    public function deleteProduct() {
-
+        return true;
     }
 }

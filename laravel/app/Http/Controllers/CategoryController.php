@@ -38,4 +38,29 @@ class CategoryController extends Controller
 
         return true;
     }
+
+    public function changeCategoryStatus(Request $request) {
+        $id = intval($request->id);
+        $category = Category::find($id);
+
+        $category->active = intval($request->value);
+        $category->save();
+
+        return true;
+    }
+
+    public function updateCategoryImage(Request $request) {
+        $category = Category::find(intval($request->id));
+        $imageName = time() . '.' . $request->category_image->extension();
+        if(Storage::disk('public')->exists('icons/' . $category->image)){
+            Storage::disk('public')->delete('icons/' . $category->image);
+        }
+        Storage::disk('public')->putFileAs('/icons', $request->category_image, $imageName);
+        $category->image = $imageName;
+
+        $category->save();
+
+        $newCategory = Category::find($category->id);
+        return asset("storage") . "/icons/" . $newCategory->image;
+    }
 }

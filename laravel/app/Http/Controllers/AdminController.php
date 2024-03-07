@@ -56,12 +56,13 @@ class AdminController extends Controller
         $this->authorize("view-admin", Auth::user());
         $users = User::all()->sortByDesc("id");
 
-        return view("admin.users-table", ["users" => $users, 'typeTable' => "users", "editedColumns" => [1, 2, 3]]);
+        return view("admin.users-table", ["users" => $users, 'typeTable' => "users", "editedColumns" => [1, 2]]);
     }
 
     public function productsTable() {
         $this->authorize("view-manager", Auth::user());
         $products = Product::all()->sortByDesc("id");
+        $products = Product::getProductsWithImages($products);
 
         return view("admin.products-table", ["products" => $products, 'typeTable' => "products", "editedColumns" => [1, 2, 3, 4]]);
     }
@@ -82,7 +83,7 @@ class AdminController extends Controller
         $editedColumns['products'] = [1 => "name", 2 => "description", 3 => "price", 4 => "count"];
         $editedColumns['messages']= [1 => "name", 2 => "subject", 3 => "text", 4 => "phone"];
         $editedColumns['categories'] = [1 => "name"];
-        $editedColumns['users'] = [1 => "name", 2 => "email", 3 => "role"];
+        $editedColumns['users'] = [1 => "name", 2 => "email"];
 
         $entity = match($table) {
             "orders" => isset($editedColumns['orders'][$columnNumber]) ? Order::find($id) : null,

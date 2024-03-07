@@ -55,9 +55,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin-remove-product-from-order', [\App\Http\Controllers\OrderController::class, 'removeProductFromOrder'])->name('removeProductFromOrder');
 
     Route::get('/admin-products-table', [\App\Http\Controllers\AdminController::class, 'productsTable'])->name('productsTable');
+    Route::post('/admin-product-status', [\App\Http\Controllers\ProductController::class, 'changeProductStatus'])->name('changeProductStatus');
     Route::get('/admin-messages-table', [\App\Http\Controllers\AdminController::class, 'messagesTable'])->name('messagesTable');
     Route::get('/admin-categories-table', [\App\Http\Controllers\AdminController::class, 'categoriesTable'])->name('categoriesTable');
+    Route::post('/admin-category-status', [\App\Http\Controllers\CategoryController::class, 'changeCategoryStatus'])->name('changeCategoryStatus');
+    Route::post('/admin-category-icon', [\App\Http\Controllers\CategoryController::class, 'updateCategoryImage'])->name('updateCategoryImage');
     Route::get('/admin-users-table', [\App\Http\Controllers\AdminController::class, 'usersTable'])->name('usersTable');
+    Route::post('/admin-user-role', [\App\Http\Controllers\UserController::class, 'changeUserRole'])->name('changeUserRole');
 
     Route::post('/admin-edit-table-column', [\App\Http\Controllers\AdminController::class, 'editColumnTable'])->name('editColumnTable');
 });

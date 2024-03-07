@@ -20,8 +20,8 @@
                         <div class="row">
                             <div class="main-color p-2 border border-success rounded">
                                 <h5 class="text-center text-light fw-bold mb-2">{{ $product->name }}</h5>
-                                <div id="fotorama" class="fotorama bg-light" data-width="100%" data-ratio="800/600"
-                                     data-allowfullscreen="true"  data-loop="true">
+                                <div id="fotorama" class="fotorama bg-dark" data-width="100%" data-ratio="800/600"
+                                     data-allowfullscreen="true" data-nav="thumbs" data-loop="true">
                                     @foreach($product->images as $image)
                                         <img
                                             src="{{asset("storage") . "/products/" . $product->id . "/" . (isset($image) ? $image : '')}}"/>

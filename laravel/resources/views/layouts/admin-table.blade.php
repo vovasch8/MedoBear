@@ -1,13 +1,14 @@
 @extends("layouts.admin")
 
 @section("head")
+    @yield("pre-head")
     @vite(['resources/css/styles.css', 'resources/js/datatables-simple.js', 'resources/js/tables.js'])
 @endsection
 
 @section("content")
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Таблиці</h1>
+            <h1 class="mt-4">Дані</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="index.blade.php">Панель</a></li>
                 <li class="breadcrumb-item active">Дані</li>

@@ -149,6 +149,106 @@ $(document).ready(function () {
         }
     });
 
+    $(".category-active").on( "change", function () {
+        let url = $(this).attr("data-url");
+        let id = $(this).closest("tr").children(":first").text();
+        let value = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id": id, "value": value},
+            success: function (response) {
+
+            }
+        });
+    });
+
+    $(".product-active").on( "change", function () {
+        let url = $(this).attr("data-url");
+        let id = $(this).closest("tr").children(":first").text();
+        let value = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id": id, "value": value},
+            success: function (response) {
+
+            }
+        });
+    });
+
+    $(".user-role").on( "change", function () {
+        let url = $(this).attr("data-url");
+        let id = $(this).closest("tr").children(":first").text();
+        let value = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id": id, "value": value},
+            success: function (response) {
+
+            }
+        });
+    });
+
+    $(".btn-icon").click(function () {
+        let src = $(this).attr("data-src");
+        let id = $(this).closest("tr").children(":first").text();
+        $("#icon-img").attr("src", src);
+        $("#icon-img").attr("data-id", id);
+    });
+
+    $(".btn-save-upload-image").click(function (){
+        let data = new FormData();
+        let id = $("#icon-img").attr("data-id");
+        let src = $("#icon-img").attr("src");
+        let category_image = $("#load-image").prop('files')[0];
+        let url = $(this).attr("data-url");
+
+        data.append("_token", $('meta[name="csrf-token"]').attr('content'));
+        data.append("category_image", category_image);
+        data.append("id", id);
+        $(".loader-img").html("<div class='d-flex justify-content-center'><div style='height: 100px; width: 100px;' class=\"spinner-border\" role=\"status\">\n" +
+            "  <span class=\"visually-hidden\">Loading...</span>\n" +
+            "</div></div>");
+
+        $.ajax({
+            type:'POST',
+            enctype: 'multipart/form-data',
+            url: url,
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function (response) {
+                $(".loader-img").html("<img data-id='" + id + "' src=\"" + response + "\" alt=\"Icon\" id=\"icon-img\" class=\"mb-3\">");
+                $("#load-image").val("");
+                $("[data-src='" + src + "']").attr("data-src", response);
+            }
+        });
+    });
+
+    $(".btn-product-images").click(function () {
+        let imageUrls = $(this).attr("data-images");
+        imageUrls = JSON.parse(imageUrls);
+        let path = $(".photos").attr("data-full-path");
+        let id = $(this).closest("tr").children(":first").text();
+        let imagesHtml = "";
+        let data = [];
+        for (let i = 0; i < imageUrls.length; i++) {
+            // imagesHtml += "<img id='" + imageUrls[i] + "' src='" + path + "/products/" + id + "/" + imageUrls[i] + "'/>"
+            data.push({img: path + "/products/" + id + "/" + imageUrls[i], id: id});
+        }
+        console.log(data);
+        $(".photos").html("<div id=\"fotorama\" data-auto=\"false\" class=\"fotorama bg-light\" data-width=\"100%\" data-ratio=\"800/600\" data-allowfullscreen=\"true\"  data-loop=\"true\"></div>");
+        // $("#fotorama").html(imagesHtml);
+        $('.fotorama').fotorama({
+            data: data
+        });
+    });
+
     $(function() {
         $('.poshtaPopover').popover({
             placement: "right",

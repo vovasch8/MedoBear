@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin-products-table', [\App\Http\Controllers\AdminController::class, 'productsTable'])->name('productsTable');
     Route::post('/admin-product-status', [\App\Http\Controllers\ProductController::class, 'changeProductStatus'])->name('changeProductStatus');
+    Route::post('/admin-product-category', [\App\Http\Controllers\ProductController::class, 'changeProductCategory'])->name('changeProductCategory');
     Route::post('/admin-product-move-to', [\App\Http\Controllers\ProductController::class, 'movePhotoProduct'])->name('movePhotoProduct');
     Route::post('/admin-product-add-photo', [\App\Http\Controllers\ProductController::class, 'addPhotoProduct'])->name('addPhotoProduct');
     Route::post('/admin-product-remove photo', [\App\Http\Controllers\ProductController::class, 'removePhotoProduct'])->name('removePhotoProduct');

@@ -179,6 +179,21 @@ $(document).ready(function () {
         });
     });
 
+    $(".product-category").on( "change", function () {
+        let url = $(this).attr("data-url");
+        let id = $(this).closest("tr").children(":first").text();
+        let value = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id": id, "value": value},
+            success: function (response) {
+
+            }
+        });
+    });
+
     $(".user-role").on( "change", function () {
         let url = $(this).attr("data-url");
         let id = $(this).closest("tr").children(":first").text();

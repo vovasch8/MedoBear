@@ -14,6 +14,7 @@
         <th>Кількість</th>
         <th>Ціна</th>
         <th>Фото</th>
+        <th>Категорія</th>
         <th>Активний</th>
         <th>Дата створення</th>
     </tr>
@@ -27,6 +28,13 @@
             <td>{{ $product->count }}</td>
             <td>{{ $product->price }}</td>
             <td><button data-click="{{ $product->id }}" data-images="{{ json_encode($product->images) }}" data-bs-toggle="modal" data-bs-target="#productModal" class="btn btn-outline-dark btn-product-images"><i class="fa-solid fa-image"></i> Фото</button></td>
+            <td>
+                <select data-url="{{ route("changeProductCategory") }}" class="form-select product-category" name="category">
+                    @foreach($categories as $category)
+                        <option {{ ($product->category_id == $category->id) ? "selected" : "" }} value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </td>
             <td>
                 <select data-url="{{ route("changeProductStatus") }}" class="form-select product-active" name="active">
                     <option value="1">Так</option>

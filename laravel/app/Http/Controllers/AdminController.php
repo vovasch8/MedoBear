@@ -65,8 +65,9 @@ class AdminController extends Controller
         $this->authorize("view-manager", Auth::user());
         $products = Product::all()->sortByDesc("id");
         $products = Product::getProductsWithImages($products);
+        $categories = Category::all()->sortByDesc("id");
 
-        return view("admin.products-table", ["products" => $products, 'typeTable' => "products", "editedColumns" => [1, 2, 3, 4]]);
+        return view("admin.products-table", ["products" => $products, 'typeTable' => "products", "categories" => $categories, "editedColumns" => [1, 2, 3, 4]]);
     }
 
     public function messagesTable() {

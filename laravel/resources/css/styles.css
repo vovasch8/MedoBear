@@ -11357,3 +11357,7 @@ tbody td {
 #addProductsBtnToOrder{
     border-radius: 0px 5px 5px 0px;
 }
+
+.datatable-pagination a {
+    color: black;
+}

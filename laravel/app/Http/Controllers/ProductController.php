@@ -60,6 +60,16 @@ class ProductController extends Controller
         return true;
     }
 
+    public function changeProductCategory(Request $request) {
+        $id = intval($request->id);
+        $product = Product::find($id);
+
+        $product->category_id = intval($request->value);
+        $product->save();
+
+        return true;
+    }
+
     public function movePhotoProduct(Request $request) {
         $imageContainer = new ImageContainer();
         $idProduct = intval($request->product_id);

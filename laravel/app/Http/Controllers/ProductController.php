@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Class\ImageContainer;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -20,6 +21,7 @@ class ProductController extends Controller
         $productModel->category_id = intval($request->product_category_id);
         $productModel->price = intval($request->product_price);
         $productModel->count = strval($request->product_count);
+        $productImages = $request->product_images;
 
         $productModel->save();
         $product = Product::find($productModel->id);
@@ -30,8 +32,7 @@ class ProductController extends Controller
             File::makeDirectory($path, 0777, true, true);
         }
 
-        $index = 0;
-        foreach ($request->product_images as $image) {
+        foreach ($productImages as $index => $image) {
             $imageModel = new Image();
             $imageName = $index . time() . '.' . $image->extension();
             Storage::disk('public')->putFileAs('/products/' . $product->id, $image, $imageName);
@@ -41,8 +42,9 @@ class ProductController extends Controller
             $productImageModel = new ProductImage();
             $productImageModel->image_id = $imageModel->id;
             $productImageModel->product_id = $product->id;
+            ($index === 0) ? $productImageModel->father_id = 0 : $productImageModel->father_id = $prevProductImageId;
             $productImageModel->save();
-            $index++;
+            $prevProductImageId = $productImageModel->id;
         }
 
         return $product;
@@ -56,5 +58,45 @@ class ProductController extends Controller
         $product->save();
 
         return true;
+    }
+
+    public function movePhotoProduct(Request $request) {
+        $imageContainer = new ImageContainer();
+        $idProduct = intval($request->product_id);
+        $thisId = intval($request->this_id);
+        $leftId = intval($request->left_id);
+        $rightId = $request->right_id != null ? intval($request->right_id) : null;
+
+        $imageContainer->movePhoto($thisId, $leftId, $rightId);
+
+        $product = Product::getProductWithImages(Product::all()->where("id", "=", $idProduct)->first());
+
+        return $product;
+    }
+
+    public function addPhotoProduct(Request $request) {
+        $imageContainer = new ImageContainer();
+        $idProduct = intval($request->product_id);
+        $product_images = $request->product_images;
+
+        $imageContainer->addPhoto($idProduct, $product_images);
+
+        $product = Product::getProductWithImages(Product::all()->where("id", "=", $idProduct)->first());
+
+        return $product;
+    }
+
+    public function removePhotoProduct(Request $request) {
+        $imageContainer = new ImageContainer();
+        $idProduct = intval($request->product_id);
+        $thisId = intval($request->this_id);
+        $leftId = ($request->left_id !== null) ? intval($request->left_id) : null;
+        $rightId = ($request->right_id !== null) ? intval($request->right_id) : null;
+
+        $imageContainer->removePhoto($thisId, $leftId, $rightId);
+
+        $product = Product::getProductWithImages(Product::all()->where("id", "=", $idProduct)->first());
+
+        return $product;
     }
 }

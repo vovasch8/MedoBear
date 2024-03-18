@@ -26,7 +26,7 @@
             <td>{{ $product->description }}</td>
             <td>{{ $product->count }}</td>
             <td>{{ $product->price }}</td>
-            <td><button data-images="{{ json_encode($product->images) }}" data-bs-toggle="modal" data-bs-target="#productModal" class="btn btn-outline-dark btn-product-images"><i class="fa-solid fa-image"></i> Фото</button></td>
+            <td><button data-click="{{ $product->id }}" data-images="{{ json_encode($product->images) }}" data-bs-toggle="modal" data-bs-target="#productModal" class="btn btn-outline-dark btn-product-images"><i class="fa-solid fa-image"></i> Фото</button></td>
             <td>
                 <select data-url="{{ route("changeProductStatus") }}" class="form-select product-active" name="active">
                     <option value="1">Так</option>
@@ -43,25 +43,27 @@
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-body">
                     <div class="toolbar w-100">
                         <div class="inner bg-dark d-flex mb-2 justify-content-between fs-5 p-2">
                             <span class="fw-bold text-white">Дії:&nbsp;</span>
                             <div class="order-photos">
-                                <button class="btn btn-warning btn-sm btn-move"><i class="fa-solid fa-circle-arrow-left"></i></button>
+                                <button data-direction="left" data-url="{{ route("movePhotoProduct") }}" class="btn btn-warning btn-sm btn-move tool-arrow"><i class="fa-solid fa-circle-arrow-left"></i></button>
                                 <span class="fw-bold fs-6 text-white">Перемістити</span>
-                                <button class="btn btn-warning btn-sm btn-move"><i class="fa-solid fa-circle-arrow-right"></i></button>
+                                <button data-direction="right" data-url="{{ route("movePhotoProduct") }}" class="btn btn-warning btn-sm btn-move tool-arrow"><i class="fa-solid fa-circle-arrow-right"></i></button>
                             </div>
                             <div class="toolbar-actions">
-                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                <button class="btn btn-warning"><i class="fa-solid fa-circle-plus"></i></button>
+                                <button data-url="{{ route("removePhotoProduct") }}" id="tool-remove" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                <button data-url="{{ route("addPhotoProduct") }}" id="tool-add" class="btn btn-warning pointer">
+                                    <label class="pointer" for="load-files">
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                    </label>
+                                </button>
+                                <input id="load-files" class="d-none" type="file" multiple accept="image/*">
                                 <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-circle-xmark"></i></button>
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <div class="modal-body">
                     <div data-full-path="{{ asset('storage') }}" class="photos d-block">
                         <div id="fotorama" data-auto="false" class="fotorama bg-light" data-width="100%" data-ratio="800/600" data-allowfullscreen="true"  data-loop="true"></div>
                     </div>

@@ -232,22 +232,170 @@ $(document).ready(function () {
 
     $(".btn-product-images").click(function () {
         let imageUrls = $(this).attr("data-images");
-        imageUrls = JSON.parse(imageUrls);
-        let path = $(".photos").attr("data-full-path");
+        let clickedBufferedId = $(this).attr("data-click");
+        $("#productModal").attr("data-entity", clickedBufferedId);
+
         let id = $(this).closest("tr").children(":first").text();
-        let imagesHtml = "";
-        let data = [];
-        for (let i = 0; i < imageUrls.length; i++) {
-            // imagesHtml += "<img id='" + imageUrls[i] + "' src='" + path + "/products/" + id + "/" + imageUrls[i] + "'/>"
-            data.push({img: path + "/products/" + id + "/" + imageUrls[i], id: id});
+        imageUrls = JSON.parse(imageUrls);
+        let data = generateAlbumPhotos(id, imageUrls);
+
+        initFotorama(data);
+    });
+
+    $(".tool-arrow").click(function () {
+        let productId = $("#productModal").attr("data-entity");
+        let images = getArrayImages();
+        let activeImage = getActiveImage();
+        let url = $(this).attr("data-url");
+        let direction = $(this).attr("data-direction");
+        let fatherId = null;
+        let childId = null;
+        let thisId = null;
+
+        for (let i = 0; i < images.length; i++) {
+            if (images[i]['image'] === activeImage) {
+                if (direction === "left" && i !== 0) {
+                    let thisImage = images[i];
+                    thisId = thisImage['id'];
+                    fatherId = images.find((element) => element.id == thisImage['father_id']).id;
+                    childId = (i < images.length - 2) ? images.find((element) => element.father_id == thisId).id : null;
+                } else if (direction === "right" && i !== images.length - 1) {
+                    let fatherImage = images[i];
+                    fatherId = fatherImage['id'];
+                    thisId = images.find((element) => element.father_id == fatherImage['id']).id;
+                    childId = (i < images.length - 2) ? images.find((element) => element.father_id == thisId).id : null;
+                } else {
+                    return false;
+                }
+
+                $(".photos").html("<div class='d-flex justify-content-center w-100 pt-5 pb-5'><div class=\"spinner-border p-5\" role=\"status\">\n" +
+                    "  <span class=\"visually-hidden\">Loading...</span>\n" +
+                    "</div></div>");
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                        "this_id": thisId,
+                        "right_id": childId,
+                        "left_id": fatherId,
+                        "product_id": productId
+                    },
+                    success: function (product) {
+                        let jsonUrls = JSON.stringify(product.images);
+                        $('[data-click="' + product.id + '"]').attr("data-images", jsonUrls);
+
+                        let data = generateAlbumPhotos(product.id, product.images);
+                        initFotorama(data);
+                    }
+                });
+            }
         }
-        console.log(data);
+    });
+
+    $("#load-files").on("change", function () {
+        let url = $("#tool-add").attr("data-url");
+        let productId = $("#productModal").attr("data-entity");
+        let data = new FormData();
+        let files = $("#load-files").prop('files');
+
+        if (files.length) {
+            data.append("_token", $('meta[name="csrf-token"]').attr('content'));
+            data.append("product_id", productId);
+            for (let el of files) {
+                data.append("product_images[]", el);
+            }
+
+            $(".photos").html("<div class='d-flex justify-content-center w-100 pt-5 pb-5'><div class=\"spinner-border p-5\" role=\"status\">\n" +
+                "  <span class=\"visually-hidden\">Loading...</span>\n" +
+                "</div></div>");
+            $.ajax({
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                url: url,
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (product) {
+                    let jsonUrls = JSON.stringify(product.images);
+                    $('[data-click="' + product.id + '"]').attr("data-images", jsonUrls);
+
+                    let data = generateAlbumPhotos(product.id, product.images);
+                    initFotorama(data);
+                }
+            });
+        }
+    });
+
+    $("#tool-remove").click(function () {
+        let url = $(this).attr("data-url");
+        let productId = $("#productModal").attr("data-entity");
+        let activeImage = getActiveImage();
+        let images = getArrayImages();
+
+        for (let i = 0; i < images.length; i++) {
+            if (images[i]['image'] === activeImage) {
+                let thisImageId = images[i]['id'];
+                let fatherId = (images[i]['father_id'] !== 0) ? images.find((element) => element.id == images[i]['father_id']).id : null;
+                let childId = (i < images.length - 1) ? images.find((element) => element.father_id == thisImageId).id : null;
+
+                $(".photos").html("<div class='d-flex justify-content-center w-100 pt-5 pb-5'><div class=\"spinner-border p-5\" role=\"status\">\n" +
+                    "  <span class=\"visually-hidden\">Loading...</span>\n" +
+                    "</div></div>");
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                        "this_id": thisImageId,
+                        "right_id": childId,
+                        "left_id": fatherId,
+                        "product_id": productId
+                    },
+                    success: function (product) {
+                        let jsonUrls = JSON.stringify(product.images);
+                        $('[data-click="' + product.id + '"]').attr("data-images", jsonUrls);
+
+                        let data = generateAlbumPhotos(product.id, product.images);
+                        initFotorama(data);
+                    }
+                });
+            }
+        }
+    });
+
+    function initFotorama(data) {
         $(".photos").html("<div id=\"fotorama\" data-auto=\"false\" class=\"fotorama bg-light\" data-width=\"100%\" data-ratio=\"800/600\" data-allowfullscreen=\"true\"  data-loop=\"true\"></div>");
         // $("#fotorama").html(imagesHtml);
         $('.fotorama').fotorama({
             data: data
         });
-    });
+    }
+
+    function generateAlbumPhotos(id, imageUrls) {
+        let path = $(".photos").attr("data-full-path");
+
+        let data = [];
+        for (let i = 0; i < imageUrls.length; i++) {
+            data.push({img: path + "/products/" + id + "/" + imageUrls[i]['image'], id: id});
+        }
+
+        return data;
+    }
+
+    function getActiveImage() {
+        let activeImage = $(".fotorama__active img").attr("src");
+        if (activeImage) {
+            return  activeImage.substring(activeImage.lastIndexOf("/") + 1);
+        }
+    }
+
+    function getArrayImages() {
+        let entity = $("#productModal").attr("data-entity");
+        let images = $("[data-click='" + entity + "']").attr("data-images");
+
+        return JSON.parse(images);
+    }
 
     $(function() {
         $('.poshtaPopover').popover({

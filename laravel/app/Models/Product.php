@@ -12,8 +12,10 @@ class Product extends Model
 
     public static function getProductsWithImages($products) {
         foreach ($products as $product) {
-            $images = DB::table('product_images')->where('product_images.product_id', $product->id)
-                ->join('images', 'images.id', '=', 'product_images.image_id')->orderBy('images.id')->pluck("image");
+            $images = DB::table('product_images')->select("product_images.id", "product_images.father_id", "product_images.image_id", "images.image")
+                ->where('product_images.product_id', $product->id)
+                ->join('images', 'images.id', '=', 'product_images.image_id')->orderBy('product_images.id')->get();
+            $images = self::orderByFather($images);
             $product->images = $images;
         }
 
@@ -21,10 +23,23 @@ class Product extends Model
     }
 
     public static function getProductWithImages($product) {
-        $images = DB::table('product_images')->where('product_images.product_id', $product->id)
-            ->join('images', 'images.id', '=', 'product_images.image_id')->orderBy('images.id')->pluck("image");
+        $images = DB::table('product_images')->select("product_images.id", "product_images.father_id", "product_images.image_id", "images.image")
+            ->where('product_images.product_id', $product->id)
+            ->join('images', 'images.id', '=', 'product_images.image_id')->orderBy('product_images.id')->get();
+        $images = self::orderByFather($images);
         $product->images = $images;
 
         return $product;
+    }
+
+    public static function orderByFather($images) {
+        $sortArr = [];
+        $father = $images->where("father_id", "=", 0)->first();
+        while (!empty($father)) {
+            $sortArr[] = $father;
+            $father = $images->where("father_id", "=", $father->id)->first();
+        }
+
+        return $sortArr;
     }
 }

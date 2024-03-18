@@ -32,7 +32,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="iconModalLabel">Іконка категорії</h5>
+                    <h5 class="modal-title" id="iconModalLabel"><i class="fa-solid fa-ice-cream"></i> Іконка категорії</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
@@ -46,8 +46,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Закрити</button>
-                    <button data-url="{{ route("updateCategoryImage") }}" type="button" class="btn btn-outline-dark btn-save-upload-image">Зберегти</button>
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Закрити</button>
+                    <button data-url="{{ route("updateCategoryImage") }}" type="button" class="btn btn-dark btn-save-upload-image">Зберегти</button>
                 </div>
             </div>
         </div>

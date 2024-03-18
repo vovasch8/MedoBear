@@ -33,7 +33,7 @@
                          @endif alt="{{ $order->id }}"> Адереса
                 </button></td>
             <td>
-                <button data-url="{{ route("getOrderProducts") }}" type="button" class="btn btn-outline-dark btn-order-products" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fa-solid fa-box"></i> Замовленя</button>
+                <button data-url="{{ route("getOrderProducts") }}" type="button" class="btn btn-outline-dark btn-order-products" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fa-solid fa-box"></i> Замовлення</button>
             </td>
             <td>{{ $order->price }} @if($order->promocode)<i class="fa-brands fa-gg-circle tooltipPromo promo-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="З промокодом: {{ $order->promocode }}"></i>@endif</td>
             <td>{{ $order->created_at }}</td>
@@ -56,10 +56,10 @@
                         <div class="input-group mt-2">
                             <input id="idProductOrderAdd" class="form-control" type="text" placeholder="ID товару">
                             <input id="countProductOrder" class="form-control" type="number" min="1" placeholder="Кількість">
-                            <button id="addProductsBtnToOrder" class="btn btn-dark" data-url="{{ route("addProductToOrder") }}">+</button>
+                            <button id="addProductsBtnToOrder" class="btn btn-dark" data-url="{{ route("addProductToOrder") }}"><i class="fa-solid fa-circle-plus"></i></button>
                             <span style="width: 10px"></span>
                             <input id="idProductOrderDelete" type="text" class="form-control" placeholder="ID товару">
-                            <button id="removeProductBtnFromOrder" class="btn btn-danger" data-url="{{ route("removeProductFromOrder") }}">-</button>
+                            <button id="removeProductBtnFromOrder" class="btn btn-danger" data-url="{{ route("removeProductFromOrder") }}"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 </div>

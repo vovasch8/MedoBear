@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Class\ImageContainer;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Message;
 use App\Models\Order;
 use App\Models\Product;

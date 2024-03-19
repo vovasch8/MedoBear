@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.15",
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.19",
         "laravel/pint": "^1.0",
@@ -35,6 +36,11 @@
         }
     },
     "scripts": {
+        "ide" : [
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
+            "php artisan ide-helper:models -N"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

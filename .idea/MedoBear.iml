@@ -124,6 +124,15 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/laravel/sanctum" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/laravel/serializable-closure" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/kolirt/laravel-ukrposhta" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/phpstan/phpdoc-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/barryvdh/laravel-ide-helper" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/barryvdh/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/phpdocumentor/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/doctrine/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/doctrine/dbal" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/doctrine/event-manager" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

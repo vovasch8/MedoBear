@@ -5,8 +5,19 @@ use App\Models\Image;
 use App\Models\ProductImages;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class for control image in container
+ * (move, add, remove)
+ */
 class ImageContainer
 {
+    /**
+     * Move photo in container
+     * @param $thisId
+     * @param $leftId
+     * @param null $rightId
+     * @return bool
+     */
     public function movePhoto($thisId, $leftId, $rightId = null) {
         $thisImage = ProductImages::find($thisId);
         $fatherImage = ProductImages::find($leftId);
@@ -28,6 +39,12 @@ class ImageContainer
         return true;
     }
 
+    /**
+     * Add photo in container
+     * @param $productId
+     * @param $productImages
+     * @return bool
+     */
     public function addPhoto($productId, $productImages) {
 
         $firstElement = ProductImages::all()->where("product_id", "=", $productId)->where("father_id", "=", 0)->first();
@@ -57,6 +74,13 @@ class ImageContainer
         return true;
     }
 
+    /**
+     * Remove photo from container
+     * @param $thisId
+     * @param null $leftId
+     * @param null $rightId
+     * @return bool
+     */
     public function removePhoto($thisId, $leftId = null, $rightId = null) {
         $thisImage = ProductImages::find($thisId);
 

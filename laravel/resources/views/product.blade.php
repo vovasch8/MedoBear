@@ -24,7 +24,7 @@
                                      data-allowfullscreen="true" data-nav="thumbs" data-loop="true">
                                     @foreach($product->images as $image)
                                         <img
-                                            src="{{asset("storage") . "/products/" . $product->id . "/" . (isset($image) ? $image : '')}}"/>
+                                            src="{{asset("storage") . "/products/" . $product->id . "/" . (isset($image) ? $image->image : '')}}"/>
                                     @endforeach
                                     {{--                                            @foreach($album['videos'] as $video)--}}
                                     {{--                                                <a href="{{asset('storage') . '/albums/' . $video}}" data-video="true">--}}
@@ -45,7 +45,7 @@
                             <div class="p-1">
                                 <span class="fw-bold">Ціна:&nbsp;</span>
                                 <span class="fw-bold price text-warning">{{$product->price}} грн</span>
-                                <button data-url="{{ route('addProduct') }}" class="btn btn-add-product btn-warning text-body-secondary float-end"><i
+                                <button data-url="{{ route('cart.add_product') }}" class="btn btn-add-product btn-warning text-body-secondary float-end"><i
                                         class="fas fa-shopping-basket"></i> Купити
                                 </button>
                             </div>

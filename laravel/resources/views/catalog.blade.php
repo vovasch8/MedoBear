@@ -12,15 +12,15 @@
                 <div class="row pe-5">
                     @foreach($products as $product)
                         <div class="col-4 mb-4">
-                            <a href="{{ route('product', $product->id)  }}" id="p-{{$product->id}}" class="card shadow-sm product">
+                            <a href="{{ route('site.product', $product->id)  }}" id="p-{{$product->id}}" class="card shadow-sm product">
                                 <img width="100%" height="225px" class="bd-placeholder-img card-img-top"
-                                     src="{{ asset("storage") . "/products/" . $product->id . "/" . (isset($product->images[0]) ? $product->images[0] : '')}}" alt="MedoBear">
+                                     src="{{ asset("storage") . "/products/" . $product->id . "/" . (isset($product->images[0]) ? $product->images[0]->image : '')}}" alt="MedoBear">
                                 <div class="card-body">
                                     <h5 class="card-text fw-semibold">{{ $product->name }}</h5>
                                     <span class="count">Кількість: {{ $product->count }}</span>
                                     <div class="d-flex justify-content-between align-items-center btn-block">
                                         <span class="fw-bold price text-warning">{{$product->price}} грн</span>
-                                        <button data-url="{{ route('addProduct') }}" class="btn-add-product btn btn-warning text-body-secondary"><i
+                                        <button data-url="{{ route('cart.add_product') }}" class="btn-add-product btn btn-warning text-body-secondary"><i
                                                 class="fas fa-shopping-basket"></i> Купити
                                         </button>
                                     </div>

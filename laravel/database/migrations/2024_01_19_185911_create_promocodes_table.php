@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('promocode');
             $table->integer('discount');
-            $table->date('activeTo');
+            $table->date('active_to');
             $table->timestamps();
         });
     }

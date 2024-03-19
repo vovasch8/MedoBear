@@ -16,7 +16,7 @@
             <td>{{ $category->name }}</td>
             <td><button data-src="{{ asset("storage") . "/icons/" . $category->image }}" class="btn btn-outline-dark btn-icon" data-bs-toggle="modal" data-bs-target="#iconModal"><i class="fa-solid fa-ice-cream"></i> Іконка</button></td>
             <td>
-                <select data-url="{{ route("changeCategoryStatus") }}" class="form-select category-active" name="active">
+                <select data-url="{{ route("admin_categories.change_category_status") }}" class="form-select category-active" name="active">
                     <option value="1">Так</option>
                     <option {{ ($category->active == 0) ? "selected" : "" }} value="0">Ні</option>
                 </select>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Закрити</button>
-                    <button data-url="{{ route("updateCategoryImage") }}" type="button" class="btn btn-dark btn-save-upload-image">Зберегти</button>
+                    <button data-url="{{ route("admin_categories.update_category_image") }}" type="button" class="btn btn-dark btn-save-upload-image">Зберегти</button>
                 </div>
             </div>
         </div>

@@ -1,22 +1,22 @@
 <header class="border-bottom-3 d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 mb-4 border-bottom border-warning">
 
-    <a href="{{ route('catalog') }}" class="d-flex logo">
+    <a href="{{ route('site.catalog') }}" class="d-flex logo">
         <img class="ms-5" id="logo" src="{{ asset('storage') . '/logo.png' }}" alt="MedoBear">
         <h5 class="text-warning fw-bold mt-3 ms-2">MedoBear</h5>
     </a>
 
     <ul class="nav col-12 col-md-auto  justify-content-center mb-md-0 w-nav">
-        <li><a href="{{ route('catalog') }}" class="nav-link px-2 text-warning fw-bold">Каталог товарів</a></li>
-        <li><a href="{{ route('partnership') }}" class="nav-link px-2 text-warning fw-bold">Співробітництво</a></li>
+        <li><a href="{{ route('site.catalog') }}" class="nav-link px-2 text-warning fw-bold">Каталог товарів</a></li>
+        <li><a href="{{ route('site.partnership') }}" class="nav-link px-2 text-warning fw-bold">Співробітництво</a></li>
         <li><a href="#" class="nav-link px-2 text-warning fw-bold">Про нас</a></li>
-        <li><a href="{{ route('contacts') }}" class="nav-link px-2 text-warning fw-bold">Контакти</a></li>
+        <li><a href="{{ route('site.contacts') }}" class="nav-link px-2 text-warning fw-bold">Контакти</a></li>
     </ul>
 
 
     <div class="col-md-3">
         <div class="d-flex justify-content-end">
             <div class="icon-block">
-                <a href="{{ route('cart') }}" id="cart" class="text-warning"><i class="fas fa-shopping-basket"></i><span style="@if(session()->has('products')) display:inline-block; @endif" id="productCounter">{{ \App\Http\Controllers\CartController::countItems() }}</span></a>
+                <a href="{{ route('site.cart') }}" id="cart" class="text-warning"><i class="fas fa-shopping-basket"></i><span style="@if(session()->has('products')) display:inline-block; @endif" id="productCounter">{{ \App\Http\Controllers\CartController::countItems() }}</span></a>
             </div>
             @auth
                 <div class="dropdown me-3">
@@ -27,7 +27,7 @@
                         <li><a class="dropdown-item" href="{{ route("profile.edit") }}">Профіль</a></li>
                         <li><a class="dropdown-item" href="{{ route("dashboard") }}">Кабінет</a></li>
                         @can("view-manager", \Illuminate\Support\Facades\Auth::user())
-                            <li><a class="dropdown-item" href="{{ route("admin") }}">Адмін панель</a></li>
+                            <li><a class="dropdown-item" href="{{ route("admin.admin") }}">Адмін панель</a></li>
                         @endcan
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">

@@ -29,14 +29,14 @@
             <td>{{ $product->price }}</td>
             <td><button data-click="{{ $product->id }}" data-images="{{ json_encode($product->images) }}" data-bs-toggle="modal" data-bs-target="#productModal" class="btn btn-outline-dark btn-product-images"><i class="fa-solid fa-image"></i> Фото</button></td>
             <td>
-                <select data-url="{{ route("changeProductCategory") }}" class="form-select product-category" name="category">
+                <select data-url="{{ route("admin_products.change_product_category") }}" class="form-select product-category" name="category">
                     @foreach($categories as $category)
                         <option {{ ($product->category_id == $category->id) ? "selected" : "" }} value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
             </td>
             <td>
-                <select data-url="{{ route("changeProductStatus") }}" class="form-select product-active" name="active">
+                <select data-url="{{ route("admin_products.change_product_status") }}" class="form-select product-active" name="active">
                     <option value="1">Так</option>
                     <option {{ ($product->active == 0) ? "selected" : "" }} value="0">Ні</option>
                 </select>
@@ -56,13 +56,13 @@
                         <div class="inner bg-dark d-flex mb-2 justify-content-between fs-5 p-2">
                             <span class="fw-bold text-white">Дії:&nbsp;</span>
                             <div class="order-photos">
-                                <button data-direction="left" data-url="{{ route("movePhotoProduct") }}" class="btn btn-warning btn-sm btn-move tool-arrow"><i class="fa-solid fa-circle-arrow-left"></i></button>
+                                <button data-direction="left" data-url="{{ route("admin_products.move_photo_product") }}" class="btn btn-warning btn-sm btn-move tool-arrow"><i class="fa-solid fa-circle-arrow-left"></i></button>
                                 <span class="fw-bold fs-6 text-white">Перемістити</span>
-                                <button data-direction="right" data-url="{{ route("movePhotoProduct") }}" class="btn btn-warning btn-sm btn-move tool-arrow"><i class="fa-solid fa-circle-arrow-right"></i></button>
+                                <button data-direction="right" data-url="{{ route("admin_products.move_photo_product") }}" class="btn btn-warning btn-sm btn-move tool-arrow"><i class="fa-solid fa-circle-arrow-right"></i></button>
                             </div>
                             <div class="toolbar-actions">
-                                <button data-url="{{ route("removePhotoProduct") }}" id="tool-remove" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                <button data-url="{{ route("addPhotoProduct") }}" id="tool-add" class="btn btn-warning pointer">
+                                <button data-url="{{ route("admin_products.remove_photo_product") }}" id="tool-remove" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                <button data-url="{{ route("admin_products.add_photo_product") }}" id="tool-add" class="btn btn-warning pointer">
                                     <label class="pointer" for="load-files">
                                         <i class="fa-solid fa-circle-plus"></i>
                                     </label>

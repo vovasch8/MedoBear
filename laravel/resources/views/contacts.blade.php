@@ -8,7 +8,7 @@
             <div class="col-3">
                 <div class="effect border-radius-10 bg-main contact-block ms-3 me-3">
                     <img class="avatar" src="{{ asset("storage") . "\logo.png" }}" alt="MedoBear">
-                    <a href="{{ route("catalog") }}" class="text-center title-medobear fw-bold second-color fs-2">MedoBear</a>
+                    <a href="{{ route("site.catalog") }}" class="text-center title-medobear fw-bold second-color fs-2">MedoBear</a>
                     <span class="text-center text-white fw-bold fs-5 mt-2 border-bottom-second">Пропозиції:</span>
                     <p class="text-center text-white fw-bold mt-3 mb-2 pb-3 border-bottom-second">1. Ваші товари можуть бути розміщені на цьому сайті!</p>
                     <p class="text-center text-white fw-bold mt-2 mb-2 pb-3 border-bottom-second">2. Продавайте товар з цього сайту і отримуйте до 30% доходу від продуктів!</p>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-6">
                 <div class="contact-form p-3 border-radius-10 bg-main">
-                    <form action="{{ route("sendMessage") }}" method="post">
+                    <form action="{{ route("site.send_message") }}" method="post">
                         @csrf
                         <h5 class="text-center fw-bold mb-3 fs-3 second-color">Зворотній зв'язок!</h5>
                         <input type="text" name="name" class="form-control mb-2 input-form" placeholder="Прізвище ім'я">

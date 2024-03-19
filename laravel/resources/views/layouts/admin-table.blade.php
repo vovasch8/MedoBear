@@ -19,12 +19,12 @@
                 <div class="card-header d-flex">
                     <i class="fas fa-table me-1" style="font-size: xx-large"></i>
                     <select data-selected="{{ $typeTable }}" onchange="location = this.selectedOptions[0].getAttribute('data-href');" class="form-select w-25 float-end" name="typeData" id="typeTable">
-                        <option value="orders" data-href="{{ route("admin-tables") }}">Замовлення</option>
-                        <option value="products" data-href="{{ route("productsTable") }}">Продукти</option>
-                        <option value="messages" data-href="{{ route("messagesTable") }}">Повідомлення</option>
+                        <option value="orders" data-href="{{ route("admin.tables") }}">Замовлення</option>
+                        <option value="products" data-href="{{ route("admin_tables.show_products") }}">Продукти</option>
+                        <option value="messages" data-href="{{ route("admin_tables.show_messages") }}">Повідомлення</option>
                         @can("view-admin", \Illuminate\Support\Facades\Auth::user())
-                            <option value="categories" data-href="{{ route("categoriesTable") }}">Категорії</option>
-                            <option value="users" data-href="{{ route("usersTable") }}">Користувачі</option>
+                            <option value="categories" data-href="{{ route("admin_tables.show_categories") }}">Категорії</option>
+                            <option value="users" data-href="{{ route("admin_tables.show_users") }}">Користувачі</option>
                         @endcan
                     </select>
                 </div>
@@ -32,7 +32,7 @@
                     <div class="edit-block">
                         <div id="edit-form" class="input-group">
                             <span id="old-text"></span>
-                            <input data-url="{{ route("editColumnTable") }}" id="edit-input" type="text" class="form-control w-75" placeholder="Редагування">
+                            <input data-url="{{ route("admin_tables.edit_column_table") }}" id="edit-input" type="text" class="form-control w-75" placeholder="Редагування">
                         </div>
                     </div>
                     <table data-edited-column="{{ json_encode($editedColumns) }}" id="datatablesSimple" data-table="orders">

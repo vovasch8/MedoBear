@@ -16,7 +16,7 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>
-                <select data-url="{{ route("changeUserRole") }}" class="form-select user-role" name="active">
+                <select data-url="{{ route("admin_users.change_user_role") }}" class="form-select user-role" name="active">
                     <option value="user">Користувач</option>
                     <option {{ ($user->role == "manager") ? "selected" : "" }} value="manager">Менеджер</option>
                     <option {{ ($user->role == "admin") ? "selected" : "" }} value="admin">Адмін</option>

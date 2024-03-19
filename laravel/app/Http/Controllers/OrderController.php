@@ -61,8 +61,8 @@ class OrderController extends Controller
 
             foreach ($products as $id => $quantity) {
                 $orderProductsModel = new OrderProducts();
-                $orderProductsModel->orderId = $orderId;
-                $orderProductsModel->productId = $id;
+                $orderProductsModel->order_id = $orderId;
+                $orderProductsModel->product_id = $id;
                 $orderProductsModel->count = $quantity;
                 $orderProductsModel->save();
             }
@@ -79,33 +79,32 @@ class OrderController extends Controller
         $idProduct = intval($request->id_product);
         $count = intval($request->count);
 
-        $productOfOrder = $orderProductsModel->all()->where("orderId", "=", $idOrder)->where("productId", "=", $idProduct)->first();
+        $productOfOrder = $orderProductsModel->all()->where("order_id", "=", $idOrder)->where("product_id", "=", $idProduct)->first();
 
         if (empty($productOfOrder)) {
-            $orderProductsModel->orderId = $idOrder;
-            $orderProductsModel->productId = $idProduct;
+            $orderProductsModel->order_id = $idOrder;
+            $orderProductsModel->product_id = $idProduct;
             $orderProductsModel->count = $count;
             $orderProductsModel->save();
 
-            $products = DB::table("products")->join("order_products", "products.id", "=", "productId")->where("orderId", "=", $idOrder)->where("productId", "=", $idProduct)->select("products.id", "products.name", "products.price", "order_products.orderId", "order_products.count", "products.count AS count_substance")->get();
+            $products = DB::table("products")->join("order_products", "products.id", "=", "product_id")->where("order_id", "=", $idOrder)->where("product_id", "=", $idProduct)->select("products.id", "products.name", "products.price", "order_products.order_id", "order_products.count", "products.count AS count_substance")->get();
             return Product::getProductsWithImages($products);
         } else {
             $productOfOrder->count = $count;
             $productOfOrder->save();
 
-            $products = DB::table("products")->join("order_products", "products.id", "=", "productId")->where("orderId", "=", $idOrder)->where("productId", "=", $idProduct)->select("products.id", "products.name", "products.price", "order_products.orderId", "order_products.count", "products.count AS count_substance")->get();
+            $products = DB::table("products")->join("order_products", "products.id", "=", "product_id")->where("order_id", "=", $idOrder)->where("product_id", "=", $idProduct)->select("products.id", "products.name", "products.price", "order_products.order_id", "order_products.count", "products.count AS count_substance")->get();
             return Product::getProductsWithImages($products);
         }
     }
 
     public function removeProductFromOrder(Request $request) {
-        $orderProductsModel = new OrderProducts();
         $idOrder = intval($request->id_order);
         $idProduct = intval($request->id_product);
-        $product = DB::table('order_products')->where('orderId', '=', $idOrder)->where("productId", "=", $idProduct)->first();
+        $product = DB::table('order_products')->where('order_id', '=', $idOrder)->where("product_id", "=", $idProduct)->first();
 
         if (!empty($product)) {
-            DB::table('order_products')->where('orderId', '=', $idOrder)->where("productId", "=", $idProduct)->delete();
+            DB::table('order_products')->where('order_id', '=', $idOrder)->where("product_id", "=", $idProduct)->delete();
 
             return $idProduct;
         }
@@ -113,20 +112,12 @@ class OrderController extends Controller
         return false;
     }
 
-    public function updateOrder() {
-
-    }
-
-    public function deleteOrder() {
-
-    }
-
     public function getOrderProducts(Request $request) {
         $orderId = intval($request->id_order);
         $products = [];
 
         if ($orderId) {
-            $products = DB::table("products")->join("order_products", "products.id", "=", "productId")->where("orderId", "=", $orderId)->select("products.id", "products.name", "products.price", "order_products.orderId", "order_products.count", "products.count AS count_substance")->get();
+            $products = DB::table("products")->join("order_products", "products.id", "=", "product_id")->where("order_id", "=", $orderId)->select("products.id", "products.name", "products.price", "order_products.order_id", "order_products.count", "products.count AS count_substance")->get();
         }
 
         return Product::getProductsWithImages($products);

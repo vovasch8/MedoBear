@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('order_products', function (Blueprint $table) {
             $table->id();
-            $table->integer("orderId");
-            $table->integer("productId");
+            $table->integer("order_id");
+            $table->integer("product_id");
             $table->integer("count");
             $table->timestamps();
         });

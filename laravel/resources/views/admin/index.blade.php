@@ -26,7 +26,7 @@
                                             <input class="form-check-input" type="checkbox" checked id="isActiveCategory">
                                             <label class="form-check-label" for="isActiveCategory">Активна</label>
                                         </div>
-                                        <button id="add-category-btn" data-url="{{ route("addCategory") }}" class="btn btn-dark float-end">Додати</button>
+                                        <button id="add-category-btn" data-url="{{ route("admin_categories.add_category") }}" class="btn btn-dark float-end">Додати</button>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                                             <input class="form-check-input" type="checkbox" checked id="is-active-product">
                                             <label class="form-check-label" for="isActiveProduct">Активний</label>
                                         </div>
-                                        <button id="add-product-btn" data-url="{{ route("addProduct") }}" class="btn btn-dark float-end">Додати</button>
+                                        <button id="add-product-btn" data-url="{{ route("admin_products.add_product") }}" class="btn btn-dark float-end">Додати</button>
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-danger text-white mb-4 d-flex">
                         <div class="card-body">Повідомлення
-                            <div class="small text-white float-end pointer"><a class="text-white text-decoration-none" href="{{ route("admin-tables") }}"><i class="fas fa-angle-right"></i></a></div>
+                            <div class="small text-white float-end pointer"><a class="text-white text-decoration-none" href="{{ route("admin.tables") }}"><i class="fas fa-angle-right"></i></a></div>
                         </div>
                         <div class="card-footer">
                             @foreach($messages as $message)
@@ -185,7 +185,7 @@
                                              @endif alt="{{ $order->id }}"> Адереса
                                     </button></td>
                                 <td>
-                                    <button data-url="{{ route("getOrderProducts") }}" type="button" class="btn btn-outline-dark btn-order-products" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fa-solid fa-box"></i> Замовленя</button>
+                                    <button data-url="{{ route("order.get_order_products") }}" type="button" class="btn btn-outline-dark btn-order-products" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fa-solid fa-box"></i> Замовленя</button>
                                 </td>
                                 <td>{{ $order->price }} @if($order->promocode)<i class="fa-brands fa-gg-circle tooltipPromo promo-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="З промокодом: {{ $order->promocode }}"></i>@endif</td>
                                 <td>{{ $order->created_at }}</td>
@@ -206,7 +206,7 @@
                     <h1 class="modal-title fs-5" id="productModalLabel"><i class="fa-solid fa-box"></i> Замовлені товари</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("product", "") }}">
+                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("site.product", "") }}">
 
                 </div>
                 <div class="modal-footer">

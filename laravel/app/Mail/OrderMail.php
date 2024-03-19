@@ -25,8 +25,8 @@ class OrderMail extends Mailable
     public function __construct(public Order $order, public $products = 0)
     {
         $products =  DB::table('products')
-            ->join('order_products', 'products.id', '=', 'order_products.productId')
-            ->where('order_products.orderId', $this->order->id)
+            ->join('order_products', 'products.id', '=', 'order_products.product_id')
+            ->where('order_products.order_id', $this->order->id)
             ->get();
     }
 

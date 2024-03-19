@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Class\ImageContainer;
 use App\Models\Image;
 use App\Models\Product;
-use App\Models\ProductImage;
+use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -39,12 +39,12 @@ class ProductController extends Controller
             $imageModel->image = $imageName;
             $imageModel->save();
 
-            $productImageModel = new ProductImage();
-            $productImageModel->image_id = $imageModel->id;
-            $productImageModel->product_id = $product->id;
-            ($index === 0) ? $productImageModel->father_id = 0 : $productImageModel->father_id = $prevProductImageId;
-            $productImageModel->save();
-            $prevProductImageId = $productImageModel->id;
+            $productImagesModel = new ProductImages();
+            $productImagesModel->image_id = $imagesModel->id;
+            $productImagesModel->product_id = $product->id;
+            ($index === 0) ? $productImagesModel->father_id = 0 : $productImagesModel->father_id = $prevProductImagesId;
+            $productImagesModel->save();
+            $prevProductImagesId = $productImagesModel->id;
         }
 
         return $product;

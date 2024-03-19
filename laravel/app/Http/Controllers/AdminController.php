@@ -29,7 +29,7 @@ class AdminController extends Controller
         return view("admin.index", ["products" => $products, "categories" => $categories, "orders" => $orders, "lastOrders" => $lastOrders, "messages" => $messages, "countOrdersThisMonth" => $countOrdersThisMonth, "countOrdersBy6Month" => $countOrdersBy6Month]);
     }
 
-    public function charts() {
+    public function showCharts() {
         $this->authorize("view-manager", Auth::user());
         $orderModel = new Order();
 
@@ -40,28 +40,28 @@ class AdminController extends Controller
         return view("admin.charts", ["countOrdersThisMonth" => $countOrdersThisMonth, "countOrdersBy6Month" => $countOrdersBy6Month, "mostPopularProducts" => $mostPopularProducts]);
     }
 
-    public function tables() {
+    public function showTables() {
         $this->authorize("view-manager", Auth::user());
         $orders = Order::all()->sortByDesc("id");
 
         return view("admin.tables", ["orders" => $orders, 'typeTable' => "orders", 'editedColumns' => [1, 2, 5]]);
     }
 
-    public function categoriesTable() {
+    public function showCategories() {
         $this->authorize("view-admin", Auth::user());
         $categories = Category::all()->sortByDesc("id");
 
         return view("admin.categories-table", ["categories" => $categories, 'typeTable' => "categories", "editedColumns" => [1]]);
     }
 
-    public function usersTable() {
+    public function showUsers() {
         $this->authorize("view-admin", Auth::user());
         $users = User::all()->sortByDesc("id");
 
         return view("admin.users-table", ["users" => $users, 'typeTable' => "users", "editedColumns" => [1, 2]]);
     }
 
-    public function productsTable() {
+    public function showProducts() {
         $this->authorize("view-manager", Auth::user());
         $products = Product::all()->sortByDesc("id");
         $products = Product::getProductsWithImages($products);
@@ -70,7 +70,7 @@ class AdminController extends Controller
         return view("admin.products-table", ["products" => $products, 'typeTable' => "products", "categories" => $categories, "editedColumns" => [1, 2, 3, 4]]);
     }
 
-    public function messagesTable() {
+    public function showMessages() {
         $this->authorize("view-manager", Auth::user());
         $messages = Message::all()->sortByDesc("id");
 

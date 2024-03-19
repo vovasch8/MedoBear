@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Image;
 use App\Models\Message;
 use App\Models\Product;
-use App\Models\ProductImage;
+use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

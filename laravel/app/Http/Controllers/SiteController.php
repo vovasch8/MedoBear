@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MessageRequest;
 use App\Models\Category;
-use App\Models\Image;
 use App\Models\Message;
 use App\Models\Product;
-use App\Models\ProductImages;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
@@ -38,20 +35,16 @@ class SiteController extends Controller
         return view("contacts");
     }
 
-    public function sendMessage(Request $request) {
+    public function sendMessage(MessageRequest $request) {
         $messageModel = new Message();
-        $name = strval($request->name);
-        $subject = strval($request->subject);
-        $text = strval($request->text);
-        $phone = strval($request->phone);
 
-        $messageModel->name = $name;
-        $messageModel->subject = $subject;
-        $messageModel->text = $text;
-        $messageModel->phone = $phone;
+        $messageModel->name = strval($request->name);
+        $messageModel->subject = strval($request->subject);
+        $messageModel->text = strval($request->text);
+        $messageModel->phone = strval($request->phone);
 
         $messageModel->save();
 
-        return redirect()->route("contacts")->with('result', "Звернення успішно відправлено!");
+        return redirect()->route("site.contacts")->with('result', "Звернення успішно відправлено!");
     }
 }

@@ -20,14 +20,24 @@
                     <form action="{{ route("site.send_message") }}" method="post">
                         @csrf
                         <h5 class="text-center fw-bold mb-3 fs-3 second-color">Зворотній зв'язок!</h5>
-                        <input type="text" name="name" class="form-control mb-2 input-form" placeholder="Прізвище ім'я">
-                        <input type="text" name="subject" class="form-control mb-2 input-form" placeholder="Тема">
-                        <textarea name="text" id="message" cols="30" rows="9" class="form-control mb-2 input-form" placeholder="Повідомлення"></textarea>
-                        <input name="phone" type="phone" class="form-control mb-2 input-form" placeholder="Телефон">
+                        <input value="{{ old('name') }}" type="text" name="name" class="form-control mb-2 input-form" placeholder="Прізвище ім'я">
+                        <input value="{{ old('subject') }}" type="text" name="subject" class="form-control mb-2 input-form" placeholder="Тема">
+                        <textarea name="text" id="message" cols="30" rows="9" class="form-control mb-2 input-form" placeholder="Повідомлення">{{ old('text') }}</textarea>
+                        <input value="{{ old('phone') }}" name="phone" type="number" class="form-control mb-2 input-form" placeholder="Телефон">
                         <button type="submit" id="sendMessage" class="btn btn-warning w-100 bg-second">Надіслати</button>
                         @if(session('result'))
                             <div class="alert alert-success mt-2 text-center" role="alert">
                                 {{ session('result') }}
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            <div class="alert alert-danger mt-2 text-center">
+                                <span class="fw-bold mb-2">Помилки:</span><br>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
                     </form>

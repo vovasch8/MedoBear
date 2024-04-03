@@ -8,6 +8,7 @@
         <th>Повідомлення</th>
         <th>Телефон</th>
         <th>Дата</th>
+        <th>Дія</th>
     </tr>
 @endsection
 @section("tbody")
@@ -19,6 +20,7 @@
             <td>{{ $message->text }}</td>
             <td>{{ $message->phone }}</td>
             <td>{{ $message->created_at }}</td>
+            <td><div class="actions text-center"><i data-url="{{ route("admin_messages.delete_message") }}" class="fa-solid fa-trash"></i></div></td>
         </tr>
     @endforeach
 @endsection

@@ -1,11 +1,15 @@
 @extends("layouts.admin")
 
 @section("head")
-    @vite(['resources/css/styles.css', 'resources/js/charts.js', 'resources/js/chart-area.js', 'resources/js/chart-bar.js', 'resources/js/chart-bar.js', 'resources/js/chart-pie.js'])
+    @vite(['resources/css/styles.css', 'resources/js/chart-area.js', 'resources/js/chart-bar.js', 'resources/js/chart-bar.js', 'resources/js/chart-pie.js', 'resources/js/charts.js'])
 @endsection
 
 @section("content")
     <main>
+        <div class="content-body">
+            <img class="preload" src="{{ asset("logo.png") }}" alt="Logo">
+        </div>
+
         <div class="container-fluid px-4">
             <h1 class="mt-4">Графіки</h1>
             <ol class="breadcrumb mb-4">

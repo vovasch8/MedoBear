@@ -40,7 +40,7 @@ class ProductController extends Controller
             $imageModel->save();
 
             $productImagesModel = new ProductImages();
-            $productImagesModel->image_id = $imagesModel->id;
+            $productImagesModel->image_id = $imageModel->id;
             $productImagesModel->product_id = $product->id;
             ($index === 0) ? $productImagesModel->father_id = 0 : $productImagesModel->father_id = $prevProductImagesId;
             $productImagesModel->save();
@@ -108,5 +108,25 @@ class ProductController extends Controller
         $product = Product::getProductWithImages(Product::all()->where("id", "=", $idProduct)->first());
 
         return $product;
+    }
+
+    public function deleteProduct(Request $request) {
+        $id = intval($request->id);
+
+        $product = Product::find($id);
+        $product->delete();
+
+        return true;
+    }
+
+    public function editDescription(Request $request) {
+        $idProduct = intval($request->id);
+        $content = strval($request->input("content"));
+
+        $product = Product::find($idProduct);
+        $product->description = $content;
+        $product->save();
+
+        return redirect()->back();
     }
 }

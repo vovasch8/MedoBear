@@ -1,11 +1,5 @@
 @extends("layouts.admin-table")
 
-@section("pre-head")
-{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>--}}
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
-@endsection
-
 @section("thead")
     <tr>
         <th>Ід</th>
@@ -17,6 +11,7 @@
         <th>Категорія</th>
         <th>Активний</th>
         <th>Дата створення</th>
+        <th>Дія</th>
     </tr>
 @endsection
 @section("tbody")
@@ -24,7 +19,7 @@
         <tr>
             <td>{{ $product->id }}</td>
             <td>{{ $product->name }}</td>
-            <td>{{ $product->description }}</td>
+            <td><button data-content="{{ $product->description }}" data-bs-toggle="modal" data-bs-target="#descriptionModal" class="btn btn-outline-dark btn-edit-description"><i class="fa-solid fa-pen-to-square"></i> Опис</button></td>
             <td>{{ $product->count }}</td>
             <td>{{ $product->price }}</td>
             <td><button data-click="{{ $product->id }}" data-images="{{ json_encode($product->images) }}" data-bs-toggle="modal" data-bs-target="#productModal" class="btn btn-outline-dark btn-product-images"><i class="fa-solid fa-image"></i> Фото</button></td>
@@ -42,6 +37,7 @@
                 </select>
             </td>
             <td>{{ $product->created_at }}</td>
+            <td><div class="actions text-center"><i data-url="{{ route("admin_products.delete_product") }}" class="fa-solid fa-trash"></i></div></td>
         </tr>
     @endforeach
 @endsection
@@ -76,10 +72,29 @@
                         <div id="fotorama" data-auto="false" class="fotorama bg-light" data-width="100%" data-ratio="800/600" data-allowfullscreen="true"  data-loop="true"></div>
                     </div>
                 </div>
-{{--                <div class="modal-footer">--}}
-{{--                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal"><i class="fa-solid fa-circle-xmark"></i> Закрити</button>--}}
-{{--                    <button type="button" class="btn btn-outline-dark"><i class="fa-solid fa-square-pen"></i> Зберегти</button>--}}
-{{--                </div>--}}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{{ route("admin_products.edit_description") }}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="descriptionModalLabel"><i class="fa-solid fa-edit"></i> Опис</h5>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">&nbsp;&nbsp;</button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <input id="id-product-hidden" value="" type="hidden" name="id">
+                        <input id="modal-description" value="" type="hidden" name="content">
+                        <trix-editor class="trix-editor-description" input="modal-description"></trix-editor>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btn-save-description" class="btn btn-dark">Зберегти</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

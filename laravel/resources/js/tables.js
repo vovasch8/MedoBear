@@ -1,25 +1,69 @@
 window.addEventListener('DOMContentLoaded', event => {
-
     // Toggle the side navigation
     const sidebarToggle = document.body.querySelector('#sidebarToggle');
     if (sidebarToggle) {
-        // Uncomment Below to persist sidebar toggle between refreshes
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
         sidebarToggle.addEventListener('click', event => {
             event.preventDefault();
             document.body.classList.toggle('sb-sidenav-toggled');
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         });
     }
-
 });
 
+setTimeout(function() {
+    $(".preload").css("display", 'none');
+    $(".content-body").css("display", 'none');
+}, 1200);
 
 $(document).ready(function () {
+    $(function() {
+        $('.poshtaPopover').popover({
+            placement: "right",
+            trigger: "click"
+        });
+
+        $('.tooltipPromo').tooltip({
+            placement: "right",
+            trigger: "hover"
+        });
+    });
+
 // --------------Tables--------------
+    var toast = new bootstrap.Toast($(".toast"), []);
     $("#typeTable").val($("#typeTable").attr("data-selected"));
+
+    $('.actions .fa-trash').click(function () {
+        let id = $(this).closest("tr").children(":first").text();
+        let tr = $(this).closest("tr");
+        let url = $(this).attr("data-url");
+        $.confirm({
+            title: 'Підтвердження',
+            content: 'Ви впевнені що хочете видалити цей запис?',
+            buttons: {
+                confirm: {
+                    text: 'Так',
+                    btnClass: 'btn-dark',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id": id},
+                            success: function (response) {
+                                $(tr).remove();
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'Закрити',
+                    btnClass: 'btn-dark',
+                    action: function () {
+
+                    }
+                }
+            }
+        });
+    });
 
     $(".btn-order-products").click(function (event) {
         $(".modal-body").html("<div class='d-flex justify-content-center w-100'><div class=\"spinner-border p-5\" role=\"status\">\n" +
@@ -120,32 +164,43 @@ $(document).ready(function () {
         }
     });
 
-    $("#edit-input").on("focusout", function (event) {
-        let oldText = $("#old-text").text();
-        let text = $("#edit-input").val();
-        console.log(text);
-        let td = $(this).closest("td");
-        $(".edit-block").html($("#edit-form"));
-        if (oldText === text) {
-            $(td).text(oldText);
-            $("#edit-form").css("display", "none");
-        } else {
-            let url = $("#edit-input").attr("data-url");
-            let id = $(td).closest("tr").children(":first").text();
-            let column = $(td).index();
-            let value = text;
-            let table = $("#typeTable").attr("data-selected");
-            $("#edit-form").css("display", "none");
+    $("#edit-input").on("keypress", function (event) {
+        if (event.keyCode === 13) {
+            let oldText = $("#old-text").text();
+            let text = $("#edit-input").val();
+            let td = $(this).closest("td");
+            $(".edit-block").html($("#edit-form"));
+            if (oldText === text) {
+                $(td).text(oldText);
+                $("#edit-form").css("display", "none");
+            } else {
+                let url = $("#edit-input").attr("data-url");
+                let id = $(td).closest("tr").children(":first").text();
+                let column = $(td).index();
+                let value = text;
+                let table = $("#typeTable").attr("data-selected");
+                $("#edit-form").css("display", "none");
 
-            $(td).html("<div class='w-100 text-center'><div class=\"spinner-grow text-dark\" role=\"status\"><span class=\"visually-hidden\">Loading...</span></div></div>");
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {"_token": $('meta[name="csrf-token"]').attr('content'), "table": table, "id": id, "column": column, "value": value},
-                success: function (response) {
-                    td.html(response);
-                }
-            });
+                $(td).html("<div class='w-100 text-center'><div class=\"spinner-grow text-dark\" role=\"status\"><span class=\"visually-hidden\">Loading...</span></div></div>");
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                        "table": table,
+                        "id": id,
+                        "column": column,
+                        "value": value
+                    },
+                    success: function (response) {
+                        td.html(response);
+                    }, error: function (error) {
+                        console.log("error");
+                        toast.show();
+                        $(td).html(oldText);
+                    }
+                });
+            }
         }
     });
 
@@ -216,7 +271,7 @@ $(document).ready(function () {
         $("#icon-img").attr("data-id", id);
     });
 
-    $(".btn-save-upload-image").click(function (){
+    $("#load-image").on("change", function () {
         let data = new FormData();
         let id = $("#icon-img").attr("data-id");
         let src = $("#icon-img").attr("src");
@@ -243,6 +298,13 @@ $(document).ready(function () {
                 $("[data-src='" + src + "']").attr("data-src", response);
             }
         });
+    });
+
+    $(".btn-edit-description").click(function () {
+        let content = $(this).attr("data-content");
+        let id = $(this).closest("tr").children(":first").text();
+        $(".trix-editor-description").html(content);
+        $("#id-product-hidden").val(id);
     });
 
     $(".btn-product-images").click(function () {
@@ -411,16 +473,4 @@ $(document).ready(function () {
 
         return JSON.parse(images);
     }
-
-    $(function() {
-        $('.poshtaPopover').popover({
-            placement: "right",
-            trigger: "click"
-        });
-
-        $('.tooltipPromo').tooltip({
-            placement: "right",
-            trigger: "hover"
-        });
-    });
 });

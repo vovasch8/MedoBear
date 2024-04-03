@@ -21,9 +21,10 @@ use Illuminate\Support\Facades\Route;
 Route::name('site.')->group(function () {
     Route::get('/', [SiteController::class, 'showCatalog'])->name('catalog');
     Route::get('/categories/{id}', [SiteController::class, 'showCatalog'])->name('current_catalog');
-    Route::get('/products/{id}', [SiteController::class, 'showProduct'])->name('product');
+    Route::get('/product/{id}', [SiteController::class, 'showProduct'])->name('product');
     Route::get('/partnership', [SiteController::class, 'showPartnership'])->name('partnership');
     Route::get('/contacts', [SiteController::class, 'showContacts'])->name('contacts');
+    Route::get('/about-us', [SiteController::class, 'showAbout'])->name('about_us');
     Route::post('/handle-message', [SiteController::class, 'sendMessage'])->name('send_message');
     Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 });
@@ -50,3 +51,7 @@ Route::name('order.')->group(function () {
 require __DIR__.'/auth.php';
 require __DIR__.'/cabinet.php';
 require __DIR__.'/admin.php';
+
+Route::fallback(function () {
+   return view("404");
+});

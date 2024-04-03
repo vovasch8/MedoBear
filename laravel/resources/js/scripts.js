@@ -25,7 +25,13 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+setTimeout(function() {
+    $(".preload").css("display", 'none');
+    $(".content-body").css("display", 'none');
+}, 1200);
+
 $(document).ready(function () {
+
 
     $(".btn-order-products").click(function (event) {
         $(".modal-body").html("<div class='d-flex justify-content-center w-100'><div class=\"spinner-border p-5\" role=\"status\">\n" +
@@ -69,6 +75,11 @@ $(document).ready(function () {
     $("#add-product-plus").click(function (event) {
         if ($(".add-product-block").css("display") == "none") {
             $(".add-product-block").css("display", "block");
+            $("#add-product-name").val("");
+            $("#add-product-description").val("");
+            $("#add-product-count").val("");
+            $("#add-product-price").val("");
+            $("#add-product-image").val("");
         } else {
             $(".add-product-block").css("display", "none");
         }
@@ -143,7 +154,6 @@ $(document).ready(function () {
             }
         });
     });
-
 
     $(function() {
         $('.poshtaPopover').popover({

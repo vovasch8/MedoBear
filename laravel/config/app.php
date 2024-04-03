@@ -135,6 +135,7 @@ return [
     */
 
     'api_url_novaposhta' => "https://api.novaposhta.ua/v2.0/json/",
+
     'api_key_novaposhta' => "053f378c716269a12376f45507f2f4dc",
 
 

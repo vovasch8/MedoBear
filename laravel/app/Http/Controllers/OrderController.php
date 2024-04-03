@@ -28,6 +28,7 @@ class OrderController extends Controller
                     $orderModel->type_poshta = "Нова Пошта";
                 if ($request->poshta['type_delivery'] === "courier") {
                     $orderModel->courier = true;
+                    $orderModel->nova_city = $request->poshta['nova_city'];
                     $orderModel->street = $request->poshta['street'];
                     $orderModel->house = $request->poshta['house'];
                     $orderModel->room = $request->poshta['room'];
@@ -121,5 +122,19 @@ class OrderController extends Controller
         }
 
         return Product::getProductsWithImages($products);
+    }
+
+    public function deleteOrder(Request $request) {
+        $id = intval($request->id);
+
+        $orderProducts = OrderProducts::all()->where("order_id", "=", $id);
+        foreach ($orderProducts as $productRelation) {
+            $productRelation->delete();
+        }
+
+        $order = Order::find($id);
+        $order->delete();
+
+        return true;
     }
 }

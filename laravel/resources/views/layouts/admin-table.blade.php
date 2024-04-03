@@ -7,6 +7,10 @@
 
 @section("content")
     <main>
+        <div class="content-body">
+            <img class="preload" src="{{ asset("logo.png") }}" alt="Logo">
+        </div>
+
         <div class="container-fluid px-4">
             <h1 class="mt-4">Дані</h1>
             <ol class="breadcrumb mb-4">
@@ -22,6 +26,7 @@
                         <option value="orders" data-href="{{ route("admin.tables") }}">Замовлення</option>
                         <option value="products" data-href="{{ route("admin_tables.show_products") }}">Продукти</option>
                         <option value="messages" data-href="{{ route("admin_tables.show_messages") }}">Повідомлення</option>
+                        <option value="promocodes" data-href="{{ route("admin_tables.show_promocodes") }}">Промокоди</option>
                         @can("view-admin", \Illuminate\Support\Facades\Auth::user())
                             <option value="categories" data-href="{{ route("admin_tables.show_categories") }}">Категорії</option>
                             <option value="users" data-href="{{ route("admin_tables.show_users") }}">Користувачі</option>
@@ -49,6 +54,17 @@
                 </div>
             </div>
         </div>
+
+            <div class="toast main-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-warning">
+                    <strong class="me-auto text-dark">Повідомлення</strong>
+                    <small>щойно</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Введені невірні дані при редагуванні!
+                </div>
+            </div>
     </main>
 
     @yield("content-continue")

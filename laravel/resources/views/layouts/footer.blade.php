@@ -2,7 +2,7 @@
     <ul class="nav justify-content-center pb-3 mt-2 w-nav">
         <li class="nav-item"><a href="{{ route('site.catalog') }}" class="nav-link px-2 text-warning fw-bold">Каталог товарів</a></li>
         <li class="nav-item"><a href="{{ route('site.partnership') }}" class="nav-link px-2 text-warning fw-bold">Співробітництво</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-warning fw-bold">Про нас</a></li>
+        <li class="nav-item"><a href="{{ route('site.about_us') }}" class="nav-link px-2 text-warning fw-bold">Про нас</a></li>
         <li class="nav-item"><a href="{{ route("site.contacts") }}" class="nav-link px-2 text-warning fw-bold">Контакти</a></li>
     </ul>
     <div id="social" class="d-flex justify-content-center mb-2">

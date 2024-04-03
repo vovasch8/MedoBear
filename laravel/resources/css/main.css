@@ -7,6 +7,14 @@ body {
     font-family: Roboto!important;
 }
 
+a {
+    text-decoration: none;
+}
+
+hr {
+    margin: 0px!important;
+}
+
 #side-menu {
     /*border: 3px solid #ffc106!important;*/
     background-color: #2d3748;
@@ -72,9 +80,9 @@ body {
     font-size: xx-large;
 }
 
-#cart i:hover {
+#cart:hover {
     position: absolute;
-    font-size: xx-large;
+    font-size: 28px;
 }
 
 #logo {
@@ -198,6 +206,8 @@ footer li, footer p {
 .input-form {
     border-color: lightgray;
     border-radius: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .form-icon {
@@ -314,7 +324,7 @@ footer li, footer p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    min-height: 500px;
 }
 
 .second-color {
@@ -323,7 +333,7 @@ footer li, footer p {
 
 .avatar {
     width: 150px;
-    height: 150px;
+    min-height: 150px;
     box-sizing: border-box;
     border: 5px white solid;
     border-radius: 50%;
@@ -345,3 +355,172 @@ footer li, footer p {
 .bg-second {
     background: #ffc106;
 }
+
+.desc-title, .name-product{
+    font-weight: bold;
+    font-size: large;
+}
+
+.description {
+    text-align: justify!important;
+    /*font-family: "Nunito Sans", sans-serif;*/
+    /*font-weight: 600;*/
+    /*font-style: normal;*/
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.preload {
+    opacity: 100%!important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -75px;
+    width: 150px;
+    height: 150px;
+    box-sizing: border-box;
+    border: 5px white solid;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+    animation: spin 1.3s linear 0s infinite;
+    z-index: 999;
+}
+
+.content-body {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    opacity: 90%;
+    background: #2d3748;
+    z-index: 998;
+}
+
+.title-preload {
+    color: white;
+    font-size: xxx-large;
+    opacity: 100%!important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 20px 0 0 -150px;
+    z-index: 999;
+}
+
+.fa-sync-alt {
+    padding-left: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.fa-sync-alt:hover {
+    color: green;
+}
+
+.about-image {
+    width: 300px;
+    height: 500px;
+    border: 4px solid #ffc106;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.about-image:hover {
+    transform: scale(1.05);
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.btn-menu {
+    position: absolute;
+    width: 50px;
+    display: none;
+    margin-left: 12px;
+    z-index: 5;
+    border: 2px solid #ffc106!important;
+    background: #2d3748;
+    color: #ffc106;
+    font-weight: bold;
+    padding: 15px;
+}
+
+.btn-back {
+    width: 80px;
+    display: none;
+    z-index: 5;
+    padding: 5px;
+    position: absolute;
+    right: 15px;
+}
+
+.btn-back-cart {
+    display: none;
+}
+
+.btn-back i {
+    font-size: large;
+}
+
+.btn-menu:active {
+    background: #2d3748!important;
+    color: #ffc106!important;
+    font-weight: bold!important;
+}
+
+@media (max-width: 768px) {
+    #logo {
+        margin-left: 0px!important;
+    }
+    .left-menu {
+        text-align: center;
+    }
+    .product-row {
+        padding-right: 10px!important;
+    }
+    .product-entity-sidebar {
+        display: none;
+    }
+    .btn-back {
+        display: block;
+    }
+    .product-entity-row {
+        padding-right: 10px!important;
+        padding-left: 10px!important;
+    }
+    .cart-sidebar {
+        display: none;
+    }
+    .cart-row {
+        padding-right: 10px!important;
+        padding-left: 10px!important;
+    }
+    .btn-back-cart {
+        display: inline-block;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        margin-top: 55px;
+        display: none;
+    }
+    .btn-menu {
+        display: block;
+    }
+    .product-row {
+        padding-left: 55px!important;
+        padding-right: 20px!important;
+    }
+    .span-activate {
+        display: none;
+    }
+}
+

@@ -9,6 +9,7 @@
         <th>Товари</th>
         <th>Ціна замовлення</th>
         <th>Дата</th>
+        <th>Дія</th>
     </tr>
 @endsection
 @section("tbody")
@@ -28,8 +29,8 @@
                 {{ $order->ukr_city . " Вулиця: " . $order->street . " Будинок: " . $order->house . " Квартира: " . ($order->room ? $order->room : "") }}
                 @endif" class="fw-bold text-dark">
                     <img @if($order->type_poshta == "Нова Пошта")
-                         src="{{ asset("storage") . "/icons/nova.png" }}" class="icon-nova"
-                         @else src="{{ asset("storage") . "/icons/ukr.png" }}" class="icon-ukr"
+                         src="{{ asset("icons/nova.png") }}" class="icon-nova"
+                         @else src="{{ asset("icons/ukr.png") }}" class="icon-ukr"
                          @endif alt="{{ $order->id }}"> Адереса
                 </button></td>
             <td>
@@ -37,6 +38,7 @@
             </td>
             <td>{{ $order->price }} @if($order->promocode)<i class="fa-brands fa-gg-circle tooltipPromo promo-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="З промокодом: {{ $order->promocode }}"></i>@endif</td>
             <td>{{ $order->created_at }}</td>
+            <td><div class="actions text-center"><i data-url="{{ route("admin_orders.delete_order") }}" class="fa-solid fa-trash"></i></div></td>
         </tr>
     @endforeach
 @endsection

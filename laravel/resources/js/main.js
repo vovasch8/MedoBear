@@ -102,6 +102,7 @@ $(document).ready(function () {
                             + "</a></li>";
                     }
                     $(".cities-select").html(select.length ? select : "<li ><a class=\"dropdown-item disabled\" href=\"#\">Невірний населений пункт!</a></li>");
+                    $(".cities-select").css("display", "block");
                     dropdownEl.show();
                     $("#searchCities").focus();
                 }
@@ -136,6 +137,7 @@ $(document).ready(function () {
                             + "</a></li>";
                     }
                     $(".cities-courier-select").html(select.length ? select : "<li ><a class=\"dropdown-item disabled\" href=\"#\">Невірний населений пункт!</a></li>");
+                    $(".cities-courier-select").css("display", "block");
                     dropdownEl.show();
                     $("#searchCourierCities").focus();
                 }
@@ -171,6 +173,7 @@ $(document).ready(function () {
                             + "</a></li>";
                     }
                     $(".warehouses-select").html(select.length ? select : "<li ><a class=\"dropdown-item disabled\" href=\"#\">Невірні дані!</a></li>");
+                    $(".warehouses-select").css("display", "block");
                     dropdownEl.show();
                     $("#searchWarehouses").focus();
                 }
@@ -240,6 +243,7 @@ $(document).ready(function () {
                             + "</a></li>";
                     }
                     $(".ukr-poshta-cities-select").html(select.length ? select : "<li ><a class=\"dropdown-item disabled\" href=\"#\">Невірний населений пункт!</a></li>");
+                    $(".ukr-poshta-cities-select").css("display", "block");
                     dropdownEl.show();
                     $("#searchUkrPoshtaCities").focus();
                 }
@@ -281,6 +285,7 @@ $(document).ready(function () {
                             + "</a></li>";
                     }
                     $(".ukr-poshta-courier-cities-select").html(select.length ? select : "<li ><a class=\"dropdown-item disabled\" href=\"#\">Невірний населений пункт!</a></li>");
+                    $(".ukr-poshta-courier-cities-select").css("display", "block");
                     dropdownEl.show();
                     $("#searchUkrPoshtaCourierCities").focus();
                 }
@@ -316,6 +321,7 @@ $(document).ready(function () {
                             + "</a></li>";
                     }
                     $(".post-offices-select").html(select.length ? select : "<li ><a class=\"dropdown-item disabled\" href=\"#\">Невірні дані!</a></li>");
+                    $(".post-offices-select").css("display", "block");
                     dropdownEl.show();
                     $("#searchPostOffices").focus();
                 }
@@ -381,6 +387,52 @@ $(document).ready(function () {
             let listErrors = errors.join("<br>");
             $("#error-block").html("<span style='font-weight: bold;'>Ви не заповнили всі дані:</span> <br>" + listErrors);
             $("#error-block").addClass("alert alert-danger");
+        }
+    });
+
+    $("#clearSearchCities").click(function () {
+        $("#searchCities").prop("disabled", false);
+        $("#searchCities").val("");
+    });
+
+    $("#clearSearchWarehouses").click(function () {
+        $("#searchWarehouses").prop("disabled", false);
+        $("#searchWarehouses").val("");
+    });
+
+    $("#clearSearchCourierCities").click(function () {
+        $("#searchCourierCities").prop("disabled", false);
+        $("#searchCourierCities").val("");
+    });
+
+    $("#clearSearchUkrPoshtaCities").click(function () {
+        $("#searchUkrPoshtaCities").prop("disabled", false);
+        $("#searchUkrPoshtaCities").val("");
+    });
+
+    $("#clearSearchPostOffices").click(function () {
+        $("#searchPostOffices").prop("disabled", false);
+        $("#searchPostOffices").val("");
+    });
+
+    $("#clearSearchUkrPoshtaCourierCities").click(function () {
+        $("#searchUkrPoshtaCourierCities").prop("disabled", false);
+        $("#searchUkrPoshtaCourierCities").val("");
+    });
+
+    $(".btn-menu").click(function () {
+        if ($(".sidebar").css('display') == "none") {
+            $(".sidebar").css("display", "block");
+            $(".btn-menu").html("<i class=\"fas fa-hand-point-left\"></i>&nbsp;MedoBear");
+            $(".btn-menu").css("width", "300px");
+            $(".product-content").css("display", "none");
+            $("body").css("background", "#2d3748");
+        } else {
+            $(".sidebar").css("display", "none");
+            $(".btn-menu").html("<i class=\"fas fa-bars\"></i>");
+            $(".btn-menu").css("width", "50px");
+            $(".product-content").css("display", "block");
+            $("body").css("background", "white");
         }
     });
 });

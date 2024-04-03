@@ -1,11 +1,14 @@
 @extends("layouts.admin")
 
 @section("head")
-    @vite(['resources/css/styles.css', 'resources/js/scripts.js', 'resources/js/chart-area.js', 'resources/js/chart-bar.js', 'resources/js/chart-bar.js', 'resources/js/datatables-simple.js', 'resources/js/chart-pie.js'])
+    @vite(['resources/css/styles.css', 'resources/js/scripts.js', 'resources/js/chart-area.js', 'resources/js/chart-bar.js', 'resources/js/chart-bar.js', 'resources/js/datatables-simple.js'])
 @endsection
 
 @section("content")
     <main>
+        <div class="content-body">
+            <img class="preload" src="{{ asset("logo.png") }}" alt="Logo">
+        </div>
         <div class="container-fluid px-4">
             <h1 class="mt-4">Панель</h1>
             <ol class="breadcrumb mb-4">
@@ -32,7 +35,7 @@
                             </div>
                         </div>
                         <div id="add-category-footer" class="card-footer">
-                            @foreach($categories as $category)
+                            @foreach($lastCategories as $category)
                                 <div id="c-{{ $category->id }}" class="card text-white bg-primary p-2 mb-1 pointer">
                                     {{ $category->name }}
                                 </div>
@@ -50,8 +53,8 @@
                                     <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-product-name">
                                     <textarea name="description" class="form-control mb-2" id="add-product-description" placeholder="Опис" rows="3"></textarea>
                                     <div class="input-group mb-2">
-                                        <input id="add-product-count" type="text" class="form-control" name="count" placeholder="Кількість">
-                                        <input id="add-product-price" type="text" class="form-control" name="price" placeholder="Ціна">
+                                        <input id="add-product-count" type="number" class="form-control" name="count" placeholder="Кількість">
+                                        <input id="add-product-price" type="number" class="form-control" name="price" placeholder="Ціна">
                                     </div>
                                     <h6>Категорія: </h6>
                                     <select id="add-product-category" name="product-category" class="form-select mb-2">
@@ -180,8 +183,8 @@
                                     {{ $order->ukr_city . " Вулиця: " . $order->street . " Будинок: " . $order->house . " Квартира: " . ($order->room ? $order->room : "") }}
                                     @endif" class="fw-bold text-dark">
                                         <img @if($order->type_poshta == "Нова Пошта")
-                                                src="{{ asset("storage") . "/icons/nova.png" }}" class="icon-nova"
-                                             @else src="{{ asset("storage") . "/icons/ukr.png" }}" class="icon-ukr"
+                                                src="{{ asset("icons/nova.png") }}" class="icon-nova"
+                                             @else src="{{ asset("icons/ukr.png") }}" class="icon-ukr"
                                              @endif alt="{{ $order->id }}"> Адереса
                                     </button></td>
                                 <td>

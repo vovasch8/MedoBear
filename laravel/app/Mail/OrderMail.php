@@ -28,6 +28,7 @@ class OrderMail extends Mailable
             ->join('order_products', 'products.id', '=', 'order_products.product_id')
             ->where('order_products.order_id', $this->order->id)
             ->get();
+        $this->products = $products;
     }
 
     /**

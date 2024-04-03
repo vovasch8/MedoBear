@@ -16,6 +16,10 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+setTimeout(function() {
+    $(".preload").css("display", 'none');
+    $(".content-body").css("display", 'none');
+}, 1200);
 
 $(document).ready(function () {
 

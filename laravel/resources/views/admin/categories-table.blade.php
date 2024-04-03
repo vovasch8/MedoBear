@@ -7,6 +7,7 @@
         <th>Іконка</th>
         <th>Активна</th>
         <th>Дата</th>
+        <th>Дія</th>
     </tr>
 @endsection
 @section("tbody")
@@ -22,6 +23,11 @@
                 </select>
             </td>
             <td>{{ $category->created_at }}</td>
+            <td><div class="actions text-center">
+                    <div class="popover bs-popover-auto fade show" role="tooltip" id="popover95769" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(66.5px, 1886.5px, 0px);" data-popper-placement="top"><div class="popover-arrow" style="position: absolute; left: 0px; transform: translate3d(47px, 0px, 0px);"></div><div class="popover-body">Top popover</div></div>
+                    <i data-url="{{ route("admin_categories.delete_category") }}" class="fa-solid fa-trash"></i>
+                </div>
+            </td>
         </tr>
     @endforeach
 @endsection
@@ -33,7 +39,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="iconModalLabel"><i class="fa-solid fa-ice-cream"></i> Іконка категорії</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">&nbsp;&nbsp;</button>
                 </div>
                 <div class="modal-body text-center">
                     <div class="loader-img">
@@ -42,12 +48,8 @@
                     <br>
                     <span class="fw-bold">Вибрати нову іконку:</span>
                     <div class="d-flex justify-content-center">
-                        <input placeholder="Фото" type="file" accept="image/*" class="form-control mb-2" id="load-image">
+                        <input data-url="{{ route("admin_categories.update_category_image") }}" placeholder="Фото" type="file" accept="image/*" class="form-control mb-2" id="load-image">
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Закрити</button>
-                    <button data-url="{{ route("admin_categories.update_category_image") }}" type="button" class="btn btn-dark btn-save-upload-image">Зберегти</button>
                 </div>
             </div>
         </div>

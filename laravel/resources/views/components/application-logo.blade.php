@@ -1,1 +1,1 @@
-<img class="avatar" src="{{ asset("storage") . "/logo.png" }}" alt="Logo">
+<img class="avatar" src="{{ asset("logo.png")  }}" alt="Logo">

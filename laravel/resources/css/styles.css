@@ -11361,3 +11361,79 @@ tbody td {
 .datatable-pagination a {
     color: black;
 }
+
+.fa-trash {
+    font-size: larger;
+}
+
+.fa-trash:hover {
+    color: red;
+    cursor: pointer;
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.preload {
+    opacity: 100%!important;
+    position: fixed;
+    top: 50vh;
+    left: 50%;
+    margin: -150px 0 0 -75px;
+    width: 150px;
+    height: 150px;
+    box-sizing: border-box;
+    border: 5px white solid;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+    animation: spin 1.3s linear 0s infinite;
+    z-index: 999;
+}
+
+.content-body {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    opacity: 90%;
+    background: #2d3748;
+    z-index: 998;
+}
+
+@keyframes float {
+    0% {
+        box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+        transform: translatey(0px);
+    }
+    50% {
+        box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+        transform: translatey(-20px);
+    }
+    100% {
+        box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+        transform: translatey(0px);
+    }
+}
+
+.avatar {
+    margin: auto;
+    width: 120px;
+    height: 120px;
+    box-sizing: border-box;
+    border: 5px white solid;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+    transform: translatey(0px);
+    animation: float 2s ease-in-out infinite;
+}
+.main-toast {
+    position: absolute;
+    right: 10px!important;
+    bottom: 50px!important;
+}

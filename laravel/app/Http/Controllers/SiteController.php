@@ -47,4 +47,8 @@ class SiteController extends Controller
 
         return redirect()->route("site.contacts")->with('result', "Звернення успішно відправлено!");
     }
+
+    public function showAbout() {
+        return view("about");
+    }
 }

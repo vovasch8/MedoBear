@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
@@ -17,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::name('admin_tables.')->group(function () {
         Route::get('/admin/products', [AdminController::class, 'showProducts'])->name('show_products');
         Route::get('/admin/messages', [AdminController::class, 'showMessages'])->name('show_messages');
+        Route::get('/admin/promocodes', [AdminController::class, 'showPromocodes'])->name('show_promocodes');
         Route::get('/admin/categories', [AdminController::class, 'showCategories'])->name('show_categories');
         Route::get('/admin/users', [AdminController::class, 'showUsers'])->name('show_users');
 
@@ -29,8 +31,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/product-move-photo', [ProductController::class, 'movePhotoProduct'])->name('move_photo_product');
         Route::post('/admin/product-add-photo', [ProductController::class, 'addPhotoProduct'])->name('add_photo_product');
         Route::post('/admin/product-remove-photo', [ProductController::class, 'removePhotoProduct'])->name('remove_photo_product');
+        Route::post('/admin/product-edit-description', [ProductController::class, 'editDescription'])->name("edit_description");
 
         Route::post('/admin/add-product', [ProductController::class, 'addProduct'])->name('add_product');
+        Route::post('/admin/delete-product', [ProductController::class, 'deleteProduct'])->name('delete_product');
     });
 
     Route::name('admin_categories.')->group(function () {
@@ -38,6 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/category-icon', [CategoryController::class, 'updateCategoryImage'])->name('update_category_image');
 
         Route::post('/admin/add-category', [CategoryController::class, 'addCategory'])->name('add_category');
+        Route::post('/admin/delete-category', [CategoryController::class, 'deleteCategory'])->name('delete_category');
     });
 
     Route::name('admin_users.')->group(function () {
@@ -47,5 +52,10 @@ Route::middleware('auth')->group(function () {
     Route::name('admin_orders.')->group(function () {
         Route::post('/admin/add-product-to-order', [OrderController::class, 'addProductToOrder'])->name('add_product_to_order');
         Route::post('/admin/remove-product-from-order', [OrderController::class, 'removeProductFromOrder'])->name('remove_product_from_order');
+        Route::post('/admin/delete-order', [OrderController::class, 'deleteOrder'])->name('delete_order');
+    });
+
+    Route::name('admin_messages.')->group(function () {
+        Route::post('/admin/delete-message', [MessageController::class, 'deleteMessage'])->name('delete_message');
     });
 });

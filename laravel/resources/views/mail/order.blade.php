@@ -66,28 +66,34 @@
 
 <table role="presentation" width="100%" style="padding-bottom: 15px;">
     <tr>
-        <td align="center" colspan="3"><h4 style="background: #2d3748;color: white;">--Замовлені Товари--</h4></td>
+        <td align="center" colspan="4"><h4 style="background: #2d3748;color: white;">--Замовлені Товари--</h4></td>
+    </tr>
+    <tr>
+        <td align="center" style="border: 2px solid black;"><h4>Товар</h4></td>
+        <td align="center" style="border: 2px solid black;"><h4>Кількість</h4></td>
+        <td align="center" style="border: 2px solid black;"><h4>Ціна шт.</h4></td>
+        <td align="center" style="border: 2px solid black;"><h4>Посилання</h4></td>
     </tr>
     @foreach($products as $index => $product)
-        @if($index % 3 === 0)
-            <tr>
-                @endif
-                <td valign="top" align="center" style="padding-bottom: 10px;">
-                    <img style="border: 1px solid grey; border-radius: 5px;" width="150px" height="150px"
-                         src="{{ $product->images[0]->image }}" alt="{{ $product->name }}"> <br>
-                    <h4>{{ $product->name . " - " .  $product->count }}</h4>
-                    Кількість: {{ $product->product_count }} шт. <br>
-                    Ціна шт.: {{ $product->price }} грн. <br>
-                    <a href="{{ route("product", $product->id) }}">
-                        <button
-                            style="font: inherit;background-color: #ffc106;border: none;padding: 10px;text-transform: uppercase;letter-spacing: 2px;font-weight: 900;color: white;border-radius: 5px;box-shadow: 3px 3px #ffc106; cursor: pointer;">
-                            Товар на сайті
-                        </button>
-                    </a>
-                </td>
-                @if(($index + 1) % 3 === 0 || ($index + 1 > (count($products) - (count($products) % 3)) && count($products) % 3 === 1))
-            </tr>
-        @endif
+        <tr>
+            <td valign="top" align="center" style="border: 2px solid black;">
+                <h4>{{ $product->name . " - " .  $product->count }}</h4>
+            </td>
+            <td align="center" style="border: 2px solid black;">
+                {{ $product->product_count }} шт. <br>
+            </td>
+            <td align="center" style="border: 2px solid black;">
+                {{ $product->price }} грн. <br>
+            </td>
+            <td align="center" style="border: 2px solid black;">
+                <a href="{{ route("product", $product->id) }}">
+                    <button
+                        style="font: inherit;background-color: #ffc106;border: none;padding: 10px;text-transform: uppercase;letter-spacing: 2px;font-weight: 900;color: white;border-radius: 5px;box-shadow: 3px 3px #ffc106; cursor: pointer;">
+                        Товар на сайті
+                    </button>
+                </a>
+            </td>
+        </tr>
     @endforeach
 </table>
 

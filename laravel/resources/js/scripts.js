@@ -96,9 +96,9 @@ $(document).ready(function () {
         data.append("category_name", category_name);
         data.append("category_active", category_active);
         data.append("category_image", category_image);
-        $(".category-loader").html("<div class='float-end'><div style='height: 15px; width: 15px;' class=\"spinner-border\" role=\"status\">\n" +
-            "  <span class=\"visually-hidden\">Loading...</span>\n" +
-            "</div></div>");
+        // $(".category-loader").html("<div class='float-end'><div style='height: 15px; width: 15px;' class=\"spinner-border\" role=\"status\">\n" +
+        //     "  <span class=\"visually-hidden\">Loading...</span>\n" +
+        //     "</div></div>");
 
         $.ajax({
             type:'POST',
@@ -118,7 +118,7 @@ $(document).ready(function () {
     $("#add-product-btn").click(function (event) {
         let data = new FormData();
         let product_name = $("#add-product-name").val();
-        let product_description = $("#add-product-description").val();
+        let product_description = $("#productDescription").html()
         let product_count = $("#add-product-count").val();
         let product_price = $("#add-product-price").val();
         let product_active = $("#is-active-product").prop('checked');
@@ -136,9 +136,9 @@ $(document).ready(function () {
         for (let el of arr_images) {
             data.append("product_images[]", el);
         }
-        $(".product-loader").html("<div class='float-end'><div style='height: 15px; width: 15px;' class=\"spinner-border\" role=\"status\">\n" +
-            "  <span class=\"visually-hidden\">Loading...</span>\n" +
-            "</div></div>");
+        // $(".product-loader").html("<div class='float-end'><div style='height: 15px; width: 15px;' class=\"spinner-border\" role=\"status\">\n" +
+        //     "  <span class=\"visually-hidden\">Loading...</span>\n" +
+        //     "</div></div>");
 
         $.ajax({
             type:'POST',

@@ -32,6 +32,7 @@
                             <option value="users" data-href="{{ route("admin_tables.show_users") }}">Користувачі</option>
                         @endcan
                     </select>
+                    @yield("right-block")
                 </div>
                 <div class="card-body">
                     <div class="edit-block">

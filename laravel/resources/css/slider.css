@@ -1,0 +1,18 @@
+@media (max-width: 992px) {
+    #top-1 {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    #top-2 {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .top-row {
+        padding-left: 20px!important;
+        padding-right: 20px!important;
+    }
+}

@@ -13,6 +13,7 @@
     <div class="content-body">
         <img class="preload" src="{{ asset('logo.png') }}" alt="MedoBear">
         <h3 class="text-center fw-bold text-white title-preload">404 - Помилка</h3>
+        <a class="btn btn-warning btn-to-site" href="{{ route("site.catalog") }}">Повернутись на сайт</a>
     </div>
 </body>
 </html>

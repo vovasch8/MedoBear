@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Class\ImageContainer;
 use App\Models\Category;
-use App\Models\Image;
 use App\Models\Message;
 use App\Models\Order;
 use App\Models\Product;
@@ -12,7 +10,6 @@ use App\Models\Promocode;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -112,5 +109,28 @@ class AdminController extends Controller
         $entity->save();
 
         return $value;
+    }
+
+    public function addPromocode(Request $request) {
+        $promocodeField = strval($request->promocode);
+        $discountField = strval($request->discount);
+        $endDateField = $request->end_date;
+
+        $promocode = new Promocode();
+        $promocode->promocode = $promocodeField;
+        $promocode->discount = $discountField;
+        $promocode->active_to = $endDateField;
+        $promocode->save();
+
+        return Promocode::find($promocode->id);
+    }
+
+    public function deletePromocode(Request $request) {
+        $id = intval($request->id);
+
+        $promocode = Promocode::find($id);
+        $promocode->delete();
+
+        return true;
     }
 }

@@ -153,14 +153,16 @@ $(document).ready(function () {
     });
 
     $("tbody td").click(function (event) {
-        let editedColumns = JSON.parse($("table").attr("data-edited-column"));
+        if (event.target != document.querySelector("#edit-input")) {
+            let editedColumns = JSON.parse($("table").attr("data-edited-column"));
 
-        if (editedColumns.includes($(this).index())) {
-            $("#old-text").text($.trim($(this).text()));
-            $(this).html($("#edit-form"));
-            $("#edit-input").val($.trim($(this).text()));
-            $("#edit-form").css("display", "flex");
-            $("#edit-input").focus();
+            if (editedColumns.includes($(this).index())) {
+                $("#old-text").text($.trim($(this).text()));
+                $(this).html($("#edit-form"));
+                $("#edit-input").val($.trim($(this).text()));
+                $("#edit-form").css("display", "flex");
+                $("#edit-input").focus();
+            }
         }
     });
 
@@ -439,6 +441,59 @@ $(document).ready(function () {
                 });
             }
         }
+    });
+
+    $(".btn-add-promo").click(function () {
+        let promocode = $("#promocode").val();
+        let discount = $("#discount").val();
+        let end_date = $("#endDate").val();
+        let url = $(this).attr("data-url");
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                "_token": $('meta[name="csrf-token"]').attr('content'),
+                "promocode": promocode,
+                "discount" : discount,
+                "end_date" : end_date
+            },
+            success: function (promocode) {
+                location.reload(true);
+            }
+        });
+    });
+
+    $('.promos .fa-trash').click(function () {
+        let id = $(this).closest("tr").children(":first").text();
+        let tr = $(this).closest("tr");
+        let url = $(this).attr("data-url");
+        $.confirm({
+            title: 'Підтвердження',
+            content: 'Ви впевнені що хочете видалити цей запис?',
+            buttons: {
+                confirm: {
+                    text: 'Так',
+                    btnClass: 'btn-dark',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id": id},
+                            success: function (response) {
+                                $(tr).remove();
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'Закрити',
+                    btnClass: 'btn-dark',
+                    action: function () {
+
+                    }
+                }
+            }
+        });
     });
 
     function initFotorama(data) {

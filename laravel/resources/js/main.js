@@ -390,6 +390,156 @@ $(document).ready(function () {
         }
     });
 
+    // ---------------Apply Filters-------------------------
+    var productItems = $(".product-row").children(".product-grid");
+    $(".fa-sort-alpha-down, .fa-sort-alpha-up, .fa-sort-numeric-down, .fa-sort-numeric-up").click(function () {
+        let sort = "order";
+        let mylist = $('.product-row');
+        let listitems = mylist.children(".product-grid");
+        if ($(this).hasClass("fa-sort-alpha-down")) {
+            $(this).removeClass("fa-sort-alpha-down");
+            $(this).addClass("fa-sort-alpha-up");
+            $(".sort").attr("data-sort", "alpha-up");
+            listitems.sort(function(a, b) {
+                let compA = a.querySelector(".product-name").textContent;
+                let compB = b.querySelector(".product-name").textContent;
+                return (compB < compA) ? -1 : (compB > compA) ? 1 : 0;
+            })
+            $(mylist).append(listitems);
+        } else if ($(this).hasClass("fa-sort-alpha-up")) {
+            $(this).removeClass("fa-sort-alpha-up");
+            $(this).addClass("fa-sort-alpha-down");
+            $(".sort").attr("data-sort", "alpha-down");
+            listitems.sort(function(a, b) {
+                let compA = a.querySelector(".product-name").textContent;
+                let compB = b.querySelector(".product-name").textContent;
+                return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+            })
+            $(mylist).append(listitems);
+        } else if ($(this).hasClass("fa-sort-numeric-down")) {
+            $(this).removeClass("fa-sort-numeric-down");
+            $(this).addClass("fa-sort-numeric-up");
+            $(".sort").attr("data-sort", "price-up");
+            listitems.sort(function(a, b) {
+                let compA = a.querySelector(".product-price").textContent;
+                let compB = b.querySelector(".product-price").textContent;
+                return (compB < compA) ? -1 : (compB > compA) ? 1 : 0;
+            })
+            $(mylist).append(listitems);
+        } else if ($(this).hasClass("fa-sort-numeric-up")) {
+            $(this).removeClass("fa-sort-numeric-up");
+            $(this).addClass("fa-sort-numeric-down");
+            $(".sort").attr("data-sort", "price-down");
+            listitems.sort(function(a, b) {
+                let compA = a.querySelector(".product-price").textContent;
+                let compB = b.querySelector(".product-price").textContent;
+                return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+            })
+            $(mylist).append(listitems);
+        }
+
+        $(".sort-active").removeClass("sort-active");
+        $(this).addClass("sort-active");
+    });
+
+    $(".search-btn").click(function () {
+        let url = $(".filter-url").attr("data-url");
+        applyFilters(url, getSort(), getSearch(), getPrice());
+    });
+
+    $('.rangeHandle').mouseup(function () {
+        if (getSearch() !== "") {
+            let url = $(".filter-url").attr("data-url");
+            applyFilters(url, getSort(), getSearch(), getPrice());
+        } else {
+            let listitems = productItems;
+            listitems = sortProducts(listitems);
+            $(".product-row").html("");
+            let hasElements = false;
+            listitems.each(function (index) {
+                if (parseInt($(this).find(".product-price").text()) > parseInt($('[data-handle="0"]').attr("aria-valuenow")) && parseInt($(this).find(".product-price").text()) < parseInt($('[data-handle="1"]').attr("aria-valuenow"))) {
+                    $(".product-row").append(this);
+                    hasElements = true;
+                }
+            });
+            if (!hasElements) {
+                $(".container-empty").css("display", "block");
+            } else {
+                $(".container-empty").css("display", "none");
+            }
+        }
+    });
+
+    function sortProducts(listitems) {
+        let sort = getSort();
+
+        if (sort === "alpha-up") {
+            listitems.sort(function(a, b) {
+                let compA = a.querySelector(".product-name").textContent;
+                let compB = b.querySelector(".product-name").textContent;
+                return (compB < compA) ? -1 : (compB > compA) ? 1 : 0;
+            })
+        } else if (sort === "alpha-down") {
+            listitems.sort(function(a, b) {
+                let compA = a.querySelector(".product-name").textContent;
+                let compB = b.querySelector(".product-name").textContent;
+                return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+            })
+        } else if (sort === "price-up") {
+            listitems.sort(function(a, b) {
+                let compA = a.querySelector(".product-price").textContent;
+                let compB = b.querySelector(".product-price").textContent;
+                return (compB < compA) ? -1 : (compB > compA) ? 1 : 0;
+            })
+        } else if (sort === "price-down") {
+            listitems.sort(function(a, b) {
+                let compA = a.querySelector(".product-price").textContent;
+                let compB = b.querySelector(".product-price").textContent;
+                return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+            })
+        }
+
+        return listitems;
+    }
+
+    function getSort() {
+        return $(".sort").attr("data-sort");
+    }
+
+    function getSearch() {
+        return $(".search-field").val();
+    }
+
+    function getPrice() {
+        let priceMin = $('[data-handle="0"]').attr("aria-valuenow");
+        let priceMax = $('[data-handle="1"]').attr("aria-valuenow");
+
+        return [priceMin, priceMax];
+    }
+
+    function applyFilters(url, sort, search, price) {
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                "_token": $('meta[name="csrf-token"]').attr('content'),
+                "sort": sort,
+                "search": search,
+                "price": price
+            },
+            success: function (content) {
+                if (!content.length) {
+                    $(".container-empty").css("display", "block");
+                    $(".product-row").html(content);
+                } else {
+                    $(".product-row").html(content);
+                    productItems = $(".product-row").children(".product-grid");
+                    $(".container-empty").css("display", "none");
+                }
+            }
+        });
+    }
+
     $("#clearSearchCities").click(function () {
         $("#searchCities").prop("disabled", false);
         $("#searchCities").val("");
@@ -436,3 +586,4 @@ $(document).ready(function () {
         }
     });
 });
+

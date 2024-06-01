@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/promocodes', [AdminController::class, 'showPromocodes'])->name('show_promocodes');
         Route::get('/admin/categories', [AdminController::class, 'showCategories'])->name('show_categories');
         Route::get('/admin/users', [AdminController::class, 'showUsers'])->name('show_users');
+        Route::post('/addPromocode', [AdminController::class, "addPromocode"])->name('add_promocode');
+        Route::post('/deletePromocode', [AdminController::class, "deletePromocode"])->name('delete_promocode');
 
         Route::post('/admin/edit-table-column', [AdminController::class, 'editColumnTable'])->name('edit_column_table');
     });

@@ -1,7 +1,7 @@
 <footer class="py-3 mt-4 border-top border-top-3 border-warning">
     <ul class="nav justify-content-center pb-3 mt-2 w-nav">
         <li class="nav-item"><a href="{{ route('site.catalog') }}" class="nav-link px-2 text-warning fw-bold">Каталог товарів</a></li>
-        <li class="nav-item"><a href="{{ route('site.partnership') }}" class="nav-link px-2 text-warning fw-bold">Співробітництво</a></li>
+        <li class="nav-item"><a href="{{ route('site.delivery') }}" class="nav-link px-2 text-warning fw-bold">Доставка і оплата</a></li>
         <li class="nav-item"><a href="{{ route('site.about_us') }}" class="nav-link px-2 text-warning fw-bold">Про нас</a></li>
         <li class="nav-item"><a href="{{ route("site.contacts") }}" class="nav-link px-2 text-warning fw-bold">Контакти</a></li>
     </ul>

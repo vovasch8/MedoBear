@@ -9,7 +9,7 @@
 
     <ul class="nav col-md-7 col-lg-8 col-12 col-md-auto nav-menu justify-content-center mb-md-0 w-nav">
         <li><a href="{{ route('site.catalog') }}" class="nav-link px-2 text-warning fw-bold">Каталог товарів</a></li>
-        <li><a href="{{ route('site.partnership') }}" class="nav-link px-2 text-warning fw-bold">Співробітництво</a></li>
+        <li><a href="{{ route('site.delivery') }}" class="nav-link px-2 text-warning fw-bold">Доставка і оплата</a></li>
         <li><a href="{{ route('site.about_us') }}" class="nav-link px-2 text-warning fw-bold">Про нас</a></li>
         <li><a href="{{ route('site.contacts') }}" class="nav-link px-2 text-warning fw-bold">Контакти</a></li>
     </ul>

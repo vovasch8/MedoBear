@@ -18,21 +18,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-primary text-white mb-4 d-flex">
                         <div class="card-body">Категорії
-                            <div id="add-category-plus" class="small text-white float-end pointer"><i class="fas fa-plus"></i></div>
-                            <div class="add-category-block card">
-                                <div class="card-header fw-bold bg-dark text-white mb-2 d-flex justify-content-between"><span>Додавання категорії: </span><div class="category-loader"></div></div>
-                                <div class="d-block">
-                                    <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-name-category-input">
-                                    <input placeholder="Іконка" type="file" accept="image/*" class="form-control mb-2" id="add-image-category-input">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" checked id="isActiveCategory">
-                                            <label class="form-check-label" for="isActiveCategory">Активна</label>
-                                        </div>
-                                        <button id="add-category-btn" data-url="{{ route("admin_categories.add_category") }}" class="btn btn-dark float-end">Додати</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <div id="add-category-plus" data-bs-toggle="modal" data-bs-target="#addCategoryModal" class="small text-white float-end pointer"><i class="fas fa-plus"></i></div>
                         </div>
                         <div id="add-category-footer" class="card-footer">
                             @foreach($lastCategories as $category)
@@ -46,33 +32,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-warning text-white mb-4 d-flex">
                         <div class="card-body">Продукти
-                            <div id="add-product-plus" class="small text-white float-end pointer"><i class="fas fa-plus"></i></div>
-                            <div class="add-product-block card">
-                                <div class="card-header fw-bold bg-dark text-white mb-2 d-flex justify-content-between"><span>Додавання продукту: </span><div class="product-loader"></div></div>
-                                <div class="d-block">
-                                    <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-product-name">
-                                    <textarea name="description" class="form-control mb-2" id="add-product-description" placeholder="Опис" rows="3"></textarea>
-                                    <div class="input-group mb-2">
-                                        <input id="add-product-count" type="number" class="form-control" name="count" placeholder="Кількість">
-                                        <input id="add-product-price" type="number" class="form-control" name="price" placeholder="Ціна">
-                                    </div>
-                                    <h6>Категорія: </h6>
-                                    <select id="add-product-category" name="product-category" class="form-select mb-2">
-                                        @foreach($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <h6>Фото: </h6>
-                                    <input placeholder="Фото" type="file" multiple accept="image/*" class="form-control mb-2" id="add-product-image">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" checked id="is-active-product">
-                                            <label class="form-check-label" for="isActiveProduct">Активний</label>
-                                        </div>
-                                        <button id="add-product-btn" data-url="{{ route("admin_products.add_product") }}" class="btn btn-dark float-end">Додати</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <div data-bs-toggle="modal" data-bs-target="#addProductModal" id="add-product-plus" class="small text-white float-end pointer"><i class="fas fa-plus"></i></div>
                         </div>
                         <div id="add-product-footer" class="card-footer">
                             @foreach($products as $product)
@@ -214,6 +174,78 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark btn-order_products" data-bs-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addCategoryModalLabel"><i class="fa-solid fa-table-list"></i>&nbsp;Додавання категорії</h1>
+                    <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">&nbsp;&nbsp;</button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="d-block">
+                            <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-name-category-input">
+                            <input placeholder="Іконка" type="file" accept="image/*" class="form-control mb-2" id="add-image-category-input">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked id="isActiveCategory">
+                            <label class="form-check-label" for="isActiveCategory">Активна</label>
+                        </div>
+                        <button data-bs-dismiss="modal" id="add-category-btn" data-url="{{ route("admin_categories.add_category") }}" class="btn btn-dark float-end">Додати</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addProductModalLabel"><i class="fa-brands fa-product-hunt"></i>&nbsp;Додавання продукту</h1>
+                    <button class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">&nbsp;&nbsp;</button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="d-block">
+                            <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-product-name">
+                            <input placeholder="Опис"  type="hidden" name="content">
+                            <trix-editor id="productDescription" class="mb-2" placeholder="Опис" input="description"></trix-editor>
+                            <div class="input-group mb-2">
+                                <input id="add-product-count" type="number" class="form-control" name="count" placeholder="Кількість">
+                                <input id="add-product-price" type="number" class="form-control" name="price" placeholder="Ціна">
+                            </div>
+                            <h6>Категорія: </h6>
+                            <select id="add-product-category" name="product-category" class="form-select mb-2">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            <h6>Фото: </h6>
+                            <input placeholder="Фото" type="file" multiple accept="image/*" class="form-control mb-2" id="add-product-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked id="is-active-product">
+                            <label class="form-check-label" for="isActiveProduct">Активний</label>
+                        </div>
+                        <button id="add-product-btn" data-url="{{ route("admin_products.add_product") }}" class="btn btn-dark float-end" data-bs-dismiss="modal">Додати</button>
+                    </div>
                 </div>
             </div>
         </div>

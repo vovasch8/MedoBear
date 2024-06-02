@@ -2,8 +2,10 @@
 
 namespace App\Social\SocialNetworks;
 
+use App\Models\Product;
 use App\Social\SocialNetworks\SocialNetwork;
 use App\Social\Notifications\TelegramNotification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 /**
@@ -28,5 +30,80 @@ class Telegram implements SocialNetwork
      */
     public function generateNotification($message) {
         return new TelegramNotification($message);
+    }
+
+    /**
+     * @param $order
+     * @return string
+     */
+    public function generateOrderNotification($order) {
+        $promocode = "";
+        if($order->promocode) {
+            $promocode = "Промокод: " . $order->promocode;
+        }
+
+        // Generate poshta info
+        $typePoshta = "";
+        if ($order->type_poshta == "Нова Пошта") {
+            $typePoshta .= "✉Пошта: Нова пошта";
+            if ($order->courier) {
+                $typePoshta .= "\n--Відправити кур'єром по адресу--\n" .
+                    "📌Населений пункт: " . $order->nova_city .
+                    "\n⬆Вулиця: " . $order->street .
+                    "\n🏡Будинок: " . $order->house;
+                if ($order->room) {
+                    $typePoshta .= "\n🏨Квартира: " . $order->room;
+                }
+            } else {
+                $typePoshta .= "\n--Відправити у відділення--\n".
+                    "📌Населений пункт: " . $order->nova_city .
+                    "\n🚪Відділення: " . $order->nova_warehouse;
+            }
+        } else {
+            $typePoshta .= "✉Пошта: Укр пошта";
+            if ($order->courier) {
+                $typePoshta .= "\n--Відправити кур'єром по адресу--\n" .
+                    "📌Населений пункт: " . $order->ukr_city .
+                    "\n⬆Вулиця: " . $order->street .
+                    "\n🏡Будинок: " . $order->house;
+                if ($order->room) {
+                    $typePoshta .= "\n🏨Квартира: " . $order->room;
+                }
+            }
+            else {
+                $typePoshta .= "\n--Відправити у відділення--\n" .
+                    "📌Населений пункт: " . $order->ukr_city .
+                    "\n🚪Відділення: " . $order->ukr_post_office;
+            }
+        }
+
+        // Get Products from order
+        $products =  DB::table('products')
+            ->join('order_products', 'products.id', '=', 'order_products.product_id')
+            ->select('products.id', 'products.name', 'products.count', 'products.price', 'order_products.count as product_count')
+            ->where('order_products.order_id', $order->id)
+            ->get();
+        $products = Product::getProductsWithImages($products);
+
+        // Generate products info
+        $orderProducts = "";
+        foreach($products as $index => $product) {
+            $orderProducts .= '📦️' . $product->name . " - "
+                . $product->count
+                . " - " . $product->product_count . "шт."
+                . $product->price . "грн.шт.\n"
+                . route("site.product", $product->id) . "\n";
+        }
+
+        // Generate all message for notification
+        return "🎯Нове замовлення #$order->id на сайті Medobear\n\n--Контакти покупця--\n😀Покупець: " . $order->pip .
+            "\n📞Телефон: " . $order->phone .
+            $promocode .
+            "\n\n--Відправка--\n" .
+            $typePoshta .
+            "\n\n💰️Ціна замовлення: " . $order->price . "грн.\n" .
+            "\n--Замовлені Товари--\n" .
+            $orderProducts .
+            "\n💎Подивитись на замовлення в адмін панелі: " . route("admin.admin");
     }
 }

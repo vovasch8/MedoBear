@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderMail;
 use App\Models\Product;
+use App\Social\SocialNetworks\Telegram;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProducts;
@@ -68,7 +69,11 @@ class OrderController extends Controller
                 $orderProductsModel->save();
             }
 
-            Mail::to(config("mail.mail_for_order"))->send(new OrderMail(Order::find($orderId)));
+            $order = Order::find($orderId);
+            $telegram = new Telegram();
+            $orderNotification = $telegram->generateOrderNotification($order);
+            $telegram->sendNotification($telegram->generateNotification($orderNotification));
+            Mail::to(config("mail.mail_for_order"))->send(new OrderMail($order));
         }
 
         return true;

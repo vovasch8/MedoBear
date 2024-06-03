@@ -47,7 +47,7 @@
                             <i class="fas fa-chart-pie me-1"></i>
                             Найпопулярніші товари
                         </div>
-                        <div class="card-body"><canvas <?php $i = 1;?> @foreach($mostPopularProducts as $m) data-m{{$i}}="{{$m->name}}" data-mv{{$i}}="{{$m->count}}" <?php $i++; ?>@endforeach id="myPieChart" width="100%" height="50"></canvas></div>
+                        <div class="card-body"><canvas <?php $i = 1;?> @foreach($mostPopularProducts as $m) data-m{{$i}}="{{$m->name}}" data-mv{{$i}}="{{$m->count_product}}" <?php $i++; ?>@endforeach id="myPieChart" width="100%" height="50"></canvas></div>
                     </div>
                 </div>
             </div>

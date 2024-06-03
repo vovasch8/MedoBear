@@ -3,7 +3,7 @@
 @section("title") Оплата і доставка @endsection
 
 @section("content")
-    <div class="row">
+    <div class="row container-fluid">
         <div class="col-xl-6 col-lg-12 mb-3 pe-5">
             <div class="store-container">
                 <div class="border-animation">

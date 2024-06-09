@@ -29,6 +29,7 @@ class CartController extends Controller
     public function addProduct(Request $request) {
 
         $id = intval($request->id_product);
+        $count_value = strval($request->count_value);
         $productsInCart = array();
 
         // Якщо в корзині вже є товари вони зберігаються в сесії
@@ -37,13 +38,20 @@ class CartController extends Controller
             $productsInCart = session('products');
         }
 
+        $product = Product::find($id);
         // Перевіряємо чи такий товар вже є в корзині
         if (array_key_exists($id, $productsInCart)) {
             // Якщо такий товар є в корзині і був доданий то його кількість збільшуємо на 1
-            $productsInCart[$id] ++;
+            $productsInCart[$id]['count_products'] ++;
+            if (isset($productsInCart[$id]['sizes'][$count_value])) {
+                $productsInCart[$id]['sizes'][$count_value] ++;
+            } else {
+                $productsInCart[$id]['sizes'][$count_value] = 1;
+            }
         } else {
             // Якщо його немає, додавємо новий товар в кількості 1
-            $productsInCart[$id] = 1;
+            $productsInCart[$id]['count_products'] = 1;
+            $productsInCart[$id]['sizes'][$count_value] = 1;
         }
 
         // Записуємо масив з товарами в сесію
@@ -51,16 +59,17 @@ class CartController extends Controller
 
         // Повертаємо кількість товарів в корзині
         return self::countItems();
-
     }
 
     public function deleteProduct(Request $request) {
         $id = intval($request->id_product);
+        $count_value = strval($request->count_value);
 
         if (session()->has('products')) {
             // То заповним наш массив товарами
             $products = session("products");
-            unset($products[$id]);
+            $products[$id]['count_products'] = $products[$id]['count_products'] - $products[$id]['sizes'][$count_value];
+            unset($products[$id]['sizes'][$count_value]);
             session(['products' => $products]);
         }
 
@@ -96,7 +105,7 @@ class CartController extends Controller
             // Якщо масив з товарами є підраховуємо їх кількість
             $count = 0;
             foreach (session('products') as $id => $quantity) {
-                $count = $count + $quantity;
+                $count = $count + $quantity['count_products'];
             }
             return $count;
         } else {
@@ -111,10 +120,11 @@ class CartController extends Controller
 
         if (session()->has("products")) {
             $productsQuantity = session("products");
-            $products = Product::all()->whereIn('id', array_keys($productsQuantity));
 
-            foreach ($products as $product) {
-                $totalPrice += $product->price * $productsQuantity[$product->id];
+            foreach ($productsQuantity as $idProduct => $productKind) {
+                foreach ($productKind['sizes'] as $size => $countProduct) {
+                    $totalPrice += $countProduct * self::getPriceOfProductSize(Product::find($idProduct), $size);
+                }
             }
         }
 
@@ -124,6 +134,20 @@ class CartController extends Controller
         }
 
         return $totalPrice;
+    }
+
+    public static function getPriceOfProductSize($product, $size) {
+        if ($size === $product->count) {
+            return $product->price;
+        } elseif ($size === $product->count2) {
+            return $product->price2;
+        } elseif ($size === $product->count3) {
+            return $product->price3;
+        } elseif ($size === $product->count4) {
+            return $product->price4;
+        } else {
+            return 0;
+        }
     }
 
     public static function getProducts() {

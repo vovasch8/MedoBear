@@ -5,12 +5,13 @@ $(document).ready(function () {
         event.preventDefault();
         let url = $(this).attr("data-url");
         let idProduct = $(this).closest('.card').attr('id');
+        let count = $(this).closest('.btn-block').find('.product-price').attr('data-count');
         idProduct = idProduct.substr(2);
 
         $.ajax({
             type:'POST',
             url: url,
-            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_product" : idProduct},
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_product" : idProduct, "count_value": count},
             success: function (response) {
                 $("#productCounter").css("display", "inline-block")
                 $("#productCounter").text(response);
@@ -18,17 +19,34 @@ $(document).ready(function () {
         });
     });
 
+    $('.count-value').click(function (event) {
+        event.preventDefault();
+        let price = $(this).attr('data-price');
+        let oldActiveEl = $(this).parent().find('.btn-warning');
+        oldActiveEl.removeClass('btn-warning');
+        oldActiveEl.addClass('btn-outline-warning');
+        $(this).removeClass('btn-outline-warning');
+        $(this).addClass('btn-warning');
+        $(this).parent().parent().find('.product-price').text(price);
+        $(this).parent().parent().find('.product-price').attr("data-count", $(this).attr("data-count"));
+        let url = $(this).closest('.product').attr("href");
+        let pos = url.lastIndexOf('/');
+        url = url.substring(0, pos) + '/' + $(this).attr("data-count");
+        $(this).closest('.product').attr("href", url);
+    });
+
     // ----------------Cart----------------------------------
     $(".btn-delete").click(function (event) {
         let element = $(this);
         let idProduct = $(this).attr('id');
         let url = $(element).attr("data-url");
+        let size = $(this).attr("data-size");
         idProduct = idProduct.substr(8);
 
         $.ajax({
             type: 'POST',
             url: url,
-            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_product": idProduct},
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_product": idProduct, "count_value": size},
             success: function (response) {
                 let data = jQuery.parseJSON(response);
                 $("#productCounter").text(data.count);
@@ -444,29 +462,17 @@ $(document).ready(function () {
 
     $(".search-btn").click(function () {
         let url = $(".filter-url").attr("data-url");
-        applyFilters(url, getSort(), getSearch(), getPrice());
+        applyFilters(url, getSort(), getSearch(), getPrice(), false);
     });
 
     $('.rangeHandle').mouseup(function () {
         if (getSearch() !== "") {
             let url = $(".filter-url").attr("data-url");
-            applyFilters(url, getSort(), getSearch(), getPrice());
+            applyFilters(url, getSort(), getSearch(), getPrice(), false);
         } else {
-            let listitems = productItems;
-            listitems = sortProducts(listitems);
-            $(".product-row").html("");
-            let hasElements = false;
-            listitems.each(function (index) {
-                if (parseInt($(this).find(".product-price").text()) > parseInt($('[data-handle="0"]').attr("aria-valuenow")) && parseInt($(this).find(".product-price").text()) < parseInt($('[data-handle="1"]').attr("aria-valuenow"))) {
-                    $(".product-row").append(this);
-                    hasElements = true;
-                }
-            });
-            if (!hasElements) {
-                $(".container-empty").css("display", "block");
-            } else {
-                $(".container-empty").css("display", "none");
-            }
+            let url = $(".filter-url").attr("data-url");
+            let category_id = $('.category').attr("data-category");
+            applyFilters(url, getSort(), getSearch(), getPrice(), category_id);
         }
     });
 
@@ -517,7 +523,7 @@ $(document).ready(function () {
         return [priceMin, priceMax];
     }
 
-    function applyFilters(url, sort, search, price) {
+    function applyFilters(url, sort, search, price, category_id) {
         $.ajax({
             type: 'POST',
             url: url,
@@ -525,7 +531,8 @@ $(document).ready(function () {
                 "_token": $('meta[name="csrf-token"]').attr('content'),
                 "sort": sort,
                 "search": search,
-                "price": price
+                "price": price,
+                "category_id": category_id
             },
             success: function (content) {
                 if (!content.length) {

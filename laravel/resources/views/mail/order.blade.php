@@ -77,7 +77,7 @@
     @foreach($products as $index => $product)
         <tr>
             <td valign="top" align="center" style="border: 2px solid black;">
-                <h4>{{ $product->name . " - " .  $product->count }}</h4>
+                <h4>{{ $product->name . " - " .  $product->size }}</h4>
             </td>
             <td align="center" style="border: 2px solid black;">
                 {{ $product->product_count }} шт. <br>
@@ -86,7 +86,7 @@
                 {{ $product->price }} грн. <br>
             </td>
             <td align="center" style="border: 2px solid black;">
-                <a href="{{ route("product", $product->id) }}">
+                <a href="{{ urldecode(route("site.product", [$product->id, $product->size])) }}">
                     <button
                         style="font: inherit;background-color: #ffc106;border: none;padding: 10px;text-transform: uppercase;letter-spacing: 2px;font-weight: 900;color: white;border-radius: 5px;box-shadow: 3px 3px #ffc106; cursor: pointer;">
                         Товар на сайті
@@ -101,7 +101,7 @@
     <tr>
         <td bgcolor="#2d3748" align="center" style="color: white; padding-bottom: 15px;">
             <h4>Подивитись на замовлення в адмін панелі</h4>
-            <a href="{{ route("admin") }}"><button style="font: inherit;background-color: #ffc106;border: none;padding: 10px;text-transform: uppercase;letter-spacing: 2px;font-weight: 900;color: white;border-radius: 5px;box-shadow: 3px 3px #ffc106;cursor: pointer;">
+            <a href="{{ route("admin.admin") }}"><button style="font: inherit;background-color: #ffc106;border: none;padding: 10px;text-transform: uppercase;letter-spacing: 2px;font-weight: 900;color: white;border-radius: 5px;box-shadow: 3px 3px #ffc106;cursor: pointer;">
                     Адмін панель</button></a>
         </td>
     </tr>

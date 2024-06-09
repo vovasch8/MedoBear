@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("site.product", "") }}">
+                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("site.product", ["", ""]) }}">
 
                 </div>
                 <div class="modal-footer">

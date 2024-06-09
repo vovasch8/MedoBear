@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer("order_id");
             $table->integer("product_id");
+            $table->string("size");
+            $table->integer("price");
             $table->integer("count");
             $table->timestamps();
         });

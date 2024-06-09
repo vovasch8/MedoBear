@@ -169,7 +169,7 @@
                     <h1 class="modal-title fs-5" id="productModalLabel"><i class="fa-solid fa-box"></i> Замовлені товари</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("site.product", "") }}">
+                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("site.product", ["", ""]) }}">
 
                 </div>
                 <div class="modal-footer">
@@ -223,9 +223,22 @@
                             <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-product-name">
                             <input placeholder="Опис"  type="hidden" name="content">
                             <trix-editor id="productDescription" class="mb-2" placeholder="Опис" input="description"></trix-editor>
+                            <h6>Види товару: </h6>
                             <div class="input-group mb-2">
-                                <input id="add-product-count" type="number" class="form-control" name="count" placeholder="Кількість">
-                                <input id="add-product-price" type="number" class="form-control" name="price" placeholder="Ціна">
+                                <label class="fw-bold me-1" for="add-product-count">1.</label>
+                                <input id="add-product-count" type="text" class="form-control me-1" name="count" placeholder="Об'єм">
+                                <input id="add-product-price" type="number" class="form-control me-1" name="price" placeholder="Ціна">
+                                <label class="fw-bold me-1" for="add-product-count2">2.</label>
+                                <input id="add-product-count2" type="text" class="form-control me-1" name="count" placeholder="Об'єм">
+                                <input id="add-product-price2" type="number" class="form-control" name="price" placeholder="Ціна">
+                            </div>
+                            <div class="input-group mb-2">
+                                <label class="fw-bold me-1" for="add-product-count3">3.</label>
+                                <input id="add-product-count3" type="text" class="form-control me-1" name="count" placeholder="Об'єм">
+                                <input id="add-product-price3" type="number" class="form-control me-1" name="price" placeholder="Ціна">
+                                <label class="fw-bold me-1" for="add-product-count4">4.</label>
+                                <input id="add-product-count4" type="text" class="form-control me-1" name="count" placeholder="Об'єм">
+                                <input id="add-product-price4" type="number" class="form-control" name="price" placeholder="Ціна">
                             </div>
                             <h6>Категорія: </h6>
                             <select id="add-product-category" name="product-category" class="form-select mb-2">

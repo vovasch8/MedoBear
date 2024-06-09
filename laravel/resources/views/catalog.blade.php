@@ -1,9 +1,21 @@
 @extends("layouts.main")
 
-@section("title") Каталог @endsection
+@section("title") {{ $activeCategory->name }} @endsection
+
+@section('seo-block')
+    <meta name="description" content="Інтернет магазин медових товарів MedoBear: натуральний мед, пилок, віск та інші продукти бджільництва. Висока якість, швидка доставка, вигідні ціни. У нас в наявності багато бджолопродуктів, які підійдуть вам по смаку!">
+    <meta name="keywords" content="medobear, медобір, {{ $activeCategory->name . ',' }} інтернет магазин меду, купити мед онлайн, продаж меду, купити мед, продукти бджільництва, мед, пилок, прополіс, бджолопродукти, медова продукція, медові ласощі, настоянки, свічки, подарункові набори, напої, лікувальний мед, подарунок, вітамінні продукти, медовий бокс, пасіка, натуральний мед, мед з пасіки, домашній мед, свіжий мед, медові десерти, інтернет магазин, каталог товарів">
+    <meta name="author" content="MedoBear">
+
+    <meta property="og:url" content="https://medo-bear.com">
+    <meta property="og:type" content="Page">
+    <meta property="og:title" content="Інтернет Магазин - MedoBear">
+    <meta property="og:description" content="Інтернет магазин медових товарів MedoBear: натуральний мед, пилок, віск та інші продукти бджільництва. Висока якість, швидка доставка, вигідні ціни. У нас в наявності багато бджолопродуктів, які підійдуть вам по смаку!">
+    <meta property="og:image" content="{{ asset('logo.png') }}">
+@endsection
 
 @section("content")
-    <div class="container-fluid">
+    <div class="container-fluid category" data-category="{{ $activeCategory->id }}">
         <div class="row">
             <button style="background: #2d3748;color: #ffc106;font-weight: bold;" class="btn-menu btn"><i
                     class="fas fa-bars"></i></button>
@@ -46,16 +58,29 @@
                 <div class="row pe-5 product-row mb-3 main-row">
                     @foreach($products as $product)
                         <div class="col-12 col-md-6 col-lg-6 col-xl-4 mb-4 product-grid">
-                            <a href="{{ route('site.product', $product->id) }}" id="p-{{$product->id}}"
+                            <a href="{{ route('site.product', [$product->id, $product->count]) }}" id="p-{{$product->id}}"
                                class="card shadow-sm product">
                                 <img width="100%" height="225px" class="bd-placeholder-img card-img-top"
                                      src="{{ asset("storage") . "/products/" . $product->id . "/" . (isset($product->images[0]) ? $product->images[0]->image : '')}}"
                                      alt="MedoBear">
                                 <div class="card-body">
                                     <h5 class="card-text fw-semibold mb-0 product-name">{{ $product->name }}</h5>
-                                    <span class="count">Кількість: {{ $product->count }}</span>
+                                    <span class="count">Кількість:
+                                        @if($product->count)
+                                            <span data-price="{{ $product->price }}" data-count="{{ $product->count }}" class="text-dark btn btn-sm btn-warning me-1 count-value">{{ $product->count }}</span>
+                                        @endif
+                                        @if($product->count2)
+                                            <span data-price="{{ $product->price2 }}" data-count="{{ $product->count2 }}" class="text-dark btn btn-sm btn-outline-warning me-1 count-value">{{ $product->count2 }}</span>
+                                        @endif
+                                        @if($product->count3)
+                                            <span data-price="{{ $product->price3 }}" data-count="{{ $product->count3 }}"class="text-dark btn btn-sm btn-outline-warning count-value">{{ $product->count3 }}</span>
+                                        @endif
+                                        @if($product->count4)
+                                            <span data-price="{{ $product->price4 }}" data-count="{{ $product->count4 }}" class="text-dark btn btn-sm btn-outline-warning count-value">{{ $product->count4 }}</span>
+                                        @endif
+                                    </span>
                                     <div class="d-flex justify-content-between align-items-center btn-block">
-                                        <span class="fw-bold price text-warning"><span class="product-price">{{$product->price}}</span> грн</span>
+                                        <span class="fw-bold price text-warning"><span class="product-price" data-count="{{ $product->count }}">{{$product->price}}</span> грн</span>
                                         <button data-url="{{ route('cart.add_product') }}"
                                                 class="btn-add-product btn btn-warning text-body-secondary"><i
                                                 class="fas fa-shopping-basket"></i> Купити
@@ -74,16 +99,28 @@
                         <div class="row d-flex">
                             @foreach($mostPopularProducts as $key => $product)
                                     <div id="top-{{ $key }}" class="item mb-4 col-xs-12 col-sm-12 col-md-6 col-lg-4 ps-3 pe-3 pt-3 @if($key == 0) active @endif">
-                                        <a href="{{ route('site.product', $product->id) }}" id="p-{{$product->id}}" class="card shadow-sm product">
+                                        <a href="{{ route('site.product', [$product->id, $product->count]) }}" id="m-{{$product->id}}" class="card shadow-sm product">
                                             <img width="100%" height="225px" class="bd-placeholder-img card-img-top"
                                                              src="{{ asset("storage") . "/products/" . $product->id . "/" . (isset($product->images[0]) ? $product->images[0]->image : '')}}"
                                                              alt="MedoBear">
                                             <div class="card-body">
                                                 <h5 class="card-text fw-semibold mb-0">{{ $product->name }}</h5>
-                                                <span class="count">Кількість: {{ $product->count }}</span>
-                                                <div
-                                                    class="d-flex justify-content-between align-items-center btn-block">
-                                                    <span class="fw-bold price text-warning">{{$product->price}} грн</span>
+                                                <span class="count">Кількість:
+                                                        @if($product->count)
+                                                            <span data-price="{{ $product->price }}" data-count="{{ $product->count }}" class="text-dark btn btn-sm btn-warning me-1 count-value">{{ $product->count }}</span>
+                                                        @endif
+                                                        @if($product->count2)
+                                                            <span data-price="{{ $product->price2 }}" data-count="{{ $product->count2 }}" class="text-dark btn btn-sm btn-outline-warning me-1 count-value">{{ $product->count2 }}</span>
+                                                        @endif
+                                                        @if($product->count3)
+                                                            <span data-price="{{ $product->price3 }}" data-count="{{ $product->count3 }}" class="text-dark btn btn-sm btn-outline-warning count-value">{{ $product->count3 }}</span>
+                                                        @endif
+                                                        @if($product->count4)
+                                                            <span data-price="{{ $product->price4 }}" data-count="{{ $product->count4 }}" class="text-dark btn btn-sm btn-outline-warning count-value">{{ $product->count4 }}</span>
+                                                        @endif
+                                                    </span>
+                                                <div class="d-flex justify-content-between align-items-center btn-block">
+                                                    <span class="fw-bold price text-warning"><span class="product-price" data-count="{{ $product->count }}">{{$product->price}}</span> грн</span>
                                                     <button data-url="{{ route('cart.add_product') }}" class="btn-add-product btn btn-warning text-body-secondary"><i class="fas fa-shopping-basket"></i> Купити</button>
                                                 </div>
                                             </div>

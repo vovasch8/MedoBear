@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::name('site.')->group(function () {
     Route::get('/', [SiteController::class, 'showCatalog'])->name('catalog');
     Route::get('/categories/{id}', [SiteController::class, 'showCatalog'])->name('current_catalog');
-    Route::get('/product/{id}', [SiteController::class, 'showProduct'])->name('product');
+    Route::get('/product/{id}/{size}', [SiteController::class, 'showProduct'])->name('product');
     Route::get('/delivery', [SiteController::class, 'showDelivery'])->name('delivery');
     Route::get('/contacts', [SiteController::class, 'showContacts'])->name('contacts');
     Route::get('/about-us', [SiteController::class, 'showAbout'])->name('about_us');

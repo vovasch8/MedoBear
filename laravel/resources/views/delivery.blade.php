@@ -2,6 +2,18 @@
 
 @section("title") Оплата і доставка @endsection
 
+@section('seo-block')
+    <meta name="description" content="Оплата і доставка на сайті MedoBear, кроки завдяки яким ви зможете отримати товар!">
+    <meta name="keywords" content="оплата, доставка, отримати товар, як купити товар, як отримати товар, медові продукти">
+    <meta name="author" content="MedoBear">
+
+    <meta property="og:url" content="https://medo-bear.com/delivery">
+    <meta property="og:type" content="Page">
+    <meta property="og:title" content="Оплата і доставка">
+    <meta property="og:description" content="Оплата і доставка на сайті MedoBear, кроки завдяки яким ви зможете отримати товар!">
+    <meta property="og:image" content="{{ asset('logo.png') }}">
+@endsection
+
 @section("content")
     <div class="row container-fluid">
         <div class="col-xl-6 col-lg-12 mb-3 pe-5">

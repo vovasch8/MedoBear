@@ -1,2 +1,11 @@
 User-agent: *
-Disallow:
+Disallow: /bootstrap/
+Disallow: /config/
+Disallow: /database/
+Disallow: /lang/
+Disallow: /node_modules/
+Disallow: /tests/
+Disallow: /vendor/
+
+SiteMap: https://medo-bear.com/sitemap.xml
+

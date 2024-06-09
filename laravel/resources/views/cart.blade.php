@@ -11,27 +11,33 @@
             <div class="col-md-9 col-sm-12">
                 <div class="row cart-row pe-5">
                     <h4 class="fw-bold text-warning cart-title"><a href="{{ URL::previous() }}" class="btn-back-cart btn btn-warning"><i class="fas fa-angle-left"></i>&nbsp;Назад</a>&nbsp;Корзина</h4>
-                   <table class="table">
-                       <tr>
-                           <th>Назва продукту</th>
-                           <th>Вартість</th>
-                           <th>Кількість</th>
-                           <th>Видалити</th>
-                       </tr>
-                       @foreach($products as $product)
+                   <div class="table-responsive mb-1">
+                        <table class="table">
                            <tr>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->price }}  грн</td>
-                                <td>{{$productQuantity[$product->id] }}</td>
-                                <td><i id="btn-del-{{ $product->id }}" class="fas fa-trash-alt btn-delete" data-url="{{route("cart.delete_product")}}"></i></td>
+                               <th>Назва продукту</th>
+                               <th>Вартість</th>
+                               <th>Розмір</th>
+                               <th>Кількість</th>
+                               <th>Видалити</th>
                            </tr>
+                           @foreach($products as $product)
+                               @foreach($productQuantity[$product->id]['sizes'] as $size => $count)
+                                   <tr>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ \App\Http\Controllers\CartController::getPriceOfProductSize($product, $size) }}  грн</td>
+                                        <td>{{ $size }}</td>
+                                        <td>{{ $count }}</td>
+                                        <td><i id="btn-del-{{ $product->id }}" data-size="{{ $size }}" class="fas fa-trash-alt btn-delete" data-url="{{route("cart.delete_product")}}"></i></td>
+                                   </tr>
+                               @endforeach
                            @endforeach
-                       <tr>
-                           <td>Загальна вартість:</td>
-                           <td id="totalPrice" class="fw-bold">{{ $totalPrice  }} грн</td>
-                           <td colspan="2"><div class="input-group"><input id="promocodeInput" @if(session()->has('promocode')) disabled value="{{ session('promocode')['name'] }}" @endif type="text" class="form-control promo-input" placeholder="Промокод"><button data-url="{{ route("cart.add_promocode") }}" id="btn-promocode" @if(!session()->has('promocode')) @endif class="btn btn-warning"><i class="fas fa-check"></i>&nbsp;<span class="span-activate">Застосувати</span></button></div><span class="error"></span></td>
-                       </tr>
-                   </table>
+                           <tr>
+                               <td>Загальна вартість:</td>
+                               <td id="totalPrice" class="fw-bold">{{ $totalPrice  }} грн</td>
+                               <td colspan="3"><div class="input-group"><input id="promocodeInput" @if(session()->has('promocode')) disabled value="{{ session('promocode')['name'] }}" @endif type="text" class="form-control promo-input" placeholder="Промокод"><button data-url="{{ route("cart.add_promocode") }}" id="btn-promocode" @if(!session()->has('promocode')) @endif class="btn btn-warning"><i class="fas fa-check"></i>&nbsp;<span class="span-activate">Застосувати</span></button></div><span class="error"></span></td>
+                           </tr>
+                       </table>
+                   </div>
                     <div class="text-center">
                         <button data-bs-toggle="modal" data-bs-target="#orderModal" class="btn btn-warning btn-order"><i class="fas fa-box"></i> Оформити замовлення</button>
                     </div>

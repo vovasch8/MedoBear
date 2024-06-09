@@ -8,6 +8,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
 @endsection
 
+@section('seo-block')
+    <meta name="description" content="{{mb_substr(strip_tags($product->description), 0, 200)}}">
+    <meta name="keywords" content="{{$product->keywords}}">
+    <meta name="author" content="MedoBear">
+
+    <meta property="og:url" content="{{"https://medo-bear.com/product/" . $product->id}}">
+    <meta property="og:type" content="Page">
+    <meta property="og:title" content="{{$product->name}}">
+    <meta property="og:description" content="{{mb_substr(strip_tags($product->description), 0, 200)}}">
+    <meta property="og:image" content="{{ asset('storage') . '/products/' . $product->id . '/' . $product->images[0]->image}}">
+@endsection
+
 @section("content")
     <div class="container-fluid">
         <div class="row">
@@ -39,11 +51,22 @@
                         <div id="p-{{ $product->id }}" class="card p-3 mb-3">
                             <a href="{{ URL::previous() }}" class="btn-back btn btn-warning text-body-secondary"><i class="fas fa-angle-left"></i>&nbsp;Назад</a>
                             <h1 class="card-text fw-semibold name-product">{{ $product->name }}</h1>
-                            <span class="count mb-1">Кількість: {{ $product->count }}</span>
+                            <span class="count mb-1">Кількість:
+                                <span data-price="{{ $product->price }}" data-count="{{ $product->count }}" class="text-dark btn btn-sm @if($size === $product->count) btn-warning @else btn-outline-warning @endif me-1 count-value">{{ $product->count }}</span>
+                                @if($product->count2)
+                                    <span data-price="{{ $product->price2 }}" data-count="{{ $product->count2 }}" class="text-dark btn btn-sm @if($size === $product->count2) btn-warning @else btn-outline-warning @endif me-1 count-value">{{ $product->count2 }}</span>
+                                @endif
+                                @if($product->count3)
+                                    <span data-price="{{ $product->price3 }}" data-count="{{ $product->count3 }}" class="text-dark btn btn-sm @if($size === $product->count3) btn-warning @else btn-outline-warning @endif count-value">{{ $product->count3 }}</span>
+                                @endif
+                                @if($product->count4)
+                                    <span data-price="{{ $product->price4 }}" data-count="{{ $product->count4 }}" class="text-dark btn btn-sm @if($size === $product->count4) btn-warning @else btn-outline-warning @endif count-value">{{ $product->count4 }}</span>
+                                @endif
+                            </span>
                             <hr>
                             <div class="pt-2 pb-2">
                                 <span class="fw-bold title-price">Ціна:&nbsp;</span>
-                                <span class="fw-bold price text-warning title-price">{{$product->price}} грн</span>
+                                <span class="fw-bold price text-warning title-price"><span class="product-price" data-count="{{ $size }}">{{ \App\Http\Controllers\CartController::getPriceOfProductSize($product, $size) }}</span> грн</span>
                                 <button data-url="{{ route('cart.add_product') }}" class="btn btn-add-product btn-warning text-body-secondary float-end"><i
                                         class="fas fa-shopping-basket"></i> Купити
                                 </button>

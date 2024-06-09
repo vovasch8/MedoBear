@@ -62,11 +62,15 @@ class OrderController extends Controller
             $orderId = $orderModel->id;
 
             foreach ($products as $id => $quantity) {
-                $orderProductsModel = new OrderProducts();
-                $orderProductsModel->order_id = $orderId;
-                $orderProductsModel->product_id = $id;
-                $orderProductsModel->count = $quantity;
-                $orderProductsModel->save();
+                foreach ($quantity['sizes'] as $size => $count) {
+                    $orderProductsModel = new OrderProducts();
+                    $orderProductsModel->order_id = $orderId;
+                    $orderProductsModel->product_id = $id;
+                    $orderProductsModel->size = $size;
+                    $orderProductsModel->price = CartController::getPriceOfProductSize(Product::find($id), $size);
+                    $orderProductsModel->count = $count;
+                    $orderProductsModel->save();
+                }
             }
 
             $order = Order::find($orderId);

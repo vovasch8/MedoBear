@@ -80,7 +80,7 @@ class Telegram implements SocialNetwork
         // Get Products from order
         $products =  DB::table('products')
             ->join('order_products', 'products.id', '=', 'order_products.product_id')
-            ->select('products.id', 'products.name', 'products.count', 'products.price', 'order_products.count as product_count')
+            ->select('products.id', 'products.name', 'order_products.size', 'order_products.price', 'order_products.count as product_count')
             ->where('order_products.order_id', $order->id)
             ->get();
         $products = Product::getProductsWithImages($products);
@@ -89,10 +89,10 @@ class Telegram implements SocialNetwork
         $orderProducts = "";
         foreach($products as $index => $product) {
             $orderProducts .= '📦️' . $product->name . " - "
-                . $product->count
-                . " - " . $product->product_count . "шт."
+                . $product->size
+                . " - " . $product->product_count . "шт. по "
                 . $product->price . "грн.шт.\n"
-                . route("site.product", $product->id) . "\n";
+                . urldecode(route("site.product", [$product->id, $product->size])) . "\n";
         }
 
         // Generate all message for notification

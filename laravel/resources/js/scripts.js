@@ -120,7 +120,13 @@ $(document).ready(function () {
         let product_name = $("#add-product-name").val();
         let product_description = $("#productDescription").html()
         let product_count = $("#add-product-count").val();
+        let product_count2 = $("#add-product-count2").val();
+        let product_count3 = $("#add-product-count3").val();
+        let product_count4 = $("#add-product-count4").val();
         let product_price = $("#add-product-price").val();
+        let product_price2 = $("#add-product-price2").val();
+        let product_price3 = $("#add-product-price3").val();
+        let product_price4 = $("#add-product-price4").val();
         let product_active = $("#is-active-product").prop('checked');
         let product_category_id = $("#add-product-category").val();
         let arr_images = $("#add-product-image").prop('files');
@@ -130,7 +136,13 @@ $(document).ready(function () {
         data.append("product_name", product_name);
         data.append("product_description", product_description);
         data.append("product_count", product_count);
+        data.append("product_count2", product_count2);
+        data.append("product_count3", product_count3);
+        data.append("product_count4", product_count4);
         data.append("product_price", product_price);
+        data.append("product_price2", product_price2);
+        data.append("product_price3", product_price3);
+        data.append("product_price4", product_price4);
         data.append("product_active", product_active);
         data.append("product_category_id", product_category_id);
         for (let el of arr_images) {

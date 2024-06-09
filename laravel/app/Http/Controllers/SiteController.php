@@ -9,11 +9,12 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SiteController extends Controller
 {
     public function showCatalog($categoryId = 1) {
-
+//        session()->forget("products");
         $category = Category::find($categoryId);
         if (!$category) {
             return redirect("/404");
@@ -26,19 +27,19 @@ class SiteController extends Controller
         $mostPopularProducts = $orderModel->getMostPopularProducts(3);
         $mostPopularProducts = Product::getProductsWithImages($mostPopularProducts);
 
-        return view("catalog", ["categories" => $categories, "products" => $products, "mostPopularProducts" => $mostPopularProducts]);
+        return view("catalog", ["categories" => $categories, "products" => $products, "mostPopularProducts" => $mostPopularProducts, 'activeCategory' => $category]);
     }
 
-    public function showProduct($productId) {
+    public function showProduct($productId, $size) {
         $product = Product::find($productId);
-        if (!$product) {
+        if (!$product || !Product::checkSize($product, $size)) {
             return redirect("/404");
         }
 
         $categories = Category::all()->where("active", "=", true);
         $product = Product::getProductWithImages($product);
 
-        return view("product", ["categories" => $categories, "product" => $product]);
+        return view("product", ["categories" => $categories, "product" => $product, 'size' => $size]);
     }
 
     public function showDelivery() {
@@ -69,6 +70,7 @@ class SiteController extends Controller
     public function applyFilters(Request $request) {
         $type = "name";
         $direct = "asc";
+        $search = strval($request->search);
 
         if ($request->sort == "alpha-up") {
             $type = "name";
@@ -84,13 +86,51 @@ class SiteController extends Controller
             $direct = "asc";
         }
 
-        ;
-        $products = DB::table("products")
-            ->where("name", "like", "%" . $request->search . "%")
-            ->whereBetween('price', [intval($request->price[0]), intval($request->price[1])])
-            ->orderBy($type, $direct)->get();
+        $min = intval($request->price[0]);
+        $max = intval($request->price[1]);
+        $query = DB::table("products");
 
+        if ($search != "") {
+            $query->where("name", "like", "%" . $request->search . "%");
+        } else {
+            $query->where("category_id", "=", intval($request->category_id));
+        }
+
+        $query->whereBetween('price', [$min, $max])
+            ->orWhereBetween('price2', [$min, $max])
+            ->orWhereBetween('price3', [$min, $max])
+            ->orWhereBetween('price4', [$min, $max]);
+
+        $products = $query->orderBy($type, $direct)->get();
         $products = Product::getProductsWithImages(collect($products));
+
+        foreach ($products as $product) {
+            if($product->price4 < $min || $product->price4 > $max) {
+                $product->price4 = null;
+                $product->count4 = null;
+            } else {
+                $product->startPrice = $product->price4;
+                $product->startCount = $product->count4;
+            } if($product->price3 < $min || $product->price3 > $max) {
+                $product->price3 = null;
+                $product->count3 = null;
+            } else {
+                $product->startPrice = $product->price3;
+                $product->startCount = $product->count3;
+            } if($product->price2 < $min || $product->price2 > $max) {
+                $product->price2 = null;
+                $product->count2 = null;
+            } else {
+                $product->startPrice = $product->price2;
+                $product->startCount = $product->count2;
+            } if ($product->price < $min || $product->price > $max) {
+                $product->price = null;
+                $product->count = null;
+            } else{
+                $product->startPrice = $product->price;
+                $product->startCount = $product->count;
+            }
+        }
 
         return view("layouts.products-content", ["products" => $products]);
     }

@@ -42,4 +42,8 @@ class Product extends Model
 
         return $sortArr;
     }
+
+    public static function checkSize($product, $size) {
+        return ($product->count === $size || $product->count2 === $size || $product->count3 === $size || $product->count4 === $size);
+    }
 }

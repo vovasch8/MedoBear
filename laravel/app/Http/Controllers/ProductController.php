@@ -21,6 +21,19 @@ class ProductController extends Controller
         $productModel->category_id = intval($request->product_category_id);
         $productModel->price = intval($request->product_price);
         $productModel->count = strval($request->product_count);
+        if (intval($request->product_price2) && strval($request->product_count2)) {
+            $productModel->price2 = intval($request->product_price2);
+            $productModel->count2 = strval($request->product_count2);
+        }
+        if (intval($request->product_price3) && strval($request->product_count3)) {
+            $productModel->price3 = intval($request->product_price3);
+            $productModel->count3 = strval($request->product_count3);
+        }
+        if (intval($request->product_price4) && strval($request->product_count4)) {
+            $productModel->price4 = intval($request->product_price4);
+            $productModel->count4 = strval($request->product_count4);
+        }
+
         $productImages = $request->product_images;
 
         $productModel->save();
@@ -114,7 +127,13 @@ class ProductController extends Controller
         $id = intval($request->id);
 
         $product = Product::find($id);
+
+        $productImages = ProductImages::where("product_id", "=", $id)->get();
+        foreach ($productImages as $image) {
+            $image->delete();
+        }
         $product->delete();
+        Storage::disk('public')->deleteDirectory("products/" . $id);
 
         return true;
     }

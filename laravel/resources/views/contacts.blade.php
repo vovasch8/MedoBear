@@ -2,6 +2,18 @@
 
 @section("title") Контакти @endsection
 
+@section('seo-block')
+    <meta name="description" content="Як можна зв'язатись з нами?">
+    <meta name="keywords" content="контакти медобір, контакти medobear, контакти, зворотній зв'язок, medobear">
+    <meta name="author" content="MedoBear">
+
+    <meta property="og:url" content="https://medo-bear.com/about-us">
+    <meta property="og:type" content="Page">
+    <meta property="og:title" content="Контакти">
+    <meta property="og:description" content="Як можна зв'язатись з нами?">
+    <meta property="og:image" content="{{ asset('logo.png') }}">
+@endsection
+
 @section("content")
     <div class="container-fluid">
         <div class="row">

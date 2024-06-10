@@ -66,7 +66,7 @@ class AdminController extends Controller
         $products = Product::getProductsWithImages($products);
         $categories = Category::all()->sortByDesc("id");
 
-        return view("admin.products-table", ["products" => $products, 'typeTable' => "products", "categories" => $categories, "editedColumns" => [1, 3, 4]]);
+        return view("admin.products-table", ["products" => $products, 'typeTable' => "products", "categories" => $categories, "editedColumns" => [1, 4, 5, 6, 7, 8, 9, 10, 11]]);
     }
 
     public function showMessages() {
@@ -89,7 +89,7 @@ class AdminController extends Controller
         $columnNumber = intval($request->column);
         $value = $request->value;
         $editedColumns['orders'] = [1 => "pip", 2 => "phone", 5 => "price"];
-        $editedColumns['products'] = [1 => "name", 3 => "count", 4 => "price"];
+        $editedColumns['products'] = [1 => "name", 3 => "count", 4 => "price", 5 => "count2", 6 => "price2", 7 => "count3", 8 => "price3", 9 => "count4", 10 => "price4"];
         $editedColumns['messages']= [1 => "name", 2 => "subject", 3 => "text", 4 => "phone"];
         $editedColumns['promocodes']= [1 => "promocode", 2 => "discount", 3 => "active_to"];
         $editedColumns['categories'] = [1 => "name"];

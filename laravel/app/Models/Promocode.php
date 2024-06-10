@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Promocode extends Model
 {
     use HasFactory;
+
+    public static function getDiscount($promocode) {
+        $promocode = Promocode::all()->where("promocode", "=", $promocode)->first();
+
+        return $promocode->discount;
+    }
 }

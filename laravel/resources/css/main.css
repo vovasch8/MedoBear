@@ -516,6 +516,13 @@ footer li, footer p {
     max-height: 150px;
 }
 
+.productImage {
+    border: 3px solid #ffc106;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+}
+
 @media (max-width: 768px) {
     #logo {
         margin-left: 0px!important;

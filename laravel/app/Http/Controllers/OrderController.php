@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderMail;
 use App\Models\Product;
+use App\Models\Promocode;
+use App\Models\UserOrders;
 use App\Social\SocialNetworks\Telegram;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProducts;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -78,6 +81,13 @@ class OrderController extends Controller
             $orderNotification = $telegram->generateOrderNotification($order);
             $telegram->sendNotification($telegram->generateNotification($orderNotification));
             Mail::to(config("mail.mail_for_order"))->send(new OrderMail($order));
+            if (\Auth::check()) {
+                $userOrder = new UserOrders();
+                $userOrder->user_id = Auth::user()->id;
+                $userOrder->order_id = $orderId;
+
+                $userOrder->save();
+            }
         }
 
         return true;
@@ -111,12 +121,13 @@ class OrderController extends Controller
     public function removeProductFromOrder(Request $request) {
         $idOrder = intval($request->id_order);
         $idProduct = intval($request->id_product);
-        $product = DB::table('order_products')->where('order_id', '=', $idOrder)->where("product_id", "=", $idProduct)->first();
+        $size = strval($request->count_substance);
+        $product = DB::table('order_products')->where('order_id', '=', $idOrder)->where("product_id", "=", $idProduct)->where("size", "=", $size)->first();
 
         if (!empty($product)) {
-            DB::table('order_products')->where('order_id', '=', $idOrder)->where("product_id", "=", $idProduct)->delete();
+            DB::table('order_products')->where('order_id', '=', $idOrder)->where("product_id", "=", $idProduct)->where("size", "=", $size)->delete();
 
-            return $idProduct;
+            return $this->updateTotalPrice(Order::find($idOrder));
         }
 
         return false;
@@ -127,7 +138,7 @@ class OrderController extends Controller
         $products = [];
 
         if ($orderId) {
-            $products = DB::table("products")->join("order_products", "products.id", "=", "product_id")->where("order_id", "=", $orderId)->select("products.id", "products.name", "products.price", "order_products.order_id", "order_products.count", "products.count AS count_substance")->get();
+            $products = DB::table("products")->join("order_products", "products.id", "=", "product_id")->where("order_id", "=", $orderId)->select("products.id", "products.name", "order_products.price", "order_products.order_id", "order_products.count as count", "order_products.size AS count_substance")->get();
         }
 
         return Product::getProductsWithImages($products);
@@ -145,5 +156,50 @@ class OrderController extends Controller
         $order->delete();
 
         return true;
+    }
+
+    public function getOrderCart(Request $request) {
+        $products = $this->getOrderProducts($request);
+
+        return view("layouts.admin-order-products", ['products' => $products]);
+    }
+
+    public function updateTotalPrice($order) {
+        $products = OrderProducts::all()->where("order_id", "=", $order->id);
+        $totalPrice = 0;
+
+        if ($products) {
+            foreach ($products as $product) {
+                $totalPrice += $product->count * $product->price;
+            }
+        }
+
+        if ($order->promocode) {
+            $promocode = Promocode::all()->where("promocode", "=", $order->promocode)->first();
+            $totalPrice = round($totalPrice - ($promocode['discount'] * $totalPrice / 100));
+        }
+
+        $order->price = $totalPrice;
+        $order->save();
+
+        return $totalPrice;
+    }
+
+    public function updateOrder(Request $request) {
+        $id_product = intval($request->id_product);
+        $id_order = intval($request->id_order);
+        $size = strval($request->size);
+        $count = intval($request->count);
+
+        $orderProduct = OrderProducts::all()->where('product_id', $id_product)->where('order_id', $id_order)->where('size', $size)->first();
+
+        if ($orderProduct) {
+            $orderProduct->count = $count;
+            $orderProduct->save();
+
+            return $this->updateTotalPrice(Order::find($id_order));
+        }
+
+        return false;
     }
 }

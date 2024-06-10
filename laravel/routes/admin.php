@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/product-add-photo', [ProductController::class, 'addPhotoProduct'])->name('add_photo_product');
         Route::post('/admin/product-remove-photo', [ProductController::class, 'removePhotoProduct'])->name('remove_photo_product');
         Route::post('/admin/product-edit-description', [ProductController::class, 'editDescription'])->name("edit_description");
+        Route::post('/admin/product-edit-keywords', [ProductController::class, 'editKeywords'])->name("edit_keywords");
 
         Route::post('/admin/add-product', [ProductController::class, 'addProduct'])->name('add_product');
         Route::post('/admin/delete-product', [ProductController::class, 'deleteProduct'])->name('delete_product');

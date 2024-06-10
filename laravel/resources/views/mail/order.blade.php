@@ -24,7 +24,8 @@
             Покупець: {{ $order->pip }} <br>
             Телефон: {{ $order->phone }} <br>
             @if($order->promocode)
-                Промокод: {{ $order->promocode }}
+                Промокод: {{ $order->promocode }} <br>
+                Знижка: {{ $order->discount . "%" }}
             @endif
         </td>
         <td valign="top" align="center" style="border: 2px solid black;">

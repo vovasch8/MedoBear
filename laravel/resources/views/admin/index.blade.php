@@ -112,6 +112,7 @@
                             <th>Адреса</th>
                             <th>Товари</th>
                             <th>Ціна замовлення</th>
+                            <th>Промокод</th>
                             <th>Дата</th>
                         </tr>
                         </thead>
@@ -123,6 +124,7 @@
                             <th>Адреса</th>
                             <th>Товари</th>
                             <th>Ціна замовлення</th>
+                            <th>Промокод</th>
                             <th>Дата</th>
                         </tr>
                         </tfoot>
@@ -150,7 +152,8 @@
                                 <td>
                                     <button data-url="{{ route("order.get_order_products") }}" type="button" class="btn btn-outline-dark btn-order-products" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fa-solid fa-box"></i> Замовленя</button>
                                 </td>
-                                <td>{{ $order->price }} @if($order->promocode)<i class="fa-brands fa-gg-circle tooltipPromo promo-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="З промокодом: {{ $order->promocode }}"></i>@endif</td>
+                                <td>{{ $order->price }}</td>
+                                <td>@if($order->promocode)<i class="fa-brands fa-gg-circle tooltipPromo promo-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="З промокодом: {{ $order->promocode . " Знижка: " . \App\Models\Promocode::getDiscount($order->promocode) . "%"}}"></i>@else Немає @endif</td>
                                 <td>{{ $order->created_at }}</td>
                             </tr>
                         @endforeach
@@ -169,7 +172,7 @@
                     <h1 class="modal-title fs-5" id="productModalLabel"><i class="fa-solid fa-box"></i> Замовлені товари</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("site.product", ["", ""]) }}">
+                <div id="product-body" data-img="{{asset('storage')}}" class="modal-body" data-order="" data-product-url="{{ route("site.product", ["", ""]) }}">
 
                 </div>
                 <div class="modal-footer">

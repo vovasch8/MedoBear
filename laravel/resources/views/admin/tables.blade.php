@@ -8,6 +8,7 @@
         <th>Адреса</th>
         <th>Товари</th>
         <th>Ціна замовлення</th>
+        <th>Промокод</th>
         <th>Дата</th>
         <th>Дія</th>
     </tr>
@@ -34,9 +35,10 @@
                          @endif alt="{{ $order->id }}"> Адереса
                 </button></td>
             <td>
-                <button data-url="{{ route("order.get_order_products") }}" type="button" class="btn btn-outline-dark btn-order-products" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fa-solid fa-box"></i> Замовлення</button>
+                <button data-url="{{ route("order.get_order_cart") }}" type="button" class="btn btn-outline-dark btn-order-products" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fa-solid fa-box"></i> Замовлення</button>
             </td>
-            <td>{{ $order->price }} @if($order->promocode)<i class="fa-brands fa-gg-circle tooltipPromo promo-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="З промокодом: {{ $order->promocode }}"></i>@endif</td>
+            <td>{{ $order->price }}</td>
+            <td>@if($order->promocode)<i class="fa-brands fa-gg-circle tooltipPromo promo-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="З промокодом: {{ $order->promocode . " Знижка: " . \App\Models\Promocode::getDiscount($order->promocode) . "%"}}"></i>@else Немає @endif</td>
             <td>{{ $order->created_at }}</td>
             <td><div class="actions text-center"><i data-url="{{ route("admin_orders.delete_order") }}" class="fa-solid fa-trash"></i></div></td>
         </tr>
@@ -49,27 +51,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="productModalLabel"><i class="fa-solid fa-box"></i> Замовлені товари <i id="edit-order-btn" class="pointer fa-solid fa-pen-to-square"></i></h1>
+                    <h1 class="modal-title fs-5" id="productModalLabel"><i class="fa-solid fa-box"></i> Замовлені товари</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="me-2 ms-2">
                     <div id="edit-order-block" class="mt-2">
                         <h6 class="text-center">Редагування замовлення <i id="closeEditBlock" class="fa-solid fa-circle-xmark pointer"></i></h6>
-                        <div class="input-group mt-2">
-                            <input id="idProductOrderAdd" class="form-control" type="text" placeholder="ID товару">
-                            <input id="countProductOrder" class="form-control" type="number" min="1" placeholder="Кількість">
-                            <button id="addProductsBtnToOrder" class="btn btn-dark" data-url="{{ route("admin_orders.add_product_to_order") }}"><i class="fa-solid fa-circle-plus"></i></button>
-                            <span style="width: 10px"></span>
-                            <input id="idProductOrderDelete" type="text" class="form-control" placeholder="ID товару">
-                            <button id="removeProductBtnFromOrder" class="btn btn-danger" data-url="{{ route("admin_orders.remove_product_from_order") }}"><i class="fa-solid fa-trash"></i></button>
-                        </div>
                     </div>
                 </div>
-                <div id="product-body" class="modal-body" data-order="" data-product-url="{{ route("site.product", ["", ""]) }}">
+                <div id="product-body" data-image-url="{{ asset('storage') . "/products/" }}" class="modal-body" data-order="" data-product-url="{{ route("site.product", ["", ""]) }}">
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark btn-order_products" data-bs-dismiss="modal">Закрити</button>
+                    <button onclick="document.location.reload();" type="button" class="btn btn-dark btn-order_products">Оновити</button>
                 </div>
             </div>
         </div>

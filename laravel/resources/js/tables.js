@@ -78,17 +78,7 @@ $(document).ready(function () {
             url: url,
             data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_order": idOrder},
             success: function (response) {
-                let productsSelect = "";
-                let urlProduct = $(".modal-body").attr("data-product-url");
-                for (let item of response) {
-                    productsSelect += "<div id='p-" + item.id + "' style='height: 120px; background: cornsilk!important;' class='card d-block mb-3'>" +
-                        "<img class='float-start d-block me-2' width='150px' height='120px' src='" + item.image +"'>" +
-                        "<div class='d-block'><a href='" + urlProduct + "/" + item.id + "' class='mt-1 fw-bold text-decoration-none text-dark d-block'>" + item.name + " " + item.count_substance + "</a>" +
-                        "---<span class='d-block fw-bold'><span class='text-warning'>Кількість:</span> " + item.count + " шт</span>" +
-                        "<span class='d-block fw-bold'><span class='text-warning'>Ціна:</span> " + item.price + " грн</span></div>" +
-                        "</div>";
-                }
-                $(".modal-body").html(productsSelect);
+                $(".modal-body").html(response);
                 $(".modal-body").attr("data-order", idOrder);
             }
         });
@@ -125,22 +115,6 @@ $(document).ready(function () {
         });
     });
 
-    $("#removeProductBtnFromOrder").click(function (event) {
-        let url = $(this).attr("data-url");
-        let idOrder = $(".modal-body").attr("data-order");
-        let idProduct = $("#idProductOrderDelete").val();
-
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_order": idOrder, "id_product": idProduct},
-            success: function (response) {
-                $("#p-" + response).remove();
-                $("#idProductOrderDelete").val("");
-            }
-        });
-    });
-
     $("#edit-order-btn").click(function (event) {
         $("#edit-order-block").css("display", "block");
     });
@@ -153,7 +127,7 @@ $(document).ready(function () {
     });
 
     $("tbody td").click(function (event) {
-        if (event.target != document.querySelector("#edit-input")) {
+        if (event.target != document.querySelector("#edit-input") && $("#edit-form").css("display") == "none") {
             let editedColumns = JSON.parse($("table").attr("data-edited-column"));
 
             if (editedColumns.includes($(this).index())) {
@@ -307,6 +281,13 @@ $(document).ready(function () {
         let id = $(this).closest("tr").children(":first").text();
         $(".trix-editor-description").html(content);
         $("#id-product-hidden").val(id);
+    });
+
+    $(".btn-edit-keywords").click(function () {
+        let content = $(this).attr("data-content");
+        let id = $(this).closest("tr").children(":first").text();
+        $("#textarea-keywords").val(content);
+        $("#id-product-keywords-hidden").val(id);
     });
 
     $(".btn-product-images").click(function () {

@@ -148,4 +148,15 @@ class ProductController extends Controller
 
         return redirect()->back();
     }
+
+    public function editKeywords(Request $request) {
+        $idProduct = intval($request->id);
+        $keywords = strval($request->keywords);
+
+        $product = Product::find($idProduct);
+        $product->keywords = $keywords;
+        $product->save();
+
+        return redirect()->back();
+    }
 }

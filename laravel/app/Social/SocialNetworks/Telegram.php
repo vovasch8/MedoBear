@@ -3,6 +3,7 @@
 namespace App\Social\SocialNetworks;
 
 use App\Models\Product;
+use App\Models\Promocode;
 use App\Social\SocialNetworks\SocialNetwork;
 use App\Social\Notifications\TelegramNotification;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,7 @@ class Telegram implements SocialNetwork
     public function generateOrderNotification($order) {
         $promocode = "";
         if($order->promocode) {
-            $promocode = "Промокод: " . $order->promocode;
+            $promocode = "\n👑Промокод: " . $order->promocode . "\n🔖Знижка: " . Promocode::getDiscount($order->promocode) . "%";
         }
 
         // Generate poshta info

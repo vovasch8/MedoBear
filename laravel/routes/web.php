@@ -46,7 +46,9 @@ Route::name('post.')->group(function () {
 
 Route::name('order.')->group(function () {
     Route::post('/create-order', [OrderController::class, 'createOrder'])->name('create_order');
+    Route::post('/update-order', [OrderController::class, 'updateOrder'])->name('update_order');
     Route::post('/get-order-products', [OrderController::class, 'getOrderProducts'])->name('get_order_products');
+    Route::post('/get-order-cart', [OrderController::class, 'getOrderCart'])->name('get_order_cart');
 });
 
 require __DIR__.'/auth.php';

@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Models\Order;
 use App\Models\OrderProducts;
+use App\Models\Promocode;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -30,6 +31,9 @@ class OrderMail extends Mailable
             ->where('order_products.order_id', $this->order->id)
             ->get();
         $this->products = $products;
+        if ($this->order->promocode) {
+            $this->order->discount = Promocode::getDiscount($this->order->promocode);
+        }
     }
 
     /**

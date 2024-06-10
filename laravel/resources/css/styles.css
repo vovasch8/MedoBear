@@ -11437,3 +11437,14 @@ tbody td {
     right: 10px!important;
     bottom: 50px!important;
 }
+
+.img-product-order {
+    border-radius: 5px;
+}
+
+.counter {
+    margin: 0px;
+    padding: 0px;
+    width: 20px;
+    height: 25px;
+}

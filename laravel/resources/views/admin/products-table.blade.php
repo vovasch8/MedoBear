@@ -5,7 +5,14 @@
         <th>Ід</th>
         <th>Назва</th>
         <th>Опис</th>
-        <th>Кількість</th>
+        <th>Ключі</th>
+        <th>Вид товару</th>
+        <th>Ціна</th>
+        <th>Вид товару</th>
+        <th>Ціна</th>
+        <th>Вид товару</th>
+        <th>Ціна</th>
+        <th>Вид товару</th>
         <th>Ціна</th>
         <th>Фото</th>
         <th>Категорія</th>
@@ -20,8 +27,15 @@
             <td>{{ $product->id }}</td>
             <td>{{ $product->name }}</td>
             <td><button data-content="{{ $product->description }}" data-bs-toggle="modal" data-bs-target="#descriptionModal" class="btn btn-outline-dark btn-edit-description"><i class="fa-solid fa-pen-to-square"></i> Опис</button></td>
+            <td><button data-content="{{ $product->keywords }}" data-bs-toggle="modal" data-bs-target="#keywordsModal" class="btn btn-outline-dark btn-edit-keywords"><i class="fa-solid fa-key"></i> Ключі</button></td>
             <td>{{ $product->count }}</td>
             <td>{{ $product->price }}</td>
+            <td>{{ $product->count2 }}</td>
+            <td>{{ $product->price2 }}</td>
+            <td>{{ $product->count3 }}</td>
+            <td>{{ $product->price3 }}</td>
+            <td>{{ $product->count4 }}</td>
+            <td>{{ $product->price4 }}</td>
             <td><button data-click="{{ $product->id }}" data-images="{{ json_encode($product->images) }}" data-bs-toggle="modal" data-bs-target="#productModal" class="btn btn-outline-dark btn-product-images"><i class="fa-solid fa-image"></i> Фото</button></td>
             <td>
                 <select data-url="{{ route("admin_products.change_product_category") }}" class="form-select product-category" name="category">
@@ -93,6 +107,28 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" id="btn-save-description" class="btn btn-dark">Зберегти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="keywordsModal" tabindex="-1" aria-labelledby="keywordsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route("admin_products.edit_keywords") }}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="keywordsModalLabel"><i class="fa-solid fa-edit"></i> Ключові слова</h5>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">&nbsp;&nbsp;</button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <input id="id-product-keywords-hidden" value="" type="hidden" name="id">
+                        <textarea placeholder="Перечисліть ключі через кому..." class="form-control" name="keywords" id="textarea-keywords" cols="30" rows="10"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btn-save-keywords" class="btn btn-dark">Зберегти</button>
                     </div>
                 </form>
             </div>

@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/products', [AdminController::class, 'showProducts'])->name('show_products');
         Route::get('/admin/messages', [AdminController::class, 'showMessages'])->name('show_messages');
         Route::get('/admin/promocodes', [AdminController::class, 'showPromocodes'])->name('show_promocodes');
+        Route::get('/admin/partners', [AdminController::class, 'showPartners'])->name('show_partners');
         Route::get('/admin/categories', [AdminController::class, 'showCategories'])->name('show_categories');
         Route::get('/admin/users', [AdminController::class, 'showUsers'])->name('show_users');
         Route::post('/addPromocode', [AdminController::class, "addPromocode"])->name('add_promocode');

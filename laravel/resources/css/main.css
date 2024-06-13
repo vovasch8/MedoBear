@@ -516,12 +516,34 @@ footer li, footer p {
     max-height: 150px;
 }
 
+.empty-orders {
+    max-width: 300px;
+    max-height: 300px;
+}
+
 .productImage {
     border: 3px solid #ffc106;
     border-radius: 50%;
     width: 70px;
     height: 70px;
 }
+
+.accordion-header button {
+    background: #ffc106;
+}
+
+.alert-link {
+    padding: 5px;
+}
+
+.copy, .watch {
+    cursor: pointer;
+}
+
+.watch:hover {
+    color: #ffc106;
+}
+
 
 @media (max-width: 768px) {
     #logo {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OrderMail;
+use App\Models\PartnerOrders;
 use App\Models\Product;
 use App\Models\Promocode;
 use App\Models\UserOrders;
@@ -87,6 +88,20 @@ class OrderController extends Controller
                 $userOrder->order_id = $orderId;
 
                 $userOrder->save();
+            } if (session()->has("partner") && session()->has("link") && intval(session('partner')) != Auth::user()->id) {
+                $link = session('link');
+                $id_user = session('partner');
+
+                $partnerOrder = new PartnerOrders();
+
+                $partnerOrder->partner_id = intval($id_user);
+                $partnerOrder->order_id = $orderId;
+                $partnerOrder->link = $link;
+                $partnerOrder->price = $order->price;
+                $partnerOrder->payments = round(intval($order->price) * 0.3);
+                $partnerOrder->paid_out = false;
+
+                $partnerOrder->save();
             }
         }
 

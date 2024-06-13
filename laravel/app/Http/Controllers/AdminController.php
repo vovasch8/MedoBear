@@ -10,6 +10,7 @@ use App\Models\Promocode;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -81,6 +82,41 @@ class AdminController extends Controller
         $promocodes = Promocode::all()->sortByDesc("id");
 
         return view("admin.promocodes-table", ["promocodes" => $promocodes, 'typeTable' => "promocodes", "editedColumns" => [1, 2, 3]]);
+    }
+
+    public function showPartners() {
+        $this->authorize("view-manager", Auth::user());
+//        $partnersOrders = DB::table("users")
+//            ->join("partner_orders", "users.id", "=", "partner_orders.partner_id")
+//            ->get();
+        $partners = DB::table('users')
+            ->join("partner_orders", "users.id", "=", "partner_orders.partner_id")
+            ->select("users.id", "users.name", "users.email", "users.card", "users.created_at", DB::raw("SUM(partner_orders.price) as all_price"), DB::raw("SUM(partner_orders.payments) as all_payments"), "partner_orders.paid_out")
+            ->groupBy("users.id", "partner_orders.paid_out")
+            ->get();
+
+        $partnersDetail = [];
+        foreach ($partners as $key => $partner) {
+            $partnersDetail[$partner->id]['non_price'] = 0;
+            $partnersDetail[$partner->id]['non_payment'] = 0;
+            $partnersDetail[$partner->id]['done_price'] = 0;
+            $partnersDetail[$partner->id]['done_payment'] = 0;
+        }
+        foreach ($partners as $key => $partner) {
+            $partnersDetail[$partner->id]['name'] = $partner->name;
+            $partnersDetail[$partner->id]['email'] = $partner->email;
+            $partnersDetail[$partner->id]['card'] = $partner->card;
+            $partnersDetail[$partner->id]['created_at'] = $partner->created_at;
+            if ($partner->paid_out == false) {
+                $partnersDetail[$partner->id]['non_price'] = $partner->all_price;
+                $partnersDetail[$partner->id]['non_payments'] = $partner->all_payments;
+            } else {
+                $partnersDetail[$partner->id]['done_price'] = $partner->all_price;
+                $partnersDetail[$partner->id]['done_payments'] = $partner->all_payments;
+            }
+        }
+
+        return view("admin.partners-table", ["partners" => collect($partnersDetail)->sortBy('non_price')->reverse()->toArray(), 'typeTable' => "partners", "editedColumns" => [1, 2, 3]]);
     }
 
     public function editColumnTable(Request $request) {

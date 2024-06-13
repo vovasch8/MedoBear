@@ -2,6 +2,10 @@
 
 @section("title") Контакти @endsection
 
+@section("head")
+    @vite([ 'resources/css/main.css', 'resources/js/main.js'])
+@endsection
+
 @section('seo-block')
     <meta name="description" content="Як можна зв'язатись з нами?">
     <meta name="keywords" content="контакти медобір, контакти medobear, контакти, зворотній зв'язок, medobear">

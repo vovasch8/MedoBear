@@ -27,7 +27,8 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ route("profile.edit") }}">Профіль</a></li>
-                        <li><a class="dropdown-item" href="{{ route("dashboard") }}">Кабінет</a></li>
+                        <li><a class="dropdown-item" href="{{ route("dashboard") }}">Мої замовлення</a></li>
+                        <li><a class="dropdown-item" href="{{ route("partner.partner") }}">Партнерка</a></li>
                         @can("view-manager", \Illuminate\Support\Facades\Auth::user())
                             <li><a class="dropdown-item" href="{{ route("admin.admin") }}">Адмін панель</a></li>
                         @endcan

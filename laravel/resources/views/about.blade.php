@@ -2,6 +2,10 @@
 
 @section("title") Про нас @endsection
 
+@section("head")
+    @vite([ 'resources/css/main.css', 'resources/js/main.js'])
+@endsection
+
 @section('seo-block')
     <meta name="description" content="Пасіка MedoBear. Про нас. Пасіка біля заповідника Медобори. На території заповідника існують різні види квітів з яких виходить корисний мед.">
     <meta name="keywords" content="про нас, про пасіку, про товари, про заповідник, медобір, medobear">

@@ -398,7 +398,6 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#error-block").addClass("d-none");
-                    console.log(response);
                 }
             });
         } else {
@@ -591,6 +590,74 @@ $(document).ready(function () {
             $(".product-content").css("display", "block");
             $("body").css("background", "white");
         }
+    });
+
+    $(".copy").click(function () {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(this).parent().find("span").text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+        $(this).removeClass("fa-copy");
+        $(this).addClass("fa-check");
+        var el = this;
+        setTimeout(function () {
+            $(el).removeClass("fa-check");
+            $(el).addClass("fa-copy");
+        }, 1500);
+    });
+
+    $(".btn-copy, .btn-copy .fa-copy").click(function () {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(this).parent().find(".copy-url").val()).select();
+        document.execCommand("copy");
+        $temp.remove();
+        $('.btn-copy i').removeClass("fa-copy");
+        $('.btn-copy i').addClass("fa-check");
+        setTimeout(function () {
+            $('.btn-copy i').removeClass("fa-check");
+            $('.btn-copy i').addClass("fa-copy");
+        }, 1500);
+    });
+
+    $(".btn-card").click(function () {
+        if ($(".btn-card i").hasClass("fa-credit-card")) {
+
+            if ($(".card-input").length) {
+                let card = $(".card-input").val();
+                let url = $(this).attr("data-url");
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                        "card": card
+                    },
+                    success: function (content) {
+                        $('.btn-card i').removeClass("fa-credit-card");
+                        $('.btn-card i').addClass("fa-edit");
+                        $(".card-input").prop("disabled", true);
+                    }
+                });
+            }
+        } else {
+            $('.btn-card i').removeClass("fa-edit");
+            $('.btn-card i').addClass("fa-credit-card");
+
+            $(".card-input").removeAttr("disabled");
+        }
+    });
+
+    $("#partner-link").change(function(){
+        $('.copy-url').val($(this).val());
+    });
+
+    $(function() {
+        $('.tooltipOrder').tooltip({
+            placement: "bottom",
+            trigger: "hover"
+        });
     });
 });
 

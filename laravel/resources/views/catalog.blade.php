@@ -2,6 +2,10 @@
 
 @section("title") {{ $activeCategory->name }} @endsection
 
+@section("head")
+    @vite([ 'resources/css/main.css', 'resources/js/main.js', 'resources/js/price-filter.js', 'resources/js/slider.js', 'resources/css/price-filter.css', 'resources/css/slider.css'])
+@endsection
+
 @section('seo-block')
     <meta name="description" content="Інтернет магазин медових товарів MedoBear: натуральний мед, пилок, віск та інші продукти бджільництва. Висока якість, швидка доставка, вигідні ціни. У нас в наявності багато бджолопродуктів, які підійдуть вам по смаку!">
     <meta name="keywords" content="medobear, медобір, {{ $activeCategory->name . ',' }} інтернет магазин меду, купити мед онлайн, продаж меду, купити мед, продукти бджільництва, мед, пилок, прополіс, бджолопродукти, медова продукція, медові ласощі, настоянки, свічки, подарункові набори, напої, лікувальний мед, подарунок, вітамінні продукти, медовий бокс, пасіка, натуральний мед, мед з пасіки, домашній мед, свіжий мед, медові десерти, інтернет магазин, каталог товарів">
@@ -80,6 +84,7 @@
                                         @endif
                                     </span>
                                     <div class="d-flex justify-content-between align-items-center btn-block">
+
                                         <span class="fw-bold price text-warning"><span class="product-price" data-count="{{ $product->count }}">{{$product->price}}</span> грн</span>
                                         <button data-url="{{ route('cart.add_product') }}"
                                                 class="btn-add-product btn btn-warning text-body-secondary"><i

@@ -27,6 +27,7 @@
                         <option value="products" data-href="{{ route("admin_tables.show_products") }}">Продукти</option>
                         <option value="messages" data-href="{{ route("admin_tables.show_messages") }}">Повідомлення</option>
                         <option value="promocodes" data-href="{{ route("admin_tables.show_promocodes") }}">Промокоди</option>
+                        <option value="partners" data-href="{{ route("admin_tables.show_partners") }}">Партнери</option>
                         @can("view-admin", \Illuminate\Support\Facades\Auth::user())
                             <option value="categories" data-href="{{ route("admin_tables.show_categories") }}">Категорії</option>
                             <option value="users" data-href="{{ route("admin_tables.show_users") }}">Користувачі</option>

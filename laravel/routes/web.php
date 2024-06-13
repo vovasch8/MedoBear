@@ -53,6 +53,7 @@ Route::name('order.')->group(function () {
 
 require __DIR__.'/auth.php';
 require __DIR__.'/cabinet.php';
+require __DIR__.'/partner.php';
 require __DIR__.'/admin.php';
 
 Route::fallback(function () {

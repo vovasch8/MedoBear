@@ -18,6 +18,8 @@ class SiteController extends Controller
         $category = Category::find($categoryId);
         if (!$category) {
             return redirect("/404");
+        } if (isset($_GET['partner'])) {
+            session(['partner' => intval($_GET['partner']), 'link' => strtok(\Request::fullUrl(),'?')]);
         }
         $orderModel = new Order();
         $categories = Category::all()->where("active", "=", true);

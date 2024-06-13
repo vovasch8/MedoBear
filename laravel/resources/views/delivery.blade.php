@@ -2,6 +2,10 @@
 
 @section("title") Оплата і доставка @endsection
 
+@section("head")
+    @vite([ 'resources/css/main.css', 'resources/js/main.js', 'resources/css/delivery.css'])
+@endsection
+
 @section('seo-block')
     <meta name="description" content="Оплата і доставка на сайті MedoBear, кроки завдяки яким ви зможете отримати товар!">
     <meta name="keywords" content="оплата, доставка, отримати товар, як купити товар, як отримати товар, медові продукти">

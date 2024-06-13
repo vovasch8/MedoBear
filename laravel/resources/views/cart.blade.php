@@ -2,6 +2,10 @@
 
 @section("title") Корзина @endsection
 
+@section("head")
+    @vite([ 'resources/css/main.css', 'resources/js/main.js'])
+@endsection
+
 @section("content")
     <div class="container-fluid">
         <div class="row">

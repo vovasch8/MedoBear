@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +13,16 @@ class CabinetController extends Controller
     public function dashboard() {
         $this->authorize("view-user", Auth::user());
 
+        $categories = Category::all()->where("active", true);
+        foreach ($categories as $category) {
+            $category->products = Product::all()->where("category_id", $category->id);
+        }
+
         $userOrders = DB::table("orders")
             ->join("user_orders", "orders.id", "=", "user_orders.order_id")
             ->where("user_id", "=", Auth::user()->id)
-            ->get();
+            ->orderBy("orders.id", "desc")
+            ->simplePaginate(9);
 
         foreach ($userOrders as $order) {
             $products = DB::table('products')
@@ -26,6 +33,6 @@ class CabinetController extends Controller
             $order->products = Product::getProductsWithImages($products);
         }
 
-        return view("dashboard", ["orders" => $userOrders]);
+        return view("dashboard", ["orders" => $userOrders, "categories" => $categories]);
     }
 }

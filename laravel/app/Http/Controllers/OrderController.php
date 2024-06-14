@@ -88,7 +88,7 @@ class OrderController extends Controller
                 $userOrder->order_id = $orderId;
 
                 $userOrder->save();
-            } if (session()->has("partner") && session()->has("link") && intval(session('partner')) != Auth::user()->id) {
+            } if (session()->has("partner") && session()->has("link") && ((auth()->check() && (intval(session('partner')) != Auth::user()->id) || !auth()->check()))) {
                 $link = session('link');
                 $id_user = session('partner');
 
@@ -102,10 +102,14 @@ class OrderController extends Controller
                 $partnerOrder->paid_out = false;
 
                 $partnerOrder->save();
+                session()->forget("partner");
+                session()->forget("link");
             }
+            CartController::clearCart();
         }
 
-        return true;
+
+        return route("site.catalog");
     }
 
     public function addProductToOrder(Request $request) {
@@ -165,6 +169,14 @@ class OrderController extends Controller
         $orderProducts = OrderProducts::all()->where("order_id", "=", $id);
         foreach ($orderProducts as $productRelation) {
             $productRelation->delete();
+        }
+        $partnerOrders = PartnerOrders::all()->where("order_id", "=", $id);
+        foreach ($partnerOrders as $partnerRelation) {
+            $partnerRelation->delete();
+        }
+        $userOrders = UserOrders::all()->where("order_id", "=", $id);
+        foreach ($userOrders as $userRelation) {
+            $userRelation->delete();
         }
 
         $order = Order::find($id);

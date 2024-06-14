@@ -9,7 +9,6 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class SiteController extends Controller
 {
@@ -36,6 +35,8 @@ class SiteController extends Controller
         $product = Product::find($productId);
         if (!$product || !Product::checkSize($product, $size)) {
             return redirect("/404");
+        } if (isset($_GET['partner'])) {
+            session(['partner' => intval($_GET['partner']), 'link' => strtok(\Request::fullUrl(),'?')]);
         }
 
         $categories = Category::all()->where("active", "=", true);

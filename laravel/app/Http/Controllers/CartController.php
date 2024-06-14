@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Promocode;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
@@ -77,21 +76,21 @@ class CartController extends Controller
     }
 
     public function addPromocode(Request $request) {
-        $promocode = strval($request->promocode);
+        $promocodeName = strval($request->promocode);
         $promocodeModel = new Promocode();
 
-        $promocode = $promocodeModel->all()->where("promocode", $promocode)->first();
+        $promocode = $promocodeModel->all()->where("promocode", $promocodeName)->first();
         $totalPrice = self::getTotalPrice();
 
-        if ($promocode && strtotime($promocode->active_to) > time() && !session()->has("promocode") && !isset($_COOKIE['promocodeName'])) {
+        if ($promocode && strtotime($promocode->active_to) > time() && !session()->has("promocode") && !isset($_COOKIE[$promocodeName])) {
             $totalPrice = round($totalPrice - ($promocode->discount * $totalPrice / 100));
             session(["promocode" => ["name" => $promocode->promocode, "discount" => $promocode->discount]]);
-            setcookie("promocodeName", $promocode->promocode, time() + round(abs(time() - strtotime($promocode->active_to))));
+            setcookie($promocodeName, $promocode->promocode, time() + round(abs(time() - strtotime($promocode->active_to))));
         } elseif (!$promocode) {
             return ["error" => "**Промокод невірний!**"];
         } elseif (strtotime($promocode->active_to) <= time()) {
             return ["error" => "**Час дії промокоду закінчився!**"];
-        } elseif (session()->has("promocode") || isset($_COOKIE['promocodeName'])) {
+        } elseif (session()->has("promocode") || isset($_COOKIE[$promocodeName])) {
             return ["error" => "**Ви вже використали цей промокод!**"];
         }
 
@@ -166,5 +165,13 @@ class CartController extends Controller
         }
 
         return $promocode;
+    }
+
+    public static function clearCart() {
+        if (session()->has("promocode")) {
+            session()->forget("promocode");
+        } if (session()->has("products")) {
+            session()->forget("products");
+        }
     }
 }

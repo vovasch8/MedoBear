@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\PartnerOrders;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +20,14 @@ class PartnerController extends Controller
             $category->products = Product::all()->where("category_id", $category->id);
         }
 
+        $user_id = Auth::user()->id;
+        if (Auth::user()->role == "admin" && isset($_GET['partner_id'])) {
+            $user_id = intval($_GET['partner_id']);
+        }
+
         $partnerOrders = DB::table("orders")
             ->join("partner_orders", "orders.id", "=", "partner_orders.order_id")
-            ->where("partner_id", "=", Auth::user()->id)
+            ->where("partner_id", "=", $user_id)
             ->orderBy("orders.id", "desc")
             ->simplePaginate(5);
 
@@ -74,7 +81,7 @@ class PartnerController extends Controller
         }
         $statLinks['paid_out'] = $statLinks['payments'] - $account;
 
-        return view("partner", ["orders" => $partnerOrders, "categories" => $categories, 'links' => $links, 'statLinks' => $statLinks, 'account' => $account]);
+        return view("partner", ["orders" => $partnerOrders, "categories" => $categories, 'links' => $links, 'statLinks' => $statLinks, 'account' => $account, "user" => User::find($user_id)]);
     }
 
     public function saveCard(Request $request) {
@@ -124,5 +131,19 @@ class PartnerController extends Controller
         }
 
         return $partnerLink;
+    }
+
+    public function pay(Request $request) {
+        $id_partner = intval($request->id_partner);
+
+        $partnerOrders = DB::table('partner_orders')->where("partner_id", "=", $id_partner)->where("paid_out", "=", false)->get();
+
+        foreach ($partnerOrders as $relation) {
+            $partnerOrder = PartnerOrders::find($relation->id);
+            $partnerOrder->paid_out = true;
+            $partnerOrder->save();
+        }
+
+        return true;
     }
 }

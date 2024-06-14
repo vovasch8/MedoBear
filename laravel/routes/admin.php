@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
@@ -12,6 +13,7 @@ Route::middleware('auth')->group(function () {
     Route::name('admin.')->group(function () {
         Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin');
         Route::get('/admin/charts', [AdminController::class, 'showCharts'])->name('charts');
+        Route::get('/admin/statistics', [AdminController::class, 'showStatistics'])->name('statistics');
         Route::get('/admin/tables', [AdminController::class, 'showTables'])->name('tables');
     });
 
@@ -61,5 +63,9 @@ Route::middleware('auth')->group(function () {
 
     Route::name('admin_messages.')->group(function () {
         Route::post('/admin/delete-message', [MessageController::class, 'deleteMessage'])->name('delete_message');
+    });
+
+    Route::name('admin_partners.')->group(function () {
+        Route::post('/admin/pay', [PartnerController::class, 'pay'])->name('pay');
     });
 });

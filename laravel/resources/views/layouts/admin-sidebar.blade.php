@@ -12,6 +12,10 @@
                     Дані
                 </a>
                 <div class="sb-sidenav-menu-heading">Статистика</div>
+                <a class="nav-link" href="{{ route("admin.statistics") }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                    Загальна статистика
+                </a>
                 <a class="nav-link" href="{{ route("admin.charts") }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Графіки

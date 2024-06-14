@@ -477,6 +477,21 @@ $(document).ready(function () {
         });
     });
 
+    $(".btn-pay").click(function (event) {
+        let url = $(this).attr("data-url");
+        let userItem = $(this).closest('tr');
+        let idUser = $(userItem).children().first().text();
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id_partner": idUser},
+            success: function (response) {
+                location.reload();
+            }
+        });
+    });
+
     function initFotorama(data) {
         $(".photos").html("<div id=\"fotorama\" data-auto=\"false\" class=\"fotorama bg-light\" data-width=\"100%\" data-ratio=\"800/600\" data-allowfullscreen=\"true\"  data-loop=\"true\"></div>");
         // $("#fotorama").html(imagesHtml);

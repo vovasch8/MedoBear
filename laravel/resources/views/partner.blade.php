@@ -14,17 +14,17 @@
             <hr>
             <div class="container">
             <div class="d-flex justify-content-between mt-2">
-                <h5 class="fw-bold text-wa"><span class="text-warning">Користувач:</span> {{ Auth::user()->name }}</h5>
-                <h5 class="fw-bold"><span class="text-warning">Рахунок:</span> <span>{{ $account }}</span> грн.</h5>
+                <h5 class="fw-bold text-wa"><span class="text-warning">Користувач:&nbsp;</span>{{ $user->name }}</h5>
+                <h5 class="fw-bold"><span class="text-warning">Рахунок:&nbsp;</span><span>{{ $account }}</span> грн.</h5>
             </div>
                 <div>
                     <h5 class="fw-bold text-warning text-center">Партнерські посилання</h5>
                     <div class="d-flex">
                         <select name="parner-link" id="partner-link" class="form-select">
-                            <option value="{{ route("site.catalog") . '?partner=' . Auth::user()->id}}">Каталог</option>
+                            <option value="{{ route("site.catalog") . '?partner=' . $user->id}}">Каталог</option>
                             <optgroup label="Категорії:">
                                 @foreach($categories as $category)
-                                    <option value="{{ route('site.current_catalog', [$category->id]) . '?partner=' . Auth::user()->id }}">{{$category->name}}</option>
+                                    <option value="{{ route('site.current_catalog', [$category->id]) . '?partner=' . $user->id }}">{{$category->name}}</option>
                                 @endforeach
                             </optgroup>
                             <optgroup label="Продукти категорій:">
@@ -32,23 +32,23 @@
                                     <optgroup label="{{$category->name}}">
                                         @foreach($category->products as $product)
                                             @if($product->count)
-                                                <option value="{{ urldecode(route("site.product", [$product->id, $product->count])) . '?partner=' . Auth::user()->id }} ">{{$product->name .' - '. $product->count .' - '. $product->price .'грн.'}}</option>
+                                                <option value="{{ urldecode(route("site.product", [$product->id, $product->count])) . '?partner=' . $user->id }} ">{{$product->name .' - '. $product->count .' - '. $product->price .'грн.'}}</option>
                                             @endif
                                             @if($product->count2)
-                                                <option value="{{ urldecode(route("site.product", [$product->id, $product->count2])) . '?partner=' . Auth::user()->id}}">{{$product->name .' - '. $product->count2 .' - '. $product->price2 .'грн.'}}</option>
+                                                <option value="{{ urldecode(route("site.product", [$product->id, $product->count2])) . '?partner=' . $user->id}}">{{$product->name .' - '. $product->count2 .' - '. $product->price2 .'грн.'}}</option>
                                             @endif
                                             @if($product->count3)
-                                                <option value="{{ urldecode(route("site.product", [$product->id, $product->count3])) . '?partner=' . Auth::user()->id}}">{{$product->name .' - '. $product->count3 .' - '. $product->price3 .'грн.'}}</option>
+                                                <option value="{{ urldecode(route("site.product", [$product->id, $product->count3])) . '?partner=' . $user->id}}">{{$product->name .' - '. $product->count3 .' - '. $product->price3 .'грн.'}}</option>
                                             @endif
                                             @if($product->count4)
-                                                <option value="{{ urldecode(route("site.product", [$product->id, $product->count4])) . '?partner=' . Auth::user()->id}}">{{$product->name .' - '. $product->count4 .' - '. $product->price4 .'грн.'}}</option>
+                                                <option value="{{ urldecode(route("site.product", [$product->id, $product->count4])) . '?partner=' . $user->id}}">{{$product->name .' - '. $product->count4 .' - '. $product->price4 .'грн.'}}</option>
                                             @endif
                                         @endforeach
                                     </optgroup>
                                 @endforeach
                             </optgroup>
                         </select>
-                        <input type="text" value="{{ route('site.catalog') . '?partner=' . Auth::user()->id}}" class="form-control ms-1 copy-url" readonly>
+                        <input type="text" value="{{ route('site.catalog') . '?partner=' . $user->id}}" class="form-control ms-1 copy-url" readonly>
                         <button class="btn btn-warning ms-1 btn-copy"><i class="fas fa-copy"></i></button>
                     </div>
                 </div>
@@ -138,17 +138,19 @@
                         </table>
                     </div>
                 </div>
-                <hr class="mt-3">
-                <div class="mb-3">
-                    <h5 class="fw-bold mt-3 text-warning">Виплати</h5>
-                    <div class="alert alert-primary alert-link d-flex justify-content-between" role="alert">
-                        <span>Начислення: Виплати проводяться 2 рази на місяць 1 та 15 числа на карту!</span>
+                @if(!(Auth::user()->role == "admin" && isset($_GET['partner_id'])))
+                    <hr class="mt-3">
+                    <div class="mb-3">
+                        <h5 class="fw-bold mt-3 text-warning">Виплати</h5>
+                        <div class="alert alert-primary alert-link d-flex justify-content-between" role="alert">
+                            <span>Начислення: Виплати проводяться 2 рази на місяць 1 та 15 числа на карту!</span>
+                        </div>
+                        <div class="card-number d-flex w-50">
+                            <input value="{{ $user->card }}" @if($user->card) disabled @endif type="tel" class="form-control card-input" placeholder="Номер карти для нарахувань" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="19">
+                            <button data-url="{{ route("partner.save_card") }}" class="ms-1 btn btn-warning btn-card"><i class="fas @if(!$user->card)fa-credit-card @else fa-edit @endif"></i></button>
+                        </div>
                     </div>
-                    <div class="card-number d-flex w-50">
-                        <input value="{{ Auth::user()->card }}" @if(Auth::user()->card) disabled @endif type="tel" class="form-control card-input" placeholder="Номер карти для нарахувань" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="19">
-                        <button data-url="{{ route("partner.save_card") }}" class="ms-1 btn btn-warning btn-card"><i class="fas @if(!Auth::user()->card)fa-credit-card @else fa-edit @endif"></i></button>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
         <div class="col-12 col-lg-6">

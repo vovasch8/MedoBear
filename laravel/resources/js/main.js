@@ -387,6 +387,7 @@ $(document).ready(function () {
         }
 
         if (!errors.length) {
+            $('.btn-order').html('<div class="spinner-border" role="status"> <span class="visually-hidden">Loading...</span></div>');
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -398,9 +399,11 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     $("#error-block").addClass("d-none");
+                    location.href = response;
                 }
             });
         } else {
+            $('.btn-order').html('<i class="fas fa-shipping-fast"></i> Оформити');
             let listErrors = errors.join("<br>");
             $("#error-block").html("<span style='font-weight: bold;'>Ви не заповнили всі дані:</span> <br>" + listErrors);
             $("#error-block").addClass("alert alert-danger");

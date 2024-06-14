@@ -40,6 +40,35 @@ class AdminController extends Controller
         return view("admin.charts", ["countOrdersThisMonth" => $countOrdersThisMonth, "countOrdersBy6Month" => $countOrdersBy6Month, "mostPopularProducts" => $mostPopularProducts]);
     }
 
+    public function showStatistics() {
+        $this->authorize("view-manager", Auth::user());
+
+        $ordersStat = DB::table("orders")->select(DB::raw("count(*) as count_orders"))->first();
+        $ordersWithPromocodeStat = DB::table("orders")->select(DB::raw("count(*) as count_orders_with_promocode"))->where("promocode","!=", null)->first();
+        $productsStat =  DB::table("orders")->join("order_products", "orders.id", "=", "order_products.order_id")->select( "order_products.product_id", "order_products.size", DB::raw("sum(order_products.count) as count_products"), DB::raw("sum(order_products.price) as count_price"))->groupBy("order_products.product_id", "order_products.size")->get();
+        $userStat = DB::table("users")->select(DB::raw("count(*) as count_users"))->first();
+
+        $stats['count_products'] = 0;
+        $stats['total_price'] = 0;
+        $stats['partner_orders'] = 0;
+        $stats['partner_price'] = 0;
+        $stats['partner_non_payment'] = 0;
+        $stats['count_orders'] = $ordersStat->count_orders;
+        $stats['count_orders_with_promocode'] = $ordersWithPromocodeStat->count_orders_with_promocode;
+        $stats['count_users'] = $userStat->count_users;
+        foreach ($productsStat as $productS) {
+            $stats['count_products'] += $productS->count_products;
+            $stats['total_price'] += $productS->count_price;
+        }
+
+        $partnerOrdersStat = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->select("paid_out", DB::raw("count(*) as count_partner_orders"))->groupBy("paid_out")->get();
+        $partnerStat = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->select(DB::raw("count(*) as count_orders"))->groupBy("partner_id")->get();
+        $userStat = DB::table("orders")->join("user_orders", "orders.id", "=", "user_orders.order_id")->select(DB::raw("count(*) as count_orders"))->first();
+        $stats["count_user_orders"] = $userStat->count_orders;
+
+        return view("admin.all-statistics", ["stats" => $stats]);
+    }
+
     public function showTables() {
         $this->authorize("view-manager", Auth::user());
         $orders = Order::all()->sortByDesc("id");
@@ -86,9 +115,7 @@ class AdminController extends Controller
 
     public function showPartners() {
         $this->authorize("view-manager", Auth::user());
-//        $partnersOrders = DB::table("users")
-//            ->join("partner_orders", "users.id", "=", "partner_orders.partner_id")
-//            ->get();
+
         $partners = DB::table('users')
             ->join("partner_orders", "users.id", "=", "partner_orders.partner_id")
             ->select("users.id", "users.name", "users.email", "users.card", "users.created_at", DB::raw("SUM(partner_orders.price) as all_price"), DB::raw("SUM(partner_orders.payments) as all_payments"), "partner_orders.paid_out")
@@ -98,16 +125,16 @@ class AdminController extends Controller
         $partnersDetail = [];
         foreach ($partners as $key => $partner) {
             $partnersDetail[$partner->id]['non_price'] = 0;
-            $partnersDetail[$partner->id]['non_payment'] = 0;
+            $partnersDetail[$partner->id]['non_payments'] = 0;
             $partnersDetail[$partner->id]['done_price'] = 0;
-            $partnersDetail[$partner->id]['done_payment'] = 0;
+            $partnersDetail[$partner->id]['done_payments'] = 0;
         }
         foreach ($partners as $key => $partner) {
             $partnersDetail[$partner->id]['name'] = $partner->name;
             $partnersDetail[$partner->id]['email'] = $partner->email;
             $partnersDetail[$partner->id]['card'] = $partner->card;
             $partnersDetail[$partner->id]['created_at'] = $partner->created_at;
-            if ($partner->paid_out == false) {
+            if ($partner->paid_out == true) {
                 $partnersDetail[$partner->id]['non_price'] = $partner->all_price;
                 $partnersDetail[$partner->id]['non_payments'] = $partner->all_payments;
             } else {
@@ -130,6 +157,7 @@ class AdminController extends Controller
         $editedColumns['promocodes']= [1 => "promocode", 2 => "discount", 3 => "active_to"];
         $editedColumns['categories'] = [1 => "name"];
         $editedColumns['users'] = [1 => "name", 2 => "email"];
+        $editedColumns['partners'] = [1 => "name", 2 => "email", 3 => 'card'];
 
         $entity = match($table) {
             "orders" => isset($editedColumns['orders'][$columnNumber]) ? Order::find($id) : null,
@@ -137,7 +165,8 @@ class AdminController extends Controller
             "messages" => isset($editedColumns['messages'][$columnNumber]) ? Message::find($id) : null,
             "promocodes" => isset($editedColumns['promocodes'][$columnNumber]) ? Promocode::find($id) : null,
             "categories" => isset($editedColumns['categories'][$columnNumber]) ? Category::find($id) : null,
-            "users" => isset($editedColumns['users'][$columnNumber]) ? User::find($id) : null
+            "users" => isset($editedColumns['users'][$columnNumber]) ? User::find($id) : null,
+            "partners" => isset($editedColumns['partners'][$columnNumber]) ? User::find($id) : null
         };
 
         $column = $editedColumns[$table][$columnNumber];

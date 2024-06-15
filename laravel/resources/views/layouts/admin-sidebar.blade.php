@@ -16,11 +16,19 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
                     Загальна статистика
                 </a>
+                <a class="nav-link" href="{{ route("admin.products_statistics") }}">
+                    <div class="sb-nav-link-icon"><i class="fab fa-product-hunt"></i></div>
+                    Статистика по товарах
+                </a>
                 <a class="nav-link" href="{{ route("admin.charts") }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Графіки
                 </a>
                 <div class="sb-sidenav-menu-heading">Основне</div>
+                <a class="nav-link" href="{{ route("site.catalog") }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-window-maximize"></i></div>
+                    На сайт
+                </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <a style="cursor: pointer;" class="nav-link" onclick="event.preventDefault(); this.closest('form').submit();">

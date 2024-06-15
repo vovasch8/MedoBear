@@ -19,6 +19,9 @@
             </div>
                 <div>
                     <h5 class="fw-bold text-warning text-center">Партнерські посилання</h5>
+                    <div class="alert alert-primary alert-link d-flex justify-content-between" role="alert">
+                        <span>Виплата: При переході за партнерським посиланням партнеру начисляється 30% від всього замовлення!</span>
+                    </div>
                     <div class="d-flex">
                         <select name="parner-link" id="partner-link" class="form-select">
                             <option value="{{ route("site.catalog") . '?partner=' . $user->id}}">Каталог</option>
@@ -60,16 +63,16 @@
                             <tbody>
                                 @foreach($statLinks['links'] as $key => $sLink)
                                     @if($sLink['count'])
-                                        <tr rowspan="4">
+                                        <tr>
                                             <th class="text-center">Посилання</th>
                                             <th class="text-center">Продано за весь час</th>
                                             <th class="text-center">Сума</td>
                                             <th class="text-center">Нараховано</th>
                                         </tr>
                                         <tr>
-                                            <td rowspan="4">
+                                            <td rowspan="3">
+                                                <span class="ms-2 fw-bold">{{ $links[$key]['value'] }}:</span>
                                                 <div class="ms-2 mt-2 me-2 alert alert-primary alert-link d-flex justify-content-between" role="alert">
-                                                    <span>{{ $links[$key]['value'] }}</span>
                                                     <span>{{ $links[$key]['link'] }}</span>
                                                     <i class="fas fa-copy copy mt-1"></i>
                                                 </div>

@@ -1,11 +1,11 @@
-@media (max-width: 992px) {
-    #top-1 {
+@media (max-width: 1200px) {
+    #top-4, #top-5 {
         display: none;
     }
 }
 
-@media (max-width: 768px) {
-    #top-2 {
+@media (max-width: 992px) {
+    #top-3, #top-4, #top-5 {
         display: none;
     }
 }

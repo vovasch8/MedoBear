@@ -3,13 +3,10 @@
 @section("title") {{ $product->name }} @endsection
 
 @section("head")
-    @vite([ 'resources/css/main.css', 'resources/js/main.js'])
-@endsection
-
-@section("head")
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+    @vite([ 'resources/css/main.css', 'resources/js/main.js', 'resources/js/tables.js'])
 @endsection
 
 @section('seo-block')
@@ -68,7 +65,7 @@
                                 @endif
                             </span>
                             <hr>
-                            <div class="pt-2 pb-2">
+                            <div class="pt-2 pb-2 btn-block">
                                 <span class="fw-bold title-price">Ціна:&nbsp;</span>
                                 <span class="fw-bold price text-warning title-price"><span class="product-price" data-count="{{ $size }}">{{ \App\Http\Controllers\CartController::getPriceOfProductSize($product, $size) }}</span> грн</span>
                                 <button data-url="{{ route('cart.add_product') }}" class="btn btn-add-product btn-warning text-body-secondary float-end"><i

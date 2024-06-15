@@ -14,6 +14,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin');
         Route::get('/admin/charts', [AdminController::class, 'showCharts'])->name('charts');
         Route::get('/admin/statistics', [AdminController::class, 'showStatistics'])->name('statistics');
+        Route::get('/admin/products-statistics', [AdminController::class, 'showProductsStatistics'])->name('products_statistics');
         Route::get('/admin/tables', [AdminController::class, 'showTables'])->name('tables');
     });
 

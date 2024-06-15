@@ -18,14 +18,18 @@ class SiteController extends Controller
         if (!$category) {
             return redirect("/404");
         } if (isset($_GET['partner'])) {
-            session(['partner' => intval($_GET['partner']), 'link' => strtok(\Request::fullUrl(),'?')]);
+            $link = strtok(urldecode(\Request::fullUrl(),'?'));
+            if (mb_substr($link, -1) == "/") {
+                $link = mb_substr($link, 0, -1);
+            }
+            session(['partner' => intval($_GET['partner']), 'link' => $link]);
         }
         $orderModel = new Order();
         $categories = Category::all()->where("active", "=", true);
         $products = Product::all()->where("category_id", "=", $categoryId)->where("active", "=", true)->take(12);
 
         $products = Product::getProductsWithImages($products);
-        $mostPopularProducts = $orderModel->getMostPopularProducts(3);
+        $mostPopularProducts = $orderModel->getMostPopularProducts(6);
         $mostPopularProducts = Product::getProductsWithImages($mostPopularProducts);
 
         return view("catalog", ["categories" => $categories, "products" => $products, "mostPopularProducts" => $mostPopularProducts, 'activeCategory' => $category]);
@@ -36,7 +40,11 @@ class SiteController extends Controller
         if (!$product || !Product::checkSize($product, $size)) {
             return redirect("/404");
         } if (isset($_GET['partner'])) {
-            session(['partner' => intval($_GET['partner']), 'link' => strtok(\Request::fullUrl(),'?')]);
+            $link = strtok(urldecode(\Request::fullUrl()),'?');
+            if (mb_substr($link, -1) == "/") {
+                $link = mb_substr($link, 0, -1);
+            }
+            session(['partner' => intval($_GET['partner']), 'link' => $link]);
         }
 
         $categories = Category::all()->where("active", "=", true);
@@ -73,7 +81,6 @@ class SiteController extends Controller
     public function applyFilters(Request $request) {
         $type = "name";
         $direct = "asc";
-        $search = strval($request->search);
 
         if ($request->sort == "alpha-up") {
             $type = "name";
@@ -93,16 +100,18 @@ class SiteController extends Controller
         $max = intval($request->price[1]);
         $query = DB::table("products");
 
-        if ($search != "") {
-            $query->where("name", "like", "%" . $request->search . "%");
-        } else {
-            $query->where("category_id", "=", intval($request->category_id));
-        }
-
-        $query->whereBetween('price', [$min, $max])
-            ->orWhereBetween('price2', [$min, $max])
-            ->orWhereBetween('price3', [$min, $max])
-            ->orWhereBetween('price4', [$min, $max]);
+        $query = Product::where(function ($query) use ($request) {
+            if (strval($request->search) != "") {
+                return $query->where("name", "like", "%" . strval($request->search) . "%");
+            } else {
+                return $query->where("category_id", "=", intval($request->category_id));
+            }
+        })->where(function ($query) use ($min, $max) {
+            return $query->whereBetween('price', [$min, $max])
+                ->orWhereBetween('price2', [$min, $max])
+                ->orWhereBetween('price3', [$min, $max])
+                ->orWhereBetween('price4', [$min, $max]);
+        });
 
         $products = $query->orderBy($type, $direct)->get();
         $products = Product::getProductsWithImages(collect($products));

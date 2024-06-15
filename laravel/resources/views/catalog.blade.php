@@ -19,7 +19,7 @@
 @endsection
 
 @section("content")
-    <div class="container-fluid category" data-category="{{ $activeCategory->id }}">
+    <div class="container-fluid category" data-category="{{ $activeCategory->id }}" data-category-name="{{ $activeCategory->name }}">
         <div class="row">
             <button style="background: #2d3748;color: #ffc106;font-weight: bold;" class="btn-menu btn"><i
                     class="fas fa-bars"></i></button>
@@ -52,16 +52,21 @@
                             </main>
                         </div>
                     </div>
-                    <hr class="mb-4">
+                    <hr class="mb-2">
+                    <div class="text-center d-flex justify-content-center">
+                        <span class="d-block">
+                            <span class="ps-5 pe-5 d-block"><h1 class="text-muted mt-0 h3 h-value">{{ $activeCategory->name }}</h1></span>
+                            <hr class="mt-0 mb-4 text-warning border-3">
+                        </span>
+                    </div>
                 </div>
 
                 <div class="main-row pe-5 container-empty text-center" @if($products->isEmpty()) style="display: block;" @else style="display: none;" @endif>
                     <img class="empty-products" src="{{ asset('icons') . "/empty.png" }}" alt="Пусто"><br>
-                    <h4 class="text-muted mt-2">Продуктів немає!</h4>
                 </div>
                 <div class="row pe-5 product-row mb-3 main-row">
                     @foreach($products as $product)
-                        <div class="col-12 col-md-6 col-lg-6 col-xl-4 mb-4 product-grid">
+                        <div class="col-12 col-md-8 offset-md-2 offset-lg-0 col-lg-6 col-xl-4 mb-4 product-grid">
                             <a href="{{ route('site.product', [$product->id, $product->count]) }}" id="p-{{$product->id}}"
                                class="card shadow-sm product">
                                 <img width="100%" height="225px" class="bd-placeholder-img card-img-top"
@@ -103,7 +108,7 @@
                     <div class="container">
                         <div class="row d-flex">
                             @foreach($mostPopularProducts as $key => $product)
-                                    <div id="top-{{ $key }}" class="item mb-4 col-xs-12 col-sm-12 col-md-6 col-lg-4 ps-3 pe-3 pt-3 @if($key == 0) active @endif">
+                                    <div id="top-{{ $key }}" class="item mb-4 col-12 col-md-8 offset-md-2 offset-lg-0 col-lg-6 col-xl-4 ps-3 pe-3 pt-3 @if($key == 0) active @endif">
                                         <a href="{{ route('site.product', [$product->id, $product->count]) }}" id="m-{{$product->id}}" class="card shadow-sm product">
                                             <img width="100%" height="225px" class="bd-placeholder-img card-img-top"
                                                              src="{{ asset("storage") . "/products/" . $product->id . "/" . (isset($product->images[0]) ? $product->images[0]->image : '')}}"

@@ -60,7 +60,7 @@ class PartnerController extends Controller
 
         foreach ($partnerOrders as $order) {
             foreach ($links as $key => $link) {
-                if ($order->link == $link['link'].'/') {
+                if ($order->link == $link['link']) {
                     $statLinks['links'][$key]['all_price'] += $order->price;
                     $statLinks['links'][$key]['payments'] += intval(round($order->price * 0.3));
                     $statLinks['links'][$key]['count']++;

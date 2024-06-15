@@ -45,28 +45,64 @@ class AdminController extends Controller
 
         $ordersStat = DB::table("orders")->select(DB::raw("count(*) as count_orders"))->first();
         $ordersWithPromocodeStat = DB::table("orders")->select(DB::raw("count(*) as count_orders_with_promocode"))->where("promocode","!=", null)->first();
-        $productsStat =  DB::table("orders")->join("order_products", "orders.id", "=", "order_products.order_id")->select( "order_products.product_id", "order_products.size", DB::raw("sum(order_products.count) as count_products"), DB::raw("sum(order_products.price) as count_price"))->groupBy("order_products.product_id", "order_products.size")->get();
+        $productsStat =  DB::table("orders")->join("order_products", "orders.id", "=", "order_products.order_id")->join("products", "products.id", "=", "order_products.product_id")->select( "products.name", "order_products.product_id", "order_products.size", DB::raw("sum(order_products.count) as count_products"), DB::raw("sum(order_products.price) as count_price"))->groupBy("order_products.product_id", "order_products.size")->get();
         $userStat = DB::table("users")->select(DB::raw("count(*) as count_users"))->first();
+        $partnerOrdersStatPaid = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->select(DB::raw("sum(partner_orders.payments) as total_price"))->where("partner_orders.paid_out", "=", 1)->first();
+        $partnerOrdersStatNonPaid = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->select(DB::raw("sum(partner_orders.payments) as total_price"))->where("partner_orders.paid_out", "=", 0)->first();
+        $partnerStat = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->select(DB::raw("count(*) as count_orders"), DB::raw("sum(partner_orders.price) as total_price"), DB::raw("sum(partner_orders.payments) as total_payments_price"))->groupBy("partner_id")->get();
+        $partnerOrdersWithPromocodeStat = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->select(DB::raw("count(*) as count_orders_with_promocode"))->where("promocode","!=", null)->first();
+        $userOrdersStat = DB::table("orders")->join("user_orders", "orders.id", "=", "user_orders.order_id")->select(DB::raw("count(*) as count_orders"))->first();
+        $partnerProducts = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->join("order_products", "partner_orders.order_id", "=", "order_products.order_id")->select(DB::raw("sum(order_products.count) as total_count_products"))->first();
 
         $stats['count_products'] = 0;
         $stats['total_price'] = 0;
         $stats['partner_orders'] = 0;
         $stats['partner_price'] = 0;
         $stats['partner_non_payment'] = 0;
+        $stats['count_partner_orders'] = 0;
+        $stats['partner_total_price'] = 0;
+        $stats['partner_payments_total_price'] = 0;
         $stats['count_orders'] = $ordersStat->count_orders;
         $stats['count_orders_with_promocode'] = $ordersWithPromocodeStat->count_orders_with_promocode;
         $stats['count_users'] = $userStat->count_users;
-        foreach ($productsStat as $productS) {
-            $stats['count_products'] += $productS->count_products;
-            $stats['total_price'] += $productS->count_price;
+        $stats["stats_products"] = [];
+        foreach ($productsStat as $product) {
+            $stats['count_products'] += $product->count_products;
+            $stats['total_price'] += $product->count_price;
         }
 
-        $partnerOrdersStat = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->select("paid_out", DB::raw("count(*) as count_partner_orders"))->groupBy("paid_out")->get();
-        $partnerStat = DB::table("orders")->join("partner_orders", "orders.id", "=", "partner_orders.order_id")->select(DB::raw("count(*) as count_orders"))->groupBy("partner_id")->get();
-        $userStat = DB::table("orders")->join("user_orders", "orders.id", "=", "user_orders.order_id")->select(DB::raw("count(*) as count_orders"))->first();
-        $stats["count_user_orders"] = $userStat->count_orders;
+        $stats["count_user_orders"] = $userOrdersStat->count_orders;
+        $stats['count_partners'] = count($partnerStat);
+        foreach ($partnerStat as $partner) {
+            $stats["count_partner_orders"] += $partner->count_orders;
+            $stats['partner_total_price'] += $partner->total_price;
+            $stats['partner_payments_total_price'] += $partner->total_payments_price;
+        }
+        $stats['partner_done_payments'] = intval($partnerOrdersStatPaid->total_price);
+        $stats['partner_none_payments'] = intval($partnerOrdersStatNonPaid->total_price);
+        $stats['partner_count_products'] = intval($partnerProducts->total_count_products);
+        $stats['partner_count_orders_with_promocode'] = intval($partnerOrdersWithPromocodeStat->count_orders_with_promocode);
 
         return view("admin.all-statistics", ["stats" => $stats]);
+    }
+
+    public function showProductsStatistics()
+    {
+        $this->authorize("view-manager", Auth::user());
+        $productsStat =  DB::table("orders")->join("order_products", "orders.id", "=", "order_products.order_id")->join("products", "products.id", "=", "order_products.product_id")->select( "products.name", "order_products.product_id", "order_products.size", DB::raw("sum(order_products.count) as count_products"), DB::raw("sum(order_products.price) as count_price"))->groupBy("order_products.product_id", "order_products.size")->get();
+
+        foreach ($productsStat as $product) {
+            $stats["stats_products"][$product->product_id]["sizes"][] = ["name" => $product->name, "size" => $product->size, "count_products" => $product->count_products, "total_price" => $product->count_price];
+            if (!isset($stats["stats_products"][$product->product_id]["total_count_products"])) {
+                $stats["stats_products"][$product->product_id]["total_count_products"] = 0;
+            }if (!isset($stats["stats_products"][$product->product_id]["total_price"])) {
+                $stats["stats_products"][$product->product_id]["total_price"] = 0;
+            }
+            $stats["stats_products"][$product->product_id]["total_count_products"] += $product->count_products;
+            $stats["stats_products"][$product->product_id]["total_price"] += $product->count_price;
+        }
+
+        return view("admin.product-statistics", ["stats" => $stats]);
     }
 
     public function showTables() {
@@ -118,7 +154,7 @@ class AdminController extends Controller
 
         $partners = DB::table('users')
             ->join("partner_orders", "users.id", "=", "partner_orders.partner_id")
-            ->select("users.id", "users.name", "users.email", "users.card", "users.created_at", DB::raw("SUM(partner_orders.price) as all_price"), DB::raw("SUM(partner_orders.payments) as all_payments"), "partner_orders.paid_out")
+            ->select("users.id", "users.name", "users.email", "users.card", "users.created_at", DB::raw("SUM(partner_orders.price) as all_price"), DB::raw("SUM(partner_orders.payments) as all_payments"),  DB::raw("COUNT(*) as count"), "partner_orders.paid_out")
             ->groupBy("users.id", "partner_orders.paid_out")
             ->get();
 
@@ -128,11 +164,14 @@ class AdminController extends Controller
             $partnersDetail[$partner->id]['non_payments'] = 0;
             $partnersDetail[$partner->id]['done_price'] = 0;
             $partnersDetail[$partner->id]['done_payments'] = 0;
+            $partnersDetail[$partner->id]['count_orders'] = 0;
+            $partnersDetail[$partner->id]['done_count_orders'] = 0;
         }
         foreach ($partners as $key => $partner) {
             $partnersDetail[$partner->id]['name'] = $partner->name;
             $partnersDetail[$partner->id]['email'] = $partner->email;
             $partnersDetail[$partner->id]['card'] = $partner->card;
+            $partnersDetail[$partner->id]['count_orders'] += $partner->count;
             $partnersDetail[$partner->id]['created_at'] = $partner->created_at;
             if ($partner->paid_out == true) {
                 $partnersDetail[$partner->id]['non_price'] = $partner->all_price;
@@ -140,6 +179,7 @@ class AdminController extends Controller
             } else {
                 $partnersDetail[$partner->id]['done_price'] = $partner->all_price;
                 $partnersDetail[$partner->id]['done_payments'] = $partner->all_payments;
+                $partnersDetail[$partner->id]['done_count_orders'] += $partner->count;
             }
         }
 

@@ -537,6 +537,11 @@ $(document).ready(function () {
                 "category_id": category_id
             },
             success: function (content) {
+                if (search != "") {
+                    $(".h-value").text("Результати пошуку");
+                } else {
+                    $(".h-value").text($(".category").attr("data-category-name"));
+                }
                 if (!content.length) {
                     $(".container-empty").css("display", "block");
                     $(".product-row").html(content);

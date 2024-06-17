@@ -10,7 +10,9 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-12 col-lg-6">
-            <h5 class="text-center fw-bold text-muted">Партнерська програма</h5>
+            <div class="mb-3">
+                <h5 class="text-center fw-bold text-muted">Партнерська програма</h5>
+            </div>
             <hr>
             <div class="container">
             <div class="d-flex justify-content-between mt-2">
@@ -72,13 +74,13 @@
                                         <tr>
                                             <td rowspan="3">
                                                 <span class="ms-2 fw-bold">{{ $links[$key]['value'] }}:</span>
-                                                <div class="ms-2 mt-2 me-2 alert alert-primary alert-link d-flex justify-content-between" role="alert">
-                                                    <span>{{ $links[$key]['link'] }}</span>
+                                                <div  class="ms-2 mt-2 me-2 alert alert-primary alert-link d-flex justify-content-between" role="alert">
+                                                    <span class="stat-link">{{ $links[$key]['link'] }}</span>
                                                     <i class="fas fa-copy copy mt-1"></i>
-                                                </div>
+                                                </div >
                                             </td>
-                                            <td class="text-center">
-                                                {{ $sLink['count'] }}зам. <i class="fas fa-eye mt-1 watch"></i>
+                                            <td data-stat-value="{{ $links[$key]['value'] }}" data-stat-link="{{ $links[$key]['link'] }}" class="text-center">
+                                                {{ $sLink['count'] }}зам. <i class="fas fa-eye mt-1 watch show-order-icon"></i>
                                             </td>
                                             <td class="text-center">
                                                 {{ $sLink['all_price'] }}грн.
@@ -93,8 +95,8 @@
                                             <th class="text-center">Нараховано</th>
                                         </tr>
                                         <tr>
-                                            <td class="text-center">
-                                                {{ $sLink['paid_count'] }}зам. <i class="fas fa-eye mt-1 watch"></i>
+                                            <td data-stat-value="{{ $links[$key]['value'] }}" data-stat-link="{{ $links[$key]['link'] }}" class="text-center">
+                                                {{ $sLink['paid_count'] }}зам. <i class="fas fa-eye mt-1 watch show-order-icon-last"></i>
                                             </td>
                                             <td class="text-center">
                                                 {{ $sLink['paid_all_price'] }}грн.
@@ -153,22 +155,38 @@
                             <button data-url="{{ route("partner.save_card") }}" class="ms-1 btn btn-warning btn-card"><i class="fas @if(!$user->card)fa-credit-card @else fa-edit @endif"></i></button>
                         </div>
                     </div>
+                    <hr>
+                    <div>
+                        <h5 class="fw-bold mt-3 text-warning">Сповіщення в телеграм</h5>
+                        <div class="alert alert-primary alert-link" role="alert">
+                            <span class="fw-bold">Підключіть сповіщення про замовлення і нарахування в телеграм.</span><br>
+                            <span class="fw-bold">1. Створіть групу та додайте в неї @medo_bear_bot.</span><br>
+                            <span class="fw-bold">2. Перейменуйте посилання групи та вставте сюди в форматі @yourgroup і збережіть.</span>
+                        </div>
+                        <div class="card-number d-flex w-50">
+                            <input value="{{ $user->telegram_group }}" @if($user->telegram_group) disabled @endif type="text" class="form-control group-input" placeholder="Посилання групи: @yourgroup">
+                            <button data-url="{{ route("partner.save_group") }}" class="ms-1 btn btn-warning btn-group"><i class="mt-1 @if(!$user->telegram_group)fab fa-telegram @else fas fa-edit @endif"></i></button>
+                        </div>
+                    </div>
                 @endif
             </div>
         </div>
         <div class="col-12 col-lg-6">
-            <h5 class="text-center fw-bold text-muted">Всі замовлення</h5>
+            <div class="d-flex justify-content-between mb-2 page-block" data-url="{{ route("partner.show_orders") }}">
+                <button id="prev" class="btn btn-warning ms-3 btn-sm" disabled><i class="fas fa-chevron-circle-left"></i></button>
+                <h5 data-link="" data-last="false" class="text-center fw-bold text-muted order-type">Всі замовлення</h5>
+                <button id="next" class="btn btn-warning me-3 btn-sm"><i class="fas fa-chevron-circle-right"></i></button>
+            </div>
             <hr>
             <div class="row">
-                <span class="w-100 mt-3 mb-2 text-center link-warning">
-                    {{ $orders->links() }}
-                </span>
                 <div class="main-row pe-5 container-empty text-center" @if($orders->isEmpty()) style="display: block;" @else style="display: none;" @endif>
                     <img class="empty-orders" src="{{ asset('icons') . "/empty.png" }}" alt="Пусто"><br>
                     <h4 class="text-muted mt-2">Замовлень немає!</h4>
                 </div>
-                @foreach($orders as $key => $order)
-                    <div class="col-sm-12 col-md-6 col-lg-12 col-xl-6 mt-2">
+                <div class="orders-container">
+                    <div class="count-orders row" data-next-page="{{ $orders->nextPage }}" data-count-orders="{{ count($orders) }}">
+                        @foreach($orders as $key => $order)
+                            <div class="col-sm-12 col-md-6 col-lg-12 col-xl-6 mt-2">
                         <div class="card mb-3 me-2 ms-2">
                             <h6 class="ms-3 fw-bold mt-2 text-center">Замовлення: #{{ $order->id }}</h6>
 
@@ -226,7 +244,9 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                         @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>

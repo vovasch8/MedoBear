@@ -391,6 +391,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 url: url,
+                async: false,
                 data: {
                     "_token": $('meta[name="csrf-token"]').attr('content'),
                     "pip": pip,
@@ -655,6 +656,104 @@ $(document).ready(function () {
 
             $(".card-input").removeAttr("disabled");
         }
+    });
+
+    $(".btn-group").click(function () {
+        if ($(".btn-group i").hasClass("fa-telegram")) {
+
+            if ($(".group-input").length) {
+                let group = $(".group-input").val();
+                let url = $(this).attr("data-url");
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        "_token": $('meta[name="csrf-token"]').attr('content'),
+                        "group": group
+                    },
+                    success: function (content) {
+                        $('.btn-group i').removeClass("fa-telegram");
+                        $('.btn-group i').removeClass("fab");
+                        $('.btn-group i').addClass("fa-edit");
+                        $('.btn-group i').addClass("fas");
+                        $(".group-input").prop("disabled", true);
+                    }
+                });
+            }
+        } else {
+            $('.btn-group i').removeClass("fa-edit");
+            $('.btn-group i').removeClass("fas");
+            $('.btn-group i').addClass("fa-telegram");
+            $('.btn-group i').addClass("fab");
+
+            $(".group-input").removeAttr("disabled");
+        }
+    });
+
+    var numberPage = 0;
+    if ($(".count-orders").attr("data-count-orders") < 4) {
+        $("#next").attr("disabled", "disabled");
+    }
+    $("#next, #prev").click(function () {
+        let url = $(this).parent().attr("data-url");
+        let link = $(".order-type").attr("data-link");
+        let lastOrders = $(".order-type").attr("data-last");
+
+        if(this.id == "next") {
+            numberPage++;
+            $("#prev").prop("disabled", false);
+        } else if (numberPage > 0) {
+            numberPage--;
+            $("#next").prop("disabled", false);
+            if (numberPage == 0) {
+                $("#prev").attr("disabled", "disabled");
+            }
+        }
+
+        showOrders(url, numberPage, link, lastOrders);
+    });
+
+    function showOrders(url, numberPage, link, lastOrders) {
+        console.log(lastOrders);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            async: false,
+            data: {
+                "_token": $('meta[name="csrf-token"]').attr('content'),
+                "numberPage": numberPage,
+                "link": link,
+                "lastOrders": lastOrders
+            },
+            success: function (content) {
+                if (content) {
+                    $(".orders-container").html(content);
+                    if (!$(".count-orders").attr("data-next-page")) {
+                        $("#next").attr("disabled", "disabled");
+                    }
+                }
+            }
+        });
+    }
+
+    $(".show-order-icon").click(function () {
+        $(".order-type").attr("data-link", $(this).parent().attr("data-stat-link"));
+        $(".order-type").attr("data-last", false);
+        $(".order-type").text($(this).parent().attr("data-stat-value"));
+        let url = $('.page-block').attr("data-url");
+        $("#prev").attr("disabled", "disabled");
+
+        showOrders(url, 0, $(".order-type").attr("data-link"), false);
+    });
+
+    $(".show-order-icon-last").click(function () {
+        $(".order-type").attr("data-link", $(this).parent().attr("data-stat-link"));
+        $(".order-type").attr("data-last", true);
+        $(".order-type").text($(this).parent().attr("data-stat-value"));
+        let url = $('.page-block').attr("data-url");
+        $("#prev").attr("disabled", "disabled");
+
+        showOrders(url, 0, $(".order-type").attr("data-link"), true);
     });
 
     $("#partner-link").change(function(){

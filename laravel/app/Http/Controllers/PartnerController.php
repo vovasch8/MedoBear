@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\PartnerOrders;
 use App\Models\Product;
 use App\Models\User;
@@ -15,6 +16,8 @@ class PartnerController extends Controller
     public function partner() {
         $this->authorize("view-user", Auth::user());
 
+//        dd($this->getAccountBalance(Auth::user()));
+
         $categories = Category::all()->where("active", true);
         foreach ($categories as $category) {
             $category->products = Product::all()->where("category_id", $category->id);
@@ -25,20 +28,7 @@ class PartnerController extends Controller
             $user_id = intval($_GET['partner_id']);
         }
 
-        $partnerOrders = DB::table("orders")
-            ->join("partner_orders", "orders.id", "=", "partner_orders.order_id")
-            ->where("partner_id", "=", $user_id)
-            ->orderBy("orders.id", "desc")
-            ->simplePaginate(5);
-
-        foreach ($partnerOrders as $order) {
-            $products = DB::table('products')
-                ->join("order_products", "products.id", "=", "order_products.product_id")
-                ->where("order_products.order_id", "=", $order->order_id)
-                ->select("products.id as id", "products.name", "order_products.price", "products.category_id", "order_products.order_id", "order_products.product_id", "order_products.count", "order_products.size")
-                ->get();
-            $order->products = Product::getProductsWithImages($products);
-        }
+        $partnerOrders = $this->getPartnerOrders(Auth::user()->id);
 
         $links = self::getListOfPartnerLink();
         $statLinks = [];
@@ -81,7 +71,24 @@ class PartnerController extends Controller
         }
         $statLinks['paid_out'] = $statLinks['payments'] - $account;
 
-        return view("partner", ["orders" => $partnerOrders, "categories" => $categories, 'links' => $links, 'statLinks' => $statLinks, 'account' => $account, "user" => User::find($user_id)]);
+        uasort($statLinks['links'], function ($a, $b) {
+            if ($a['count'] === $b['count']) {
+                return $b['all_price'] <=> $a['all_price'];
+            }
+            return $a['count'] < $b['count'];
+        });
+
+        return view("partner", ["orders" => $this->getPartnerOrders(Auth::user()->id, 4), "categories" => $categories, 'links' => $links, 'statLinks' => $statLinks, 'account' => $account, "user" => User::find($user_id)]);
+    }
+
+    public function getAccountBalance($user) {
+        $partnerOrders = $this->getPartnerOrders($user->id, false, 0, false, true);
+        $balance = 0;
+        foreach ($partnerOrders as $order) {
+            $balance += intval(round($order->price * 0.3));
+        }
+
+        return $balance;
     }
 
     public function saveCard(Request $request) {
@@ -94,14 +101,45 @@ class PartnerController extends Controller
         return true;
     }
 
-    public function getPartnerOrders() {
-        $partnerOrders = DB::table("orders")
-            ->join("partner_orders", "orders.id", "=", "partner_orders.order_id")
-            ->where("partner_id", "=", Auth::user()->id)
-            ->orderBy("orders.id", "desc")
-            ->get();
+    public function saveGroup(Request $request) {
+        $group = strval($request->group);
+        $user = Auth::user();
 
-        return $partnerOrders;
+        $user->telegram_group = $group;
+        $user->save();
+
+        return true;
+    }
+
+    public function getPartnerOrders($user_id, $count = false, $numberPage = 0, $link = false, $showLastOrders = false) {
+        $query = DB::table("orders")
+            ->join("partner_orders", "orders.id", "=", "partner_orders.order_id")
+            ->where("partner_id", "=", $user_id);
+
+        if ($link) {
+            $query->where("link", "=", $link);
+        } if($showLastOrders) {
+            $query->where("paid_out", "=", false);
+        } if ($count) {
+            $query->skip($numberPage * $count)->take($count + 1);
+        }
+
+        $orders = $query->orderBy("orders.id", "desc")->get();
+
+        foreach ($orders as $order) {
+            $products = DB::table('products')
+                ->join("order_products", "products.id", "=", "order_products.product_id")
+                ->where("order_products.order_id", "=", $order->order_id)
+                ->select("products.id as id", "products.name", "order_products.price", "products.category_id", "order_products.order_id", "order_products.product_id", "order_products.count", "order_products.size")
+                ->get();
+            $order->products = Product::getProductsWithImages($products);
+        }
+
+        $orders->nextPage = count($orders) > $count;
+
+        if ($orders->nextPage) unset($orders[$count]);
+
+        return $orders;
     }
 
     public static function getListOfPartnerLink() {
@@ -145,5 +183,15 @@ class PartnerController extends Controller
         }
 
         return true;
+    }
+
+    public function showOrders(Request $request) {
+        $numberPage = intval($request->numberPage);
+        $link = strval($request->link);
+        $lastOrders = $request->lastOrders == "true";
+
+        $orders = $this->getPartnerOrders(Auth::user()->id, 4, $numberPage, $link, $lastOrders);
+
+        return view("layouts.orders-content", ["orders" => $orders]);
     }
 }

@@ -18,7 +18,7 @@ class SiteController extends Controller
         if (!$category) {
             return redirect("/404");
         } if (isset($_GET['partner'])) {
-            $link = strtok(urldecode(\Request::fullUrl(),'?'));
+            $link = strtok(urldecode(\Request::fullUrl()),'?');
             if (mb_substr($link, -1) == "/") {
                 $link = mb_substr($link, 0, -1);
             }

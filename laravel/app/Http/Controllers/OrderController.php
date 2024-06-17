@@ -6,6 +6,7 @@ use App\Mail\OrderMail;
 use App\Models\PartnerOrders;
 use App\Models\Product;
 use App\Models\Promocode;
+use App\Models\User;
 use App\Models\UserOrders;
 use App\Social\SocialNetworks\Telegram;
 use Illuminate\Http\Request;
@@ -80,7 +81,7 @@ class OrderController extends Controller
             $order = Order::find($orderId);
             $telegram = new Telegram();
             $orderNotification = $telegram->generateOrderNotification($order);
-            $telegram->sendNotification($telegram->generateNotification($orderNotification));
+            $telegram->sendNotification($telegram->generateNotification($orderNotification, "site_notification"));
             Mail::to(config("mail.mail_for_order"))->send(new OrderMail($order));
             if (\Auth::check()) {
                 $userOrder = new UserOrders();
@@ -90,20 +91,27 @@ class OrderController extends Controller
                 $userOrder->save();
             } if (session()->has("partner") && session()->has("link") && ((auth()->check() && (intval(session('partner')) != Auth::user()->id) || !auth()->check()))) {
                 $link = session('link');
-                $id_user = session('partner');
+                $id_user = intval(session('partner'));
+                $partner = User::find($id_user);
 
-                $partnerOrder = new PartnerOrders();
+                if ($partner) {
+                    $partnerOrder = new PartnerOrders();
 
-                $partnerOrder->partner_id = intval($id_user);
-                $partnerOrder->order_id = $orderId;
-                $partnerOrder->link = $link;
-                $partnerOrder->price = $order->price;
-                $partnerOrder->payments = round(intval($order->price) * 0.3);
-                $partnerOrder->paid_out = false;
+                    $partnerOrder->partner_id = intval($id_user);
+                    $partnerOrder->order_id = $orderId;
+                    $partnerOrder->link = $link;
+                    $partnerOrder->price = $order->price;
+                    $partnerOrder->payments = round(intval($order->price) * 0.3);
+                    $partnerOrder->paid_out = false;
 
-                $partnerOrder->save();
-                session()->forget("partner");
-                session()->forget("link");
+                    $partnerOrder->save();
+                    session()->forget("partner");
+                    session()->forget("link");
+                    if ($partner->telegram_group) {
+                        $partnerOrderNotification = $telegram->generatePartnerOrderNotification($order, $partner);
+                        $telegram->sendNotification($telegram->generateNotification($partnerOrderNotification, "partner_notification", $partner->telegram_group));
+                    }
+                }
             }
             CartController::clearCart();
         }

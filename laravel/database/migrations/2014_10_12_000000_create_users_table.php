@@ -22,6 +22,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->string("role");
             $table->string("card");
+            $table->string("telegram_group");
             $table->timestamps();
         });
     }

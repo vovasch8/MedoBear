@@ -2,6 +2,7 @@
 
 namespace App\Social\SocialNetworks;
 
+use App\Http\Controllers\PartnerController;
 use App\Models\Product;
 use App\Models\Promocode;
 use App\Social\SocialNetworks\SocialNetwork;
@@ -29,8 +30,8 @@ class Telegram implements SocialNetwork
      * @param $message
      * @return TelegramNotification
      */
-    public function generateNotification($message) {
-        return new TelegramNotification($message);
+    public function generateNotification($message, $typeNotification = false, $chat = false) {
+        return new TelegramNotification($message, $typeNotification, $chat);
     }
 
     /**
@@ -106,5 +107,41 @@ class Telegram implements SocialNetwork
             "\n--Замовлені Товари--\n" .
             $orderProducts .
             "\n💎Подивитись на замовлення в адмін панелі: " . route("admin.admin");
+    }
+
+    public function generatePartnerOrderNotification($order, $partner) {
+        $partnerController = new PartnerController();
+        $balance = $partnerController->getAccountBalance($partner);
+        $promocode = "";
+        if($order->promocode) {
+            $promocode = "\n👑Промокод: " . $order->promocode . "\n🔖Знижка: " . Promocode::getDiscount($order->promocode) . "%";
+        }
+
+        // Get Products from order
+        $products =  DB::table('products')
+            ->join('order_products', 'products.id', '=', 'order_products.product_id')
+            ->select('products.id', 'products.name', 'order_products.size', 'order_products.price', 'order_products.count as product_count')
+            ->where('order_products.order_id', $order->id)
+            ->get();
+        $products = Product::getProductsWithImages($products);
+
+        // Generate products info
+        $orderProducts = "";
+        foreach($products as $index => $product) {
+            $orderProducts .= '📦️' . $product->name . " - "
+                . $product->size
+                . " - " . $product->product_count . "шт. по "
+                . $product->price . "грн.шт.\n"
+                . urldecode(route("site.product", [$product->id, $product->size])) . "\n";
+        }
+
+        return "🎯Нове замовлення #$order->id на сайті Medobear\n\n--Інформація покупця--\n😀Покупець: " . $order->pip .
+        $promocode .
+        "\n\n💰️Ціна замовлення: " . $order->price . "грн.\n" .
+        "💰️Нараховано: " . intval(round($order->price * 0.3)) . "грн.\n" .
+        "💰️Загальний баланс: " . $balance . "грн.\n" .
+        "\n--Замовлені Товари--\n" .
+        $orderProducts .
+        "\n💎Подивитись на замовлення в партнерці: " . route("partner.partner");
     }
 }

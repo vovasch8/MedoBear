@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'previous' => '&laquo; Previous',
-    'next' => 'Next &raquo;',
+    'previous' => '<i class="fas fa-chevron-left text-warning"></i>',
+    'next' => '<i class="fas fa-chevron-right text-warning"></i>',
 
 ];

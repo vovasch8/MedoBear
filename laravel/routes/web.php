@@ -28,6 +28,7 @@ Route::name('site.')->group(function () {
     Route::post('/handle-message', [SiteController::class, 'sendMessage'])->name('send_message');
     Route::post('/apply-filters', [SiteController::class, 'applyFilters'])->name('filters');
     Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
+    Route::get('/map', [SiteController::class, 'seoMap'])->name("map");
 });
 
 Route::name('cart.')->group(function () {

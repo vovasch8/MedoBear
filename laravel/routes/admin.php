@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::name('admin_categories.')->group(function () {
         Route::post('/admin/category-status', [CategoryController::class, 'changeCategoryStatus'])->name('change_category_status');
         Route::post('/admin/category-icon', [CategoryController::class, 'updateCategoryImage'])->name('update_category_image');
+        Route::post('/admin/category-edit-keywords', [CategoryController::class, 'editKeywords'])->name('edit_keywords');
 
         Route::post('/admin/add-category', [CategoryController::class, 'addCategory'])->name('add_category');
         Route::post('/admin/delete-category', [CategoryController::class, 'deleteCategory'])->name('delete_category');

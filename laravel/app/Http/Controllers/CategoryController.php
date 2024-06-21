@@ -13,6 +13,7 @@ class CategoryController extends Controller
 
         $categoryModel->name = strval($request->category_name);
         $categoryModel->active = ($request->category_active === "true") ? 1 : 0;
+        $categoryModel->keywords = strval($request->category_keywords);
         $imageName = time() . '.' . $request->category_image->extension();
         Storage::disk('public')->putFileAs('/icons', $request->category_image, $imageName);
         $categoryModel->image = $imageName;
@@ -25,6 +26,7 @@ class CategoryController extends Controller
     public function updateCategory(Request $request) {
         $category = Category::find(intval($request->id));
         $category->name = strval($request->name);
+        $category->keywords = strval($request->keywords);
         $category->image = strval($request->image);
 
         $category->save();
@@ -62,5 +64,16 @@ class CategoryController extends Controller
 
         $newCategory = Category::find($category->id);
         return asset("storage") . "/icons/" . $newCategory->image;
+    }
+
+    public function editKeywords(Request $request) {
+        $idCategory = intval($request->id);
+        $keywords = strval($request->keywords);
+
+        $category = Category::find($idCategory);
+        $category->keywords = $keywords;
+        $category->save();
+
+        return redirect()->back();
     }
 }

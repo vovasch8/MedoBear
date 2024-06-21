@@ -1,4 +1,4 @@
-<div class="count-orders row" data-next-page="{{ $orders->nextPage }}" data-count-orders="{{ count($orders) }}">
+<div class="count-orders row" data-next-page="{{ $orders->nextPage }}" data-count-orders="{{ count($orders) }}" data-standart-count="{{ $standart }}">
     @if (!count($orders))
         <div class="main-row pe-5 container-empty text-center mt-3">
             <img class="empty-orders" src="{{ asset('icons') . "/empty.png" }}" alt="Пусто"><br>
@@ -52,7 +52,7 @@
                 </div>
                 <h6 class=" mt-2 ms-2 fw-bold text-center">Продукти</h6>
                 <hr>
-                <div class="row mt-3 ps-2 pe-2">
+                <div class="row mt-3 ps-2 pe-2 d-flex justify-content-center">
                     @foreach($order->products as $product)
                         <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="{{ $product->name }}" class=" col-md-4 col-sm-3 col-xs-4 col-6 d-flex justify-content-center text-center flex-column link-dark tooltipOrder" href="{{ route("site.product", [$product->id, $product->size]) }}">
                             <img class="productImage mx-auto" src="{{ asset('storage') . '/products/' . $product->product_id . '/' . $product->images[0]->image }}" alt="Order">

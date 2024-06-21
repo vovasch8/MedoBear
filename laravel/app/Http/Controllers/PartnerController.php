@@ -28,7 +28,7 @@ class PartnerController extends Controller
             $user_id = intval($_GET['partner_id']);
         }
 
-        $partnerOrders = $this->getPartnerOrders(Auth::user()->id);
+        $partnerOrders = $this->getPartnerOrders($user_id);
 
         $links = self::getListOfPartnerLink();
         $statLinks = [];
@@ -51,6 +51,8 @@ class PartnerController extends Controller
         foreach ($partnerOrders as $order) {
             foreach ($links as $key => $link) {
                 if ($order->link == $link['link']) {
+                    $statLinks['links'][$key]['name'] = $link['value'];
+                    $statLinks['links'][$key]['link'] = $link['link'];
                     $statLinks['links'][$key]['all_price'] += $order->price;
                     $statLinks['links'][$key]['payments'] += intval(round($order->price * 0.3));
                     $statLinks['links'][$key]['count']++;
@@ -70,6 +72,8 @@ class PartnerController extends Controller
             $statLinks['count']++;
         }
         $statLinks['paid_out'] = $statLinks['payments'] - $account;
+        $standart = 6;
+        $standartLinks = 5;
 
         uasort($statLinks['links'], function ($a, $b) {
             if ($a['count'] === $b['count']) {
@@ -77,8 +81,12 @@ class PartnerController extends Controller
             }
             return $a['count'] < $b['count'];
         });
+        $statLinks["links"] = array_filter($statLinks['links'], function ($el) { return $el["count"] > 0;});
+        $statLinks["links"] = array_slice($statLinks['links'], 0, $standartLinks);
 
-        return view("partner", ["orders" => $this->getPartnerOrders(Auth::user()->id, 4), "categories" => $categories, 'links' => $links, 'statLinks' => $statLinks, 'account' => $account, "user" => User::find($user_id)]);
+        $statLinks['nextPage'] = count($statLinks['links']) == $standartLinks;
+
+        return view("partner", ["orders" => $this->getPartnerOrders($user_id, $standart), "categories" => $categories, 'statLinks' => $statLinks, 'account' => $account, "user" => User::find($user_id), "standart" => $standart, "standartLinks" => $standartLinks]);
     }
 
     public function getAccountBalance($user) {
@@ -185,13 +193,60 @@ class PartnerController extends Controller
         return true;
     }
 
-    public function showOrders(Request $request) {
+    public function showOrders(Request $request, $count = 6) {
         $numberPage = intval($request->numberPage);
         $link = strval($request->link);
         $lastOrders = $request->lastOrders == "true";
 
-        $orders = $this->getPartnerOrders(Auth::user()->id, 4, $numberPage, $link, $lastOrders);
+        $orders = $this->getPartnerOrders(Auth::user()->id, $count, $numberPage, $link, $lastOrders);
 
-        return view("layouts.orders-content", ["orders" => $orders]);
+        return view("layouts.orders-content", ["orders" => $orders, "standart" => $count]);
+    }
+
+    public function showLinksStat(Request $request, $count = 5) {
+        $numberPage = intval($request->numberPage);
+        $user_id = Auth::user()->id;
+        if (Auth::user()->role == "admin" && isset($_GET['partner_id'])) {
+            $user_id = intval($_GET['partner_id']);
+        }
+        $partnerOrders = $this->getPartnerOrders($user_id);
+
+        $links = self::getListOfPartnerLink();
+        $statLinks = [];
+        foreach ($links as $key => $link) {
+            $statLinks['links'][$key]['all_price'] = 0;
+            $statLinks['links'][$key]['payments'] = 0;
+            $statLinks['links'][$key]['count'] = 0;
+            $statLinks['links'][$key]['paid_all_price'] = 0;
+            $statLinks['links'][$key]['paid_payments'] = 0;
+            $statLinks['links'][$key]['paid_count'] = 0;
+        }
+        foreach ($partnerOrders as $order) {
+            foreach ($links as $key => $link) {
+                if ($order->link == $link['link']) {
+                    $statLinks['links'][$key]['name'] = $link['value'];
+                    $statLinks['links'][$key]['link'] = $link['link'];
+                    $statLinks['links'][$key]['all_price'] += $order->price;
+                    $statLinks['links'][$key]['payments'] += intval(round($order->price * 0.3));
+                    $statLinks['links'][$key]['count']++;
+                    if (!$order->paid_out) {
+                        $statLinks['links'][$key]['paid_all_price'] += $order->price;
+                        $statLinks['links'][$key]['paid_payments'] += intval(round($order->price * 0.3));
+                        $statLinks['links'][$key]['paid_count']++;
+                    }
+                }
+            }
+        }
+        uasort($statLinks['links'], function ($a, $b) {
+            if ($a['count'] === $b['count']) {
+                return $b['all_price'] <=> $a['all_price'];
+            }
+            return $a['count'] < $b['count'];
+        });
+        $statLinks["links"] = array_filter($statLinks['links'], function ($el) { return $el["count"] > 0;});
+        $statLinks["links"] = array_slice($statLinks['links'], $numberPage * $count, $count);
+        $statLinks['nextPage'] = count($statLinks['links']) == $count;
+
+        return view("layouts.partner-links-content", ["statLinks" => $statLinks, "standartLinks" => $count]);
     }
 }

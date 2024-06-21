@@ -9,6 +9,12 @@
         <priority>1.00</priority>
     </url>
     <url>
+        <loc>https://medo-bear.com/map</loc>
+        <lastmod>2024-06-07T11:27:54+00:00</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.00</priority>
+    </url>
+    <url>
         <loc>https://medo-bear.com/delivery</loc>
         <lastmod>2024-06-07T11:27:54+00:00</lastmod>
         <changefreq>daily</changefreq>
@@ -43,7 +49,7 @@
             <loc>https://medo-bear.com/categories/{{$key}}</loc>
             <lastmod>{{$time->tz('UTC')->toAtomString()}}</lastmod>
             <changefreq>daily</changefreq>
-            <priority>0.80</priority>
+            <priority>1.00</priority>
         </url>
     @endforeach
     @foreach($products as $key => $time)
@@ -51,7 +57,7 @@
             <loc>https://medo-bear.com/product/{{$key}}</loc>
             <lastmod>{{$time->tz('UTC')->toAtomString()}}</lastmod>
             <changefreq>daily</changefreq>
-            <priority>0.80</priority>
+            <priority>1.00</priority>
         </url>
     @endforeach
 </urlset>

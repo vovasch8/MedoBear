@@ -691,7 +691,7 @@ $(document).ready(function () {
     });
 
     var numberPage = 0;
-    if ($(".count-orders").attr("data-count-orders") < 4) {
+    if ($(".count-orders").attr("data-count-orders") < $(".count-orders").attr("data-standart-count")) {
         $("#next").attr("disabled", "disabled");
     }
     $("#next, #prev").click(function () {
@@ -713,8 +713,52 @@ $(document).ready(function () {
         showOrders(url, numberPage, link, lastOrders);
     });
 
+    var numberLinksPage = 0;
+    if ($(".count-links").attr("data-count-links") < $(".count-links").attr("data-standart-count-links")) {
+        $("#stat-next").attr("disabled", "disabled");
+    }
+    $("#stat-next, #stat-prev").click(function () {
+        let url = $(this).parent().attr("data-url");
+
+        if(this.id == "stat-next") {
+            numberLinksPage++;
+            $("#stat-prev").prop("disabled", false);
+        } else if (numberLinksPage > 0) {
+            numberLinksPage--;
+            $("#stat-next").prop("disabled", false);
+            if (numberLinksPage == 0) {
+                $("#stat-prev").attr("disabled", "disabled");
+            }
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            async: false,
+            data: {
+                "_token": $('meta[name="csrf-token"]').attr('content'),
+                "numberPage": numberLinksPage
+            },
+            success: function (content) {
+                if (content) {
+                    $(".stat-link-container").html(content);
+                    if (!$(".count-links").attr("data-next-page")) {
+                        $("#stat-next").attr("disabled", "disabled");
+                    }
+                }
+            }
+        });
+    });
+
+    $(".btn-show-all").click(function () {
+        if ($(this).parent().find(".all-products").hasClass("d-none")) {
+            $(this).parent().find(".all-products").removeClass("d-none");
+        } else {
+            $(this).parent().find(".all-products").addClass("d-none");
+        }
+    });
+
     function showOrders(url, numberPage, link, lastOrders) {
-        console.log(lastOrders);
         $.ajax({
             type: 'POST',
             url: url,

@@ -523,7 +523,7 @@ footer li, footer p {
 
 .productImage {
     border: 3px solid #ffc106;
-    border-radius: 50%;
+    border-radius: 35%;
     width: 70px;
     height: 70px;
 }
@@ -541,6 +541,10 @@ footer li, footer p {
 }
 
 .watch:hover {
+    color: #ffc106;
+}
+
+.link-keywords {
     color: #ffc106;
 }
 

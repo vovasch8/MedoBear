@@ -193,9 +193,12 @@
                 <div class="modal-body">
                     <div>
                         <div class="d-block">
+                            <h6>Назва: </h6>
                             <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-name-category-input">
+                            <h6>Ключові слова: </h6>
+                            <textarea class="form-control mb-2" placeholder="Перечисліть ключові слова через кому..." name="category-keywords" id="category-keywords" rows="3"></textarea>
+                            <h6>Фото: </h6>
                             <input placeholder="Іконка" type="file" accept="image/*" class="form-control mb-2" id="add-image-category-input">
-
                         </div>
                     </div>
                 </div>
@@ -223,6 +226,7 @@
                 <div class="modal-body">
                     <div>
                         <div class="d-block">
+                            <h6>Назва: </h6>
                             <input placeholder="Назва" class="form-control mb-2" type="text" name="category" id="add-product-name">
                             <input placeholder="Опис"  type="hidden" name="content">
                             <trix-editor id="productDescription" class="mb-2" placeholder="Опис" input="description"></trix-editor>
@@ -249,6 +253,8 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            <h6>Ключові слова: </h6>
+                            <textarea class="form-control mb-2" placeholder="Перечисліть ключові слова через кому..." name="product-keywords" id="product-keywords" rows="3"></textarea>
                             <h6>Фото: </h6>
                             <input placeholder="Фото" type="file" multiple accept="image/*" class="form-control mb-2" id="add-product-image">
                         </div>

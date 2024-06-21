@@ -14,27 +14,42 @@ class ImageContainer
     /**
      * Move photo in container
      * @param $thisId
-     * @param $leftId
-     * @param null $rightId
+     * @param $fatherId
+     * @param null $childId
+     * @param null $direction
      * @return bool
      */
-    public function movePhoto($thisId, $leftId, $rightId = null) {
+    public function movePhoto($thisId, $fatherId, $childId, $direction) {
         $thisImage = ProductImages::find($thisId);
-        $fatherImage = ProductImages::find($leftId);
 
-        if ($rightId === null) {
+        if ($direction == "left" && $fatherId != null) {
+            $fatherImage = ProductImages::find($fatherId);
             $thisImage->father_id = $fatherImage->father_id;
             $fatherImage->father_id = $thisId;
-        } else {
-            $childImage = ProductImages::find($rightId);
-            $thisImage->father_id = $fatherImage->father_id;
-            $fatherImage->father_id = $thisId;
-            $childImage->father_id = $leftId;
+            if ($childId) {
+                $childImage = ProductImages::find($childId);
+                $childImage->father_id = $fatherId;
+                $childImage->save();
+            }
+            $fatherImage->save();
+            $thisImage->save();
+        } else if ($direction == "right" && $childId != null) {
+            $childImage = ProductImages::find($childId);
+            $thisImage->father_id = $childId;
+            if (!$fatherId) {
+                $childImage->father_id = 0;
+            } else {
+                $childImage->father_id = $fatherId;
+            }
+            $childChildImage = ProductImages::where("father_id", "=", $childId)->first();
+            if ($childChildImage) {
+                $childChildImage->father_id = $thisId;
+                $childChildImage->save();
+            }
+
+            $thisImage->save();
             $childImage->save();
         }
-
-        $fatherImage->save();
-        $thisImage->save();
 
         return true;
     }

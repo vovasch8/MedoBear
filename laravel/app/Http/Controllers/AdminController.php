@@ -86,7 +86,7 @@ class AdminController extends Controller
         return view("admin.all-statistics", ["stats" => $stats]);
     }
 
-    public function showProductsStatistics()
+    public function showProductsStatistics(Request $request)
     {
         $this->authorize("view-manager", Auth::user());
         $productsStat =  DB::table("orders")->join("order_products", "orders.id", "=", "order_products.order_id")->join("products", "products.id", "=", "order_products.product_id")->select( "products.name", "order_products.product_id", "order_products.size", DB::raw("sum(order_products.count) as count_products"), DB::raw("sum(order_products.price) as count_price"))->groupBy("order_products.product_id", "order_products.size")->get();
@@ -102,7 +102,11 @@ class AdminController extends Controller
             $stats["stats_products"][$product->product_id]["total_price"] += $product->count_price;
         }
 
-        return view("admin.product-statistics", ["stats" => $stats]);
+        uasort($stats["stats_products"], function ($a, $b) {
+           return $b['total_price'] <=> $a['total_price'];
+        });
+
+        return view("admin.product-statistics", ['stats' => $stats]);
     }
 
     public function showTables() {

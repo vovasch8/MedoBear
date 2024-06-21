@@ -146,4 +146,63 @@ class SiteController extends Controller
 
         return view("layouts.products-content", ["products" => $products]);
     }
+
+    public function seoMap() {
+        $data = [];
+        $categories = Category::all();
+        $data[] = ["group" => 1, "id" => "MedoBear", "name" => "MedoBear", "link" => route("site.catalog"), "size" => 25, "color" => "green"];
+        $links = [];
+        $data[] = ["group" => 2, "id" => "Про нас", "name" => "Про нас", "link" => route("site.about_us"), "size" => 12, "color" => "red"];
+        $links[] = ["source"=> "Про нас", "target"=> "MedoBear"];
+        $data[] = ["group" => 2, "id" => "Контакти", "name" => "Контакти", "link" => route("site.contacts"), "size" => 12, "color" => "red"];
+        $links[] = ["source"=> "Контакти", "target"=> "MedoBear"];
+        $data[] = ["group" => 2, "id" => "Доставка", "name" => "Доставка", "link" => route("site.delivery"), "size" => 12, "color" => "red"];
+        $links[] = ["source"=> "Доставка", "target"=> "MedoBear"];
+
+        foreach ($categories as $category) {
+            $products = Product::all()->where("category_id", "=", $category->id);
+            $data[] = ["group" => 2, "id" => $category->name, "name" => $category->name, "link" => route("site.current_catalog", $category->id), "size" => 12, "color" => "red"];
+            $links[] = ["source"=> "MedoBear", "target"=> $category->name];
+            $keywords = explode(", ", $category->keywords);
+            if ($keywords[0] != "") {
+                foreach ($keywords as $keyword) {
+                    $data[] = ["group" => 10, "id" => $category->name . $keyword, "name" => $keyword, "link" => route("site.current_catalog", $category->id), "size" => 1, "color" => "yellow"];
+                    $links[] = ["source" => $category->name, "target" => $category->name . $keyword];
+                }
+            }
+            foreach ($products as $product) {
+                $sizes = 0;
+                $nameSizes = [];
+                if ($product->count) {
+                    $sizes++;
+                    $nameSizes[] = $product->count;
+                } if ($product->count2) {
+                    $sizes++;
+                    $nameSizes[] = $product->count2;
+                } if($product->count3) {
+                    $sizes++;
+                    $nameSizes[] = $product->count3;
+                } if ($product->count4) {
+                    $sizes++;
+                    $nameSizes[] = $product->count4;
+                }
+                $data[] = ["group" => 3, "id" => $product->name, "name" => $product->name, "link" => route("site.product", [$product->id, $product->count]), "size" => 10, "color" => "blue"];
+                $links[] = ["source"=> $category->name, "target"=> $product->name];
+                $keywords = explode(", ", $product->keywords);
+                if ($keywords[0] != "") {
+                    foreach ($keywords as $keyword) {
+                        $data[] = ["group" => 10, "id" => $keyword, "name" => $keyword, "link" => route("site.product", [$product->id, $product->count]), "size" => 1, "color" => "yellow"];
+                        $links[] = ["source" => $product->name, "target" => $keyword];
+                    }
+                }
+                foreach ( $nameSizes as $size) {
+                    $data[] = ["group" => 4, "id" => $product . $size, "name" => $size, "link" => route("site.product", [$product->id, $size]), "size" => 5, "color" => "black", "non_show" => true];
+                    $links[] = ["source"=> $product->name, "target"=> $product . $size];
+
+                }
+            }
+        }
+
+        return view("seo-map", ["data" => json_encode($data), "links" => json_encode($links)]);
+    }
 }

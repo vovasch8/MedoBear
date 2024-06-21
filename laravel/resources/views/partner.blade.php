@@ -59,9 +59,15 @@
                 </div>
                 <hr class="mt-3">
                 <div>
-                    <h5 class="fw-bold mt-3 text-warning">Статистика</h5>
-                    <div class="table-responsive">
-                        <table class="w-100 table-bordered">
+                    <div class="d-flex mt-3 justify-content-between mb-2">
+                        <h5 class="fw-bold  text-warning">Статистика</h5>
+                        <div data-url="{{ route("partner.show_links_stat") }}" class="pagination">
+                            <button id="stat-prev" class="btn btn-warning me-2 btn-sm" disabled><i class="fas fa-chevron-circle-left"></i></button>
+                            <button id="stat-next" class="btn btn-warning btn-sm"><i class="fas fa-chevron-circle-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="table-responsive stat-link-container">
+                        <table class="w-100 table-bordered count-links" data-next-page="{{ $statLinks['nextPage'] }}" data-count-links="{{ count($statLinks['links']) }}" data-standart-count-links="{{ $standartLinks }}">
                             <tbody>
                                 @foreach($statLinks['links'] as $key => $sLink)
                                     @if($sLink['count'])
@@ -73,13 +79,13 @@
                                         </tr>
                                         <tr>
                                             <td rowspan="3">
-                                                <span class="ms-2 fw-bold">{{ $links[$key]['value'] }}:</span>
+                                                <span class="ms-2 fw-bold">{{ $sLink['name'] }}:</span>
                                                 <div  class="ms-2 mt-2 me-2 alert alert-primary alert-link d-flex justify-content-between" role="alert">
-                                                    <span class="stat-link">{{ $links[$key]['link'] }}</span>
+                                                    <span class="stat-link">{{ $sLink['link'] }}</span>
                                                     <i class="fas fa-copy copy mt-1"></i>
                                                 </div >
                                             </td>
-                                            <td data-stat-value="{{ $links[$key]['value'] }}" data-stat-link="{{ $links[$key]['link'] }}" class="text-center">
+                                            <td data-stat-value="{{ $sLink['name'] }}" data-stat-link="{{ $sLink['link'] }}" class="text-center">
                                                 {{ $sLink['count'] }}зам. <i class="fas fa-eye mt-1 watch show-order-icon"></i>
                                             </td>
                                             <td class="text-center">
@@ -95,7 +101,7 @@
                                             <th class="text-center">Нараховано</th>
                                         </tr>
                                         <tr>
-                                            <td data-stat-value="{{ $links[$key]['value'] }}" data-stat-link="{{ $links[$key]['link'] }}" class="text-center">
+                                            <td data-stat-value="{{ $sLink['name'] }}" data-stat-link="{{ $sLink['link'] }}" class="text-center">
                                                 {{ $sLink['paid_count'] }}зам. <i class="fas fa-eye mt-1 watch show-order-icon-last"></i>
                                             </td>
                                             <td class="text-center">
@@ -184,7 +190,7 @@
                     <h4 class="text-muted mt-2">Замовлень немає!</h4>
                 </div>
                 <div class="orders-container">
-                    <div class="count-orders row" data-next-page="{{ $orders->nextPage }}" data-count-orders="{{ count($orders) }}">
+                    <div class="count-orders row" data-next-page="{{ $orders->nextPage }}" data-count-orders="{{ count($orders) }}" data-standart-count="{{ $standart }}">
                         @foreach($orders as $key => $order)
                             <div class="col-sm-12 col-md-6 col-lg-12 col-xl-6 mt-2">
                         <div class="card mb-3 me-2 ms-2">
@@ -233,7 +239,7 @@
                             </div>
                             <h6 class=" mt-2 ms-2 fw-bold text-center">Продукти</h6>
                             <hr>
-                            <div class="row mt-3 ps-2 pe-2">
+                            <div class="row mt-3 ps-2 pe-2 d-flex justify-content-center">
                                 @foreach($order->products as $product)
                                     <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="{{ $product->name }}" class=" col-md-4 col-sm-3 col-xs-4 col-6 d-flex justify-content-center text-center flex-column link-dark tooltipOrder" href="{{ route("site.product", [$product->id, $product->size]) }}">
                                         <img class="productImage mx-auto" src="{{ asset('storage') . '/products/' . $product->product_id . '/' . $product->images[0]->image }}" alt="Order">

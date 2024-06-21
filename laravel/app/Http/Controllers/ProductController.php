@@ -19,6 +19,7 @@ class ProductController extends Controller
         $productModel->description = strval($request->product_description);
         $productModel->active = ($request->product_active === "true") ? 1 : 0;
         $productModel->category_id = intval($request->product_category_id);
+        $productModel->keywords = strval($request->product_keywords);
         $productModel->price = intval($request->product_price);
         $productModel->count = strval($request->product_count);
         if (intval($request->product_price2) && strval($request->product_count2)) {
@@ -87,10 +88,11 @@ class ProductController extends Controller
         $imageContainer = new ImageContainer();
         $idProduct = intval($request->product_id);
         $thisId = intval($request->this_id);
-        $leftId = intval($request->left_id);
-        $rightId = $request->right_id != null ? intval($request->right_id) : null;
+        $fatherId = $request->father_id == null ? null : intval($request->father_id);
+        $childId = $request->child_id == null ? null : intval($request->child_id);
+        $direction = $request->direction;
 
-        $imageContainer->movePhoto($thisId, $leftId, $rightId);
+        $imageContainer->movePhoto($thisId, $fatherId, $childId, $direction);
 
         $product = Product::getProductWithImages(Product::all()->where("id", "=", $idProduct)->first());
 

@@ -314,19 +314,10 @@ $(document).ready(function () {
 
         for (let i = 0; i < images.length; i++) {
             if (images[i]['image'] === activeImage) {
-                if (direction === "left" && i !== 0) {
-                    let thisImage = images[i];
-                    thisId = thisImage['id'];
-                    fatherId = images.find((element) => element.id == thisImage['father_id']).id;
-                    childId = (i < images.length - 2) ? images.find((element) => element.father_id == thisId).id : null;
-                } else if (direction === "right" && i !== images.length - 1) {
-                    let fatherImage = images[i];
-                    fatherId = fatherImage['id'];
-                    thisId = images.find((element) => element.father_id == fatherImage['id']).id;
-                    childId = (i < images.length - 2) ? images.find((element) => element.father_id == thisId).id : null;
-                } else {
-                    return false;
-                }
+                let thisImage = images[i];
+                thisId = thisImage['id'];
+                fatherId = (thisImage['father_id'] == 0) ? null : images.find((element) => element.id == thisImage['father_id']).id;
+                childId = (i < images.length - 1) ? images.find((element) => element.father_id == thisId).id : null;
 
                 $(".photos").html("<div class='d-flex justify-content-center w-100 pt-5 pb-5'><div class=\"spinner-border p-5\" role=\"status\">\n" +
                     "  <span class=\"visually-hidden\">Loading...</span>\n" +
@@ -334,11 +325,13 @@ $(document).ready(function () {
                 $.ajax({
                     type: 'POST',
                     url: url,
+                    async: false,
                     data: {
                         "_token": $('meta[name="csrf-token"]').attr('content'),
                         "this_id": thisId,
-                        "right_id": childId,
-                        "left_id": fatherId,
+                        "child_id": childId,
+                        "father_id": fatherId,
+                        "direction": direction,
                         "product_id": productId
                     },
                     success: function (product) {
@@ -490,6 +483,13 @@ $(document).ready(function () {
                 location.reload();
             }
         });
+    });
+
+    $(".btn-edit-category-keywords").click(function () {
+        let content = $(this).attr("data-content");
+        let id = $(this).closest("tr").children(":first").text();
+        $("#textarea-keywords").val(content);
+        $("#id-category-keywords-hidden").val(id);
     });
 
     function initFotorama(data) {

@@ -23,19 +23,19 @@
             @auth
                 <div class="dropdown me-3">
                     <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ Auth::user()->name }}
+                        <i class="fas fa-user-alt"></i></i>&nbsp;{{ Auth::user()->name }}
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route("profile.edit") }}">Профіль</a></li>
-                        <li><a class="dropdown-item" href="{{ route("dashboard") }}">Мої замовлення</a></li>
-                        <li><a class="dropdown-item" href="{{ route("partner.partner") }}">Партнерка</a></li>
+                        <li><a class="dropdown-item" href="{{ route("profile.edit") }}"><i class="fas fa-user-circle text-muted"></i>&nbsp;Профіль</a></li>
+                        <li><a class="dropdown-item" href="{{ route("dashboard") }}"><i class="fas fa-box text-muted"></i>&nbsp;Мої замовлення</a></li>
+                        <li><a class="dropdown-item" href="{{ route("partner.partner") }}"><i class="fas fa-handshake text-muted"></i>&nbsp;Партнерка</a></li>
                         @can("view-manager", \Illuminate\Support\Facades\Auth::user())
-                            <li><a class="dropdown-item" href="{{ route("admin.admin") }}">Адмін панель</a></li>
+                            <li><a class="dropdown-item" href="{{ route("admin.admin") }}"><i class="fas fa-tools text-muted"></i>&nbsp;Адмін панель</a></li>
                         @endcan
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <li onclick="event.preventDefault(); this.closest('form').submit();"><a class="dropdown-item" href="#">Вийти</a></li>
+                            <li onclick="event.preventDefault(); this.closest('form').submit();"><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt text-muted"></i>&nbsp;Вийти</a></li>
                         </form>
                     </ul>
                 </div>

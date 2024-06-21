@@ -66,6 +66,7 @@ $(document).ready(function () {
         if ($(".add-category-block").css("display") == "none") {
             $(".add-category-block").css("display", "block");
             $("#add-name-category-input").val("");
+            $("#category-keywords").val("");
             $("#add-image-category-input").val("");
         } else {
             $(".add-category-block").css("display", "none");
@@ -79,6 +80,7 @@ $(document).ready(function () {
             $("#add-product-description").val("");
             $("#add-product-count").val("");
             $("#add-product-price").val("");
+            $("#product-keywords").val("");
             $("#add-product-image").val("");
         } else {
             $(".add-product-block").css("display", "none");
@@ -89,11 +91,13 @@ $(document).ready(function () {
         let data = new FormData();
         let category_name = $("#add-name-category-input").val();
         let category_active = $("#isActiveCategory").prop('checked');
+        let category_keywords = $("#category-keywords").val();
         let category_image = $("#add-image-category-input").prop('files')[0];
         let url = $("#add-category-btn").attr("data-url");
 
         data.append("_token", $('meta[name="csrf-token"]').attr('content'));
         data.append("category_name", category_name);
+        data.append("category_keywords", category_keywords);
         data.append("category_active", category_active);
         data.append("category_image", category_image);
         // $(".category-loader").html("<div class='float-end'><div style='height: 15px; width: 15px;' class=\"spinner-border\" role=\"status\">\n" +
@@ -129,6 +133,7 @@ $(document).ready(function () {
         let product_price4 = $("#add-product-price4").val();
         let product_active = $("#is-active-product").prop('checked');
         let product_category_id = $("#add-product-category").val();
+        let product_keywords = $("#product-keywords").val();
         let arr_images = $("#add-product-image").prop('files');
         let url = $("#add-product-btn").attr("data-url");
 
@@ -145,6 +150,7 @@ $(document).ready(function () {
         data.append("product_price4", product_price4);
         data.append("product_active", product_active);
         data.append("product_category_id", product_category_id);
+        data.append("product_keywords", product_keywords);
         for (let el of arr_images) {
             data.append("product_images[]", el);
         }

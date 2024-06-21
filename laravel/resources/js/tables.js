@@ -49,7 +49,12 @@ $(document).ready(function () {
                             url: url,
                             data: {"_token": $('meta[name="csrf-token"]').attr('content'), "id": id},
                             success: function (response) {
-                                $(tr).remove();
+                                if (response !== '1') {
+                                    $(".toast-body").text(response);
+                                    toast.show();
+                                } else {
+                                    $(tr).remove();
+                                }
                             }
                         });
                     }
@@ -171,7 +176,7 @@ $(document).ready(function () {
                     success: function (response) {
                         td.html(response);
                     }, error: function (error) {
-                        console.log("error");
+                        $(".toast-body").text("Введені невірні дані при редагуванні!");
                         toast.show();
                         $(td).html(oldText);
                     }

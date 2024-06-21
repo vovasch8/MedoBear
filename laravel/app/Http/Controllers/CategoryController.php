@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,10 +36,15 @@ class CategoryController extends Controller
     }
 
     public function deleteCategory(Request $request) {
-        $category = Category::find(intval($request->id));
-        $category->delete();
+        $products = Product::all()->where("category_id", "=", intval($request->id));
+        if (!$products) {
+            $category = Category::find(intval($request->id));
+            $category->delete();
 
-        return true;
+            return true;
+        }
+
+        return "В категорії не повинно бути товарів!";
     }
 
     public function changeCategoryStatus(Request $request) {

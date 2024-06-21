@@ -25,8 +25,8 @@
                 </select>
             </td>
             <td>{{ $category->created_at }}</td>
-            <td><div class="actions text-center">
-                    <div class="popover bs-popover-auto fade show" role="tooltip" id="popover95769" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(66.5px, 1886.5px, 0px);" data-popper-placement="top"><div class="popover-arrow" style="position: absolute; left: 0px; transform: translate3d(47px, 0px, 0px);"></div><div class="popover-body">Top popover</div></div>
+            <td>
+                <div class="actions text-center">
                     <i data-url="{{ route("admin_categories.delete_category") }}" class="fa-solid fa-trash"></i>
                 </div>
             </td>

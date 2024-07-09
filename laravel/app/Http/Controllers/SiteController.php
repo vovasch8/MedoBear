@@ -50,7 +50,7 @@ class SiteController extends Controller
         $categories = Category::all()->where("active", "=", true);
         $product = Product::getProductWithImages($product);
 
-        return view("product", ["categories" => $categories, "product" => $product, 'size' => $size]);
+        return view("product", ["categories" => $categories, "product" => $product, 'size' => $size, "activeCategory" => Category::find($product->category_id)]);
     }
 
     public function showDelivery() {

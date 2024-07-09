@@ -75,6 +75,15 @@
                             <hr>
                             <h5 class="desc-title text-center mt-3 mb-2 fw-semibold">Опис продукту</h5>
                             <div class="description">{!! $product->description !!}</div>
+                            <hr class="mt-2 mb-2">
+                            <nav class=" rounded mb-2" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                                {{--                                    <h2 style="margin-top: 2px" class="h6 text-white fw-bold d-block ms-2">Шлях:</h2>--}}
+                                <ol class="breadcrumb mb-0 ">
+                                    <li class="breadcrumb-item"><a class="link-warning fw-bold" href="{{ route("site.catalog") }}">MedoBear</a></li>
+                                    <li class="breadcrumb-item"><a class="link-warning fw-bold" href="{{ route("site.current_catalog", $activeCategory->id) }}">{{ $activeCategory->name }}</a></li>
+                                    <li class="breadcrumb-item"><a class="link-warning fw-bold" href="{{ route("site.product", [$product->id, $size]) }}">{{ $product->name }}</a></li>
+                                </ol>
+                            </nav>
                         </div>
                     </div>
                 </div>

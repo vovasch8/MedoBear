@@ -7,7 +7,7 @@
 @endsection
 
 @section('seo-block')
-    <meta name="description" content="Інтернет магазин медових товарів MedoBear: натуральний мед, пилок, віск та інші продукти бджільництва. Висока якість, швидка доставка, вигідні ціни. У нас в наявності багато бджолопродуктів, які підійдуть вам по смаку!">
+    <meta name="description" content="@if(Route::currentRouteName() == "site.catalog"){{ 'Інтернет магазин медових товарів MedoBear: натуральний мед, пилок, віск та інші продукти бджільництва. Висока якість, швидка доставка, вигідні ціни. У нас в наявності багато бджолопродуктів, які підійдуть вам по смаку!'}}@else{{ 'У нас ви можете купити медові продукти, в наявності є: ' . implode(", ", $products->pluck("name")->toArray()) . "." }}@endif">
     <meta name="keywords" content="@if(Route::currentRouteName() == "site.catalog"){{ '1, 2, 3'}}@else{{ $activeCategory->keywords }}@endif">
     <meta name="author" content="MedoBear">
 

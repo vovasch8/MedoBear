@@ -196,7 +196,7 @@ class AdminController extends Controller
         $columnNumber = intval($request->column);
         $value = $request->value;
         $editedColumns['orders'] = [1 => "pip", 2 => "phone", 5 => "price"];
-        $editedColumns['products'] = [1 => "name", 3 => "count", 4 => "price", 5 => "count2", 6 => "price2", 7 => "count3", 8 => "price3", 9 => "count4", 10 => "price4"];
+        $editedColumns['products'] = [1 => "name", 4 => "count", 5 => "price", 6 => "count2", 7 => "price2", 8 => "count3", 9 => "price3", 10 => "count4", 11 => "price4"];
         $editedColumns['messages']= [1 => "name", 2 => "subject", 3 => "text", 4 => "phone"];
         $editedColumns['promocodes']= [1 => "promocode", 2 => "discount", 3 => "active_to"];
         $editedColumns['categories'] = [1 => "name"];

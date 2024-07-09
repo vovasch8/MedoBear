@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
     public function deleteCategory(Request $request) {
         $products = Product::all()->where("category_id", "=", intval($request->id));
-        if (!$products) {
+        if (!count($products)) {
             $category = Category::find(intval($request->id));
             $category->delete();
 

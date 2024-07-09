@@ -166,6 +166,7 @@ $(document).ready(function () {
                 $.ajax({
                     type: 'POST',
                     url: url,
+                    async: false,
                     data: {
                         "_token": $('meta[name="csrf-token"]').attr('content'),
                         "table": table,

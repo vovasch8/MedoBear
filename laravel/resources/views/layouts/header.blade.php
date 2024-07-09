@@ -22,8 +22,8 @@
             </div>
             @auth
                 <div class="dropdown me-3">
-                    <button class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-alt"></i></i>&nbsp;{{ Auth::user()->name }}
+                    <button class="btn btn-warning dropdown-toggle ps-2 pe-2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user-alt"></i>
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ route("profile.edit") }}"><i class="fas fa-user-circle text-muted"></i>&nbsp;Профіль</a></li>

@@ -85,6 +85,13 @@
                                 </ol>
                             </nav>
                         </div>
+                        <div class="border rounded mt-3 pb-3 ps-3 pe-3">
+                            <h5 class="text-center desc-title fw-bold mt-3">Ключові запити:</h5>
+                            <hr class="mb-2">
+                            @foreach(explode(', ', $product->keywords) as $keyword)
+                                <span class="text-warning fw-bold"> {{ '#' . $keyword }} </span>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

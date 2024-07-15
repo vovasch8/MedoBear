@@ -138,6 +138,13 @@
                                     </div>
                                 @endforeach
                         </div>
+                        <div class="border rounded mt-3 pb-3 ps-3 pe-3 top-row">
+                            <h5 class="text-center desc-title text-secondary fw-bold mt-3">Ключові запити:</h5>
+                            <hr class="mb-2">
+                            @foreach(explode(', ', $activeCategory->keywords) as $keyword)
+                                <span class="text-secondary fw-bold"> {{ '#' . $keyword }} </span>
+                            @endforeach
+                        </div>
                     </div>
                     <!-- End Header Slider -->
                 </div>

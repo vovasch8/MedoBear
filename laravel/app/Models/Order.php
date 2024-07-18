@@ -47,7 +47,7 @@ class Order extends Model
 
         return $countOrdersBy6Month;
     }
-    
+
     public function getMostPopularProducts($count = 5) {
         $mostPopularProducts = DB::table("order_products")
             ->join("products", "products.id", "=", "order_products.product_id")

@@ -94,7 +94,7 @@ class Telegram implements SocialNetwork
                 . $product->size
                 . " - " . $product->product_count . "шт. по "
                 . $product->price . "грн.шт.\n"
-                . urldecode(route("site.product", [$product->id, $product->size])) . "\n";
+                . urldecode(route("site.product", [$product->id, $product->size])) . "/\n";
         }
 
         // Generate all message for notification

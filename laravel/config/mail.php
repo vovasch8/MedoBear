@@ -115,7 +115,7 @@ return [
         ],
     ],
 
-    'mail_for_order' => 'project.x.spm@gmail.com',
-    'mail_for_test' => 'project.x.spm@gmail.com'
+    'mail_for_order' => 'vovasch8@gmail.com',
+    'mail_for_test' => 'vovasch8@gmail.com'
 
 ];

@@ -51,8 +51,8 @@ class Order extends Model
     public function getMostPopularProducts($count = 5) {
         $mostPopularProducts = DB::table("order_products")
             ->join("products", "products.id", "=", "order_products.product_id")
-            ->select('name', 'product_id as id', 'products.price', 'products.count', 'products.price2', 'products.count2', 'products.count3', 'products.price3', 'products.count4', 'products.price4', DB::raw('count(*) as count_product'))
-            ->groupBy("id")
+            ->select('products.name', 'product_id as id', 'products.price', 'products.count', 'products.price2', 'products.count2', 'products.count3', 'products.price3', 'products.count4', 'products.price4', DB::raw('count(*) as count_product'))
+            ->groupBy("products.id")
             ->orderBy("count_product", "DESC")
             ->take($count)
             ->get();

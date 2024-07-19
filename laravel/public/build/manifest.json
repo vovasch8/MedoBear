@@ -1,0 +1,116 @@
+{
+  "_axios-386bc332.js": {
+    "file": "assets/axios-386bc332.js"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-0aad3f4d.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/css/delivery.css": {
+    "file": "assets/delivery-fad12783.css",
+    "isEntry": true,
+    "src": "resources/css/delivery.css"
+  },
+  "resources/css/main.css": {
+    "file": "assets/main-8d893892.css",
+    "isEntry": true,
+    "src": "resources/css/main.css"
+  },
+  "resources/css/map.css": {
+    "file": "assets/map-add59ee8.css",
+    "isEntry": true,
+    "src": "resources/css/map.css"
+  },
+  "resources/css/price-filter.css": {
+    "file": "assets/price-filter-d8edd859.css",
+    "isEntry": true,
+    "src": "resources/css/price-filter.css"
+  },
+  "resources/css/slider.css": {
+    "file": "assets/slider-d437ccd7.css",
+    "isEntry": true,
+    "src": "resources/css/slider.css"
+  },
+  "resources/css/styles.css": {
+    "file": "assets/styles-e9ed6a39.css",
+    "isEntry": true,
+    "src": "resources/css/styles.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-db315d4e.js",
+    "imports": [
+      "_axios-386bc332.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap-ef526c04.js",
+    "imports": [
+      "_axios-386bc332.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/bootstrap.js"
+  },
+  "resources/js/chart-area.js": {
+    "file": "assets/chart-area-e92c0a75.js",
+    "isEntry": true,
+    "src": "resources/js/chart-area.js"
+  },
+  "resources/js/chart-bar.js": {
+    "file": "assets/chart-bar-8b397acc.js",
+    "isEntry": true,
+    "src": "resources/js/chart-bar.js"
+  },
+  "resources/js/chart-pie.js": {
+    "file": "assets/chart-pie-28facf55.js",
+    "isEntry": true,
+    "src": "resources/js/chart-pie.js"
+  },
+  "resources/js/charts.js": {
+    "file": "assets/charts-33d82082.js",
+    "isEntry": true,
+    "src": "resources/js/charts.js"
+  },
+  "resources/js/datatables-simple.js": {
+    "file": "assets/datatables-simple-ce5d919c.js",
+    "isEntry": true,
+    "src": "resources/js/datatables-simple.js"
+  },
+  "resources/js/datatables.js": {
+    "file": "assets/datatables-0c655764.js",
+    "isEntry": true,
+    "src": "resources/js/datatables.js"
+  },
+  "resources/js/main.js": {
+    "file": "assets/main-7c0d5a26.js",
+    "isEntry": true,
+    "src": "resources/js/main.js"
+  },
+  "resources/js/map.js": {
+    "file": "assets/map-763bf7c1.js",
+    "isEntry": true,
+    "src": "resources/js/map.js"
+  },
+  "resources/js/price-filter.js": {
+    "file": "assets/price-filter-ec2b552e.js",
+    "isEntry": true,
+    "src": "resources/js/price-filter.js"
+  },
+  "resources/js/scripts.js": {
+    "file": "assets/scripts-98500542.js",
+    "isEntry": true,
+    "src": "resources/js/scripts.js"
+  },
+  "resources/js/slider.js": {
+    "file": "assets/slider-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/slider.js"
+  },
+  "resources/js/tables.js": {
+    "file": "assets/tables-5ab8b24a.js",
+    "isEntry": true,
+    "src": "resources/js/tables.js"
+  }
+}

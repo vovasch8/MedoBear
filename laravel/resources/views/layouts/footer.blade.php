@@ -6,9 +6,9 @@
         <li class="nav-item"><a href="{{ route("site.contacts") }}" class="nav-link px-2 text-warning fw-bold">Контакти</a></li>
     </ul>
     <div id="social" class="d-flex justify-content-center mb-2">
-        <i class="fab fa-facebook fa-lg"></i>
-        <i class="fab fa-instagram fa-lg"></i>
-        <i class="fab fa-telegram fa-lg"></i>
+        <a href="https://www.facebook.com/profile.php?id=61557616115991"><i class="fab fa-facebook fa-lg"></i></a>
+        <a href="https://www.instagram.com/medo_b.e.a.r/"><i class="fab fa-instagram fa-lg"></i></a>
+        <a href="https://t.me/Med_o_Bear"><i class="fab fa-telegram fa-lg"></i></a>
     </div>
     <p class="text-center text-warning fw-bold">© {{ date("Y") }} MedoBear</p>
 </footer>

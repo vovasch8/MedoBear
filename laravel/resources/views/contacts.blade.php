@@ -73,9 +73,9 @@
                     <div class="contact-block border-radius-10 bg-main">
                         <h5 class="text-center fw-bold mb-3 fs-5 second-color mt-3">Соціальні мережі:</h5>
                         <div id="social" class="d-flex justify-content-center mb-2">
-                            <i class="fab fa-facebook fa-lg"></i>
-                            <i class="fab fa-instagram fa-lg"></i>
-                            <i class="fab fa-telegram fa-lg"></i>
+                            <a href="https://www.facebook.com/profile.php?id=61557616115991"><i class="fab fa-facebook fa-lg"></i></a>
+                            <a href="https://www.instagram.com/medo_b.e.a.r/"><i class="fab fa-instagram fa-lg"></i></a>
+                            <a href="https://t.me/Med_o_Bear"><i class="fab fa-telegram fa-lg"></i></a>
                         </div>
                     </div>
                 </div>

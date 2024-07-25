@@ -8,6 +8,8 @@ $(document).ready(function () {
         let count = $(this).closest('.btn-block').find('.product-price').attr('data-count');
         idProduct = idProduct.substr(2);
 
+        $(this).find(".fa-check-circle").removeClass("d-none");
+        $(this).find(".fa-shopping-basket").addClass("d-none");
         $.ajax({
             type:'POST',
             url: url,
@@ -17,6 +19,10 @@ $(document).ready(function () {
                 $("#productCounter").text(response);
             }
         });
+        setTimeout(() => {
+            $(this).find(".fa-shopping-basket").removeClass("d-none");
+            $(this).find(".fa-check-circle").addClass("d-none");
+        }, "1500");
     });
 
     $('.count-value').click(function (event) {
@@ -468,7 +474,7 @@ $(document).ready(function () {
         applyFilters(url, getSort(), getSearch(), getPrice(), false);
     });
 
-    $('.rangeHandle').mouseup(function () {
+    $('.rangeHandle').on('mouseup touchend', function () {
         if (getSearch() !== "") {
             let url = $(".filter-url").attr("data-url");
             applyFilters(url, getSort(), getSearch(), getPrice(), false);

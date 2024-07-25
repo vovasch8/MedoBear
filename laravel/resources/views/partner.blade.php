@@ -15,7 +15,7 @@
             </div>
             <hr>
             <div class="container">
-            <div class="d-flex justify-content-between mt-2">
+            <div class="partner-info-block d-flex justify-content-between mt-2">
                 <h5 class="fw-bold text-wa"><span class="text-warning">Користувач:&nbsp;</span>{{ $user->name }}</h5>
                 <h5 class="fw-bold"><span class="text-warning">Рахунок:&nbsp;</span><span>{{ $account }}</span> грн.</h5>
             </div>
@@ -169,7 +169,7 @@
                             <span class="fw-bold">1. Створіть групу та додайте в неї @medo_bear_bot.</span><br>
                             <span class="fw-bold">2. Перейменуйте посилання групи та вставте сюди в форматі @yourgroup і збережіть.</span>
                         </div>
-                        <div class="card-number d-flex w-50">
+                        <div class="card-number d-flex w-50 mb-3">
                             <input value="{{ $user->telegram_group }}" @if($user->telegram_group) disabled @endif type="text" class="form-control group-input" placeholder="Посилання групи: @yourgroup">
                             <button data-url="{{ route("partner.save_group") }}" class="ms-1 btn btn-warning btn-group"><i class="mt-1 @if(!$user->telegram_group)fab fa-telegram @else fas fa-edit @endif"></i></button>
                         </div>

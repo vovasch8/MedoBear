@@ -50,7 +50,6 @@
                     </div>
                     <div class="col-lg-6 col-md-12">
                         <div id="p-{{ $product->id }}" class="card p-3 mb-3">
-                            <a href="{{ URL::previous() }}" class="btn-back btn btn-warning text-body-secondary"><i class="fas fa-angle-left"></i>&nbsp;Назад</a>
                             <h1 class="card-text fw-semibold name-product">{{ $product->name }}</h1>
                             <span class="count mb-1">Кількість:
                                 <span data-price="{{ $product->price }}" data-count="{{ $product->count }}" class="text-dark btn btn-sm @if($size === $product->count) btn-warning @else btn-outline-warning @endif me-1 count-value">{{ $product->count }}</span>
@@ -68,8 +67,9 @@
                             <div class="pt-2 pb-2 btn-block">
                                 <span class="fw-bold title-price">Ціна:&nbsp;</span>
                                 <span class="fw-bold price text-warning title-price"><span class="product-price" data-count="{{ $size }}">{{ \App\Http\Controllers\CartController::getPriceOfProductSize($product, $size) }}</span> грн</span>
-                                <button data-url="{{ route('cart.add_product') }}" class="btn btn-add-product btn-warning text-body-secondary float-end"><i
-                                        class="fas fa-shopping-basket"></i> Купити
+                                <button data-url="{{ route('cart.add_product') }}" class="btn btn-add-product btn-warning text-body-secondary float-end">
+                                    <i class="fas fa-check-circle d-none"></i>
+                                    <i class="fas fa-shopping-basket"></i> Купити
                                 </button>
                             </div>
                             <hr>

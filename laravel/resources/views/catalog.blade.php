@@ -92,8 +92,9 @@
 
                                         <span class="fw-bold price text-warning"><span class="product-price" data-count="{{ $product->count }}">{{$product->price}}</span> грн</span>
                                         <button data-url="{{ route('cart.add_product') }}"
-                                                class="btn-add-product btn btn-warning text-body-secondary"><i
-                                                class="fas fa-shopping-basket"></i> Купити
+                                                class="btn-add-product btn btn-warning text-body-secondary">
+                                            <i class="fas fa-check-circle d-none"></i>
+                                            <i class="fas fa-shopping-basket"></i> Купити
                                         </button>
                                     </div>
                                 </div>
@@ -131,7 +132,10 @@
                                                     </span>
                                                 <div class="d-flex justify-content-between align-items-center btn-block">
                                                     <span class="fw-bold price text-warning"><span class="product-price" data-count="{{ $product->count }}">{{$product->price}}</span> грн</span>
-                                                    <button data-url="{{ route('cart.add_product') }}" class="btn-add-product btn btn-warning text-body-secondary"><i class="fas fa-shopping-basket"></i> Купити</button>
+                                                    <button data-url="{{ route('cart.add_product') }}" class="btn-add-product btn btn-warning text-body-secondary">
+                                                        <i class="fas fa-check-circle d-none"></i>
+                                                        <i class="fas fa-shopping-basket"></i> Купити
+                                                    </button>
                                                 </div>
                                             </div>
                                         </a>

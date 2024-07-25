@@ -603,5 +603,8 @@ footer li, footer p {
     .span-price {
         display: none;
     }
+    .partner-info-block {
+        flex-direction: column !important;
+    }
 }
 

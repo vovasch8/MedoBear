@@ -262,7 +262,11 @@
 .store-block {
     padding: 20px;
     margin-left: 10px;
-    margin-right: 35px;
+}
+
+.hr-delivery {
+    padding-bottom: 8px;
+    border-bottom: 4px dashed silver!important;
 }
 
 .delivery-icon {
@@ -271,4 +275,8 @@
     padding: 10px;
     background: white;
     border-radius: 50px;
+}
+
+.delivery-title {
+    color: #60605f;
 }

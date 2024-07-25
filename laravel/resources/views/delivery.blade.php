@@ -20,10 +20,9 @@
 
 @section("content")
     <div class="row container-fluid">
-        <div class="col-xl-6 col-lg-12 mb-3 pe-5">
-            <div class="text-center mb-4">
-                <h1 class="delivery-title"><i class="fas fa-box fs-1"></i>&nbsp;Доставка і оплата</h1>
-                <hr>
+        <div class="col-xl-6 col-lg-12 mb-3">
+            <div class="text-center mb-4 ms-3">
+                <h2 class="delivery-title hr-delivery"><i class="fas fa-box fs-1"></i>&nbsp;Доставка і оплата</h2>
             </div>
             <div class="store-container">
                 <div class="border-animation">

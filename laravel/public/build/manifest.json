@@ -8,12 +8,12 @@
     "src": "resources/css/app.css"
   },
   "resources/css/delivery.css": {
-    "file": "assets/delivery-fad12783.css",
+    "file": "assets/delivery-e7f48b5f.css",
     "isEntry": true,
     "src": "resources/css/delivery.css"
   },
   "resources/css/main.css": {
-    "file": "assets/main-1f9882b9.css",
+    "file": "assets/main-4db1509d.css",
     "isEntry": true,
     "src": "resources/css/main.css"
   },

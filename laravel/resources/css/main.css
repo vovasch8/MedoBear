@@ -368,10 +368,6 @@ footer li, footer p {
     /*font-style: normal;*/
 }
 
-.delivery-title {
-    color: #3990cb;
-}
-
 @keyframes spin {
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}

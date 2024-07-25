@@ -368,6 +368,10 @@ footer li, footer p {
     /*font-style: normal;*/
 }
 
+.delivery-title {
+    color: #3990cb;
+}
+
 @keyframes spin {
     from {transform:rotate(0deg);}
     to {transform:rotate(360deg);}
@@ -548,6 +552,11 @@ footer li, footer p {
     color: #ffc106;
 }
 
+@media (max-width: 1200px) {
+    .about-image {
+        margin-right: 0px!important;
+    }
+}
 
 @media (max-width: 768px) {
     #logo {
@@ -576,6 +585,7 @@ footer li, footer p {
     .btn-back-cart {
         display: inline-block;
     }
+
 }
 
 @media (max-width: 576px) {

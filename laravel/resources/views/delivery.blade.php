@@ -21,6 +21,10 @@
 @section("content")
     <div class="row container-fluid">
         <div class="col-xl-6 col-lg-12 mb-3 pe-5">
+            <div class="text-center mb-4">
+                <h1 class="delivery-title"><i class="fas fa-box fs-1"></i>&nbsp;Доставка і оплата</h1>
+                <hr>
+            </div>
             <div class="store-container">
                 <div class="border-animation">
                     <svg role="img" xmlns="http://www.w3.org/2000/svg" id="store" viewBox="130 0 1230 930">
@@ -216,9 +220,9 @@
                     <span class="fw-bold">Переваги доставки «УКРПОШТА»:</span> <br>
 
 
-                    Строки доставки 2-4 дні;
+                    Строки доставки 2-4 дні; <br>
                     Велика кількість відділень; <br>
-                    Міжнародна доставка;
+                    Міжнародна доставка; <br>
                     Вигідно для дрібних та середніх; <br>
                     Післяплата (додатково 1% від суми післяплати, + 10 грн.) <br>
                     Безкоштовне зберігання 5 днів, кожний наступний день зберігання по 10 грн. <br>

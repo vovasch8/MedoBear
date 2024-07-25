@@ -51,5 +51,5 @@ slider.$on('change', slide);
 slider.$on('stop', stop);
 
 setTimeout(() => {
-    document.querySelector("#PriceGradient .rangeHandle").focus()
+    document.querySelector("#PriceGradient").classList.add("focus")
 }, 1000 );

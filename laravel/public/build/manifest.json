@@ -13,7 +13,7 @@
     "src": "resources/css/delivery.css"
   },
   "resources/css/main.css": {
-    "file": "assets/main-8d893892.css",
+    "file": "assets/main-dd129608.css",
     "isEntry": true,
     "src": "resources/css/main.css"
   },
@@ -84,7 +84,7 @@
     "src": "resources/js/datatables.js"
   },
   "resources/js/main.js": {
-    "file": "assets/main-7c0d5a26.js",
+    "file": "assets/main-c3464051.js",
     "isEntry": true,
     "src": "resources/js/main.js"
   },

@@ -7,7 +7,7 @@
 @section("content")
     <main>
         <div class="content-body">
-            <img class="preload" src="{{ asset("logo.png") }}" alt="Logo">
+            <img class="preload" src="{{ asset("logo.png") }}" alt="MedoBear">
         </div>
         <div class="container-fluid px-4">
             <h1 class="mt-4">Панель</h1>

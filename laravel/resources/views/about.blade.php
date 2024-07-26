@@ -69,18 +69,18 @@
                 <div class="row">
                     <div class="image-block row">
                         <div class="col-xl-6 col-lg-12 text-center">
-                            <img class="about-image me-3 mb-3" src="{{ asset("about/1.jpg") }}" alt="Medobear">
+                            <img class="about-image me-3 mb-3" src="{{ asset("about/1.jpg") }}" alt="Пасічник">
                         </div>
                         <div class="col-xl-6 col-lg-12 text-center">
-                            <img class="about-image mb-3" src="{{ asset("about/2.jpg") }}" alt="Medobear">
+                            <img class="about-image mb-3" src="{{ asset("about/2.jpg") }}" alt="Пасіка">
                         </div>
                     </div>
                     <div class="image-block row">
                         <div class="col-xl-6 col-lg-12 text-center">
-                            <img class="about-image me-3 mb-3" src="{{ asset("about/3.jpg") }}" alt="Medobear">
+                            <img class="about-image me-3 mb-3" src="{{ asset("about/3.jpg") }}" alt="Рамки з вулика">
                         </div>
                         <div class="col-xl-6 col-lg-12 text-center">
-                            <img class="about-image mb-3" src="{{ asset("about/4.jpg") }}" alt="Medobear">
+                            <img class="about-image mb-3" src="{{ asset("about/4.jpg") }}" alt="Рамки з медом">
                         </div>
                     </div>
                 </div>

@@ -71,7 +71,7 @@
                                class="card shadow-sm product">
                                 <img width="100%" height="225px" class="bd-placeholder-img card-img-top"
                                      src="{{ asset("storage") . "/products/" . $product->id . "/" . (isset($product->images[0]) ? $product->images[0]->image : '')}}"
-                                     alt="MedoBear">
+                                     alt="{{ $product->name }}">
                                 <div class="card-body">
                                     <h5 class="card-text fw-semibold mb-0 product-name">{{ $product->name }}</h5>
                                     <span class="count">Кількість:
@@ -113,7 +113,7 @@
                                         <a href="{{ route('site.product', [$product->id, $product->count]) }}" id="m-{{$product->id}}" class="card shadow-sm product">
                                             <img width="100%" height="225px" class="bd-placeholder-img card-img-top"
                                                              src="{{ asset("storage") . "/products/" . $product->id . "/" . (isset($product->images[0]) ? $product->images[0]->image : '')}}"
-                                                             alt="MedoBear">
+                                                             alt="{{ $product->name }}">
                                             <div class="card-body">
                                                 <h5 class="card-text fw-semibold mb-0">{{ $product->name }}</h5>
                                                 <span class="count">Кількість:

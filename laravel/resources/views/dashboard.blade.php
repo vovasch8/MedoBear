@@ -69,7 +69,7 @@
                             <div class="row mt-3 ps-2 pe-2 d-flex justify-content-center">
                                 @foreach($order->products as $product)
                                     <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="{{ $product->name }}" class=" col-sm-3 col-lg-6 col-xs-6 col-6 col-md-4 col-xl-4 d-flex justify-content-center text-center flex-column link-dark tooltipOrder orderProduct" href="{{ route("site.product", [$product->id, $product->size]) }}">
-                                        <img class="productImage mx-auto" src="{{ asset('storage') . '/products/' . $product->product_id . '/' . $product->images[0]->image }}" alt="Order">
+                                        <img class="productImage mx-auto" src="{{ asset('storage') . '/products/' . $product->product_id . '/' . $product->images[0]->image }}" alt="{{ $product->name }}">
                                         <h6 class="mt-1 text-center bg-warning d-flex justify-content-center"><span class="bg-warning">{{$product->size . '-' . $product->price . 'грн.'}}</span></h6>
                                         <h6 class="text-center">{{ $product->count . 'шт.' }}</h6>
                                     </a>

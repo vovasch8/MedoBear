@@ -45,7 +45,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <div class="loader-img">
-                        <img src="" alt="Icon" id="icon-img" class="mb-3">
+                        <img src="" alt="Категорія" id="icon-img" class="mb-3">
                     </div>
                     <br>
                     <span class="fw-bold">Вибрати нову іконку:</span>

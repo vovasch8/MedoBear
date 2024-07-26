@@ -199,7 +199,7 @@
         </div>
         <div class="col-xl-6 col-lg-12 mb-3">
             <div class="store-block bg-danger mb-3 card text-white">
-                <div class="card-header bg-danger fw-bold fs-3"><img class="delivery-icon" src="{{ asset("icons/nova.png") }}" alt="Medobear">&nbsp;Нова Пошта</div>
+                <div class="card-header bg-danger fw-bold fs-3"><img class="delivery-icon" src="{{ asset("icons/nova.png") }}" alt="Нова пошта">&nbsp;Нова Пошта</div>
                 <div class="card-body  text-dark">
                     Вартість доставки здійснюється за тарифами перевізника. <br>
 
@@ -212,7 +212,7 @@
                 </div>
             </div>
             <div class="store-block bg-warning text-white card">
-                <div class="card-header bg-warning fw-bold fs-3"><img class="delivery-icon delivery-ukr" src="{{ asset("icons/ukr.png") }}" alt="Medobear">&nbsp;Укр Пошта</div>
+                <div class="card-header bg-warning fw-bold fs-3"><img class="delivery-icon delivery-ukr" src="{{ asset("icons/ukr.png") }}" alt="Укр пошта">&nbsp;Укр Пошта</div>
                 <div class="card-body  text-dark">
                      Вартість доставки здійснюється за тарифами перевізника. <br>
 

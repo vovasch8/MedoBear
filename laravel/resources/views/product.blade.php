@@ -36,8 +36,7 @@
                                 <div id="fotorama" class="fotorama bg-dark" data-width="100%" data-ratio="800/600"
                                      data-allowfullscreen="true" data-nav="thumbs" data-loop="true">
                                     @foreach($product->images as $image)
-                                        <img
-                                            src="{{asset("storage") . "/products/" . $product->id . "/" . (isset($image) ? $image->image : '')}}"/>
+                                        <img src="{{asset("storage") . "/products/" . $product->id . "/" . (isset($image) ? $image->image : '')}}" alt="{{ $product->name }}"/>
                                     @endforeach
                                     {{--                                            @foreach($album['videos'] as $video)--}}
                                     {{--                                                <a href="{{asset('storage') . '/albums/' . $video}}" data-video="true">--}}

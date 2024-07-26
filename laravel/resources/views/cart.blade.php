@@ -73,10 +73,10 @@
                         </div>
                         <div class="poshta-block mb-3 mt-1 d-flex justify-content-center border-bottom pb-2">
                             <input type="radio" class="btn-check" name="typePoshta" id="novaPoshta" value="novaPoshta" autocomplete="off" checked>
-                            <label id="novaPoshtaLabel" class="btn d-flex" for="novaPoshta"><img width="30px" height="30px" src="{{ asset("icons/nova.png") }}" alt="nova poshta">&nbsp; Нова пошта</label>
+                            <label id="novaPoshtaLabel" class="btn d-flex" for="novaPoshta"><img width="30px" height="30px" src="{{ asset("icons/nova.png") }}" alt="Нова пошта">&nbsp; Нова пошта</label>
 
                             <input type="radio" class="btn-check" name="typePoshta" id="ukrPoshta" value="ukrPoshta" autocomplete="off">
-                            <label id="ukrPoshtaLabel" class="btn d-flex" for="ukrPoshta"><img width="20px" height="22px" src="{{ asset("icons/ukr.png") }}" alt="nova poshta">&nbsp; Укр пошта</label>
+                            <label id="ukrPoshtaLabel" class="btn d-flex" for="ukrPoshta"><img width="20px" height="22px" src="{{ asset("icons/ukr.png") }}" alt="Укр пошта">&nbsp; Укр пошта</label>
                         </div>
                         <div class="nova-poshta-block">
                             <div class="nova-poshta-type-delivery d-flex justify-content-center mb-3">

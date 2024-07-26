@@ -1,6 +1,6 @@
 @foreach($products as $key => $product)
     <div id='p-{{$key}}' data-url="{{ route('order.update_order') }}" data-id="{{$product->id}}" data-order-id="{{$product->order_id}}" data-count-substance="{{$product->count_substance}}" style='height: 120px; background: cornsilk!important;' class='card d-block mb-3 cart-order'>
-        <img class='float-start d-block me-2 img-product-order' width='150px' height='120px' src=' {{ asset('storage') . "/products/" . $product->id . "/" . $product->images[0]->image}}'>
+        <img class='float-start d-block me-2 img-product-order' width='150px' height='120px' src=' {{ asset('storage') . "/products/" . $product->id . "/" . $product->images[0]->image}}' alt="{{ $product->name }}">
         <div class='d-block'>
             <div class="d-flex justify-content-between">
                 <a href='{{ route("site.product", [$product->id, $product->count_substance]) }}' class='mt-1 fw-bold text-decoration-none text-dark d-block'>{{$product->name . " " . $product->count_substance}}</a>

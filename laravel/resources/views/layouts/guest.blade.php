@@ -27,5 +27,14 @@
                 {{ $slot }}
             </div>
         </div>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TN8E4GKC5N"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-TN8E4GKC5N');
+        </script>
     </body>
 </html>

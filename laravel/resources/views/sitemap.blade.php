@@ -52,10 +52,10 @@
             <priority>1.00</priority>
         </url>
     @endforeach
-    @foreach($products as $key => $time)
+    @foreach($products as $product)
         <url>
-            <loc>https://medo-bear.com/product/{{$key}}</loc>
-            <lastmod>{{$time->tz('UTC')->toAtomString()}}</lastmod>
+            <loc>https://medo-bear.com/product/{{$product->id}}/{{$product->count}}</loc>
+            <lastmod>{{$product->updated_at->tz('UTC')->toAtomString()}}</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.00</priority>
         </url>

@@ -12,7 +12,7 @@ class SiteMapController extends Controller
     {
         return response()->view("sitemap", [
             'categories' => Category::pluck("updated_at", "id"),
-            'products' => Product::pluck("updated_at", "id")
+            'products' => Product::all()
         ])->header("Content-Type", "text/xml");
     }
 }

@@ -10,7 +10,6 @@ class SiteMapController extends Controller
 {
     public function index()
     {
-
         return response()->view("sitemap", [
             'categories' => Category::pluck("updated_at", "id"),
             'products' => Product::pluck("updated_at", "id")

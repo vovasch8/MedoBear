@@ -4,6 +4,7 @@ use App\Http\Controllers\SiteController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\NovaPoshtaController;
+use App\Http\Controllers\SiteMapController;
 use App\Http\Controllers\UkrPoshtaController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,8 @@ Route::name('order.')->group(function () {
     Route::post('/get-order-products', [OrderController::class, 'getOrderProducts'])->name('get_order_products');
     Route::post('/get-order-cart', [OrderController::class, 'getOrderCart'])->name('get_order_cart');
 });
+
+Route::get('/sitemap.xml', [SiteMapController::class, 'index'])->name('sitemap');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/cabinet.php';

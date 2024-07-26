@@ -11,7 +11,7 @@
     <meta name="keywords" content="про нас, про пасіку, про товари, про заповідник, медобір, medobear">
     <meta name="author" content="MedoBear">
 
-    <meta property="og:url" content="https://medo-bear.com/about-us">
+    <meta property="og:url" content="{{url()->current()}}">
     <meta property="og:type" content="Page">
     <meta property="og:title" content="Про нас">
     <meta property="og:description" content="Пасіка MedoBear. Про нас. Пасіка біля заповідника Медобори. На території заповідника існують різні види квітів з яких виходить корисний мед.">

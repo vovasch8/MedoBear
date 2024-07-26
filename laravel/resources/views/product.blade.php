@@ -14,7 +14,7 @@
     <meta name="keywords" content="{{$product->keywords}}">
     <meta name="author" content="MedoBear">
 
-    <meta property="og:url" content="{{"https://medo-bear.com/product/" . $product->id}}">
+    <meta property="og:url" content="{{urldecode(url()->current())}}">
     <meta property="og:type" content="Page">
     <meta property="og:title" content="{{$product->name}}">
     <meta property="og:description" content="{{mb_substr(strip_tags($product->description), 0, 200)}}">

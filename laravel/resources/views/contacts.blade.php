@@ -11,7 +11,7 @@
     <meta name="keywords" content="контакти медобір, контакти medobear, контакти, зворотній зв'язок, medobear">
     <meta name="author" content="MedoBear">
 
-    <meta property="og:url" content="https://medo-bear.com/about-us">
+    <meta property="og:url" content="{{url()->current()}}">
     <meta property="og:type" content="Page">
     <meta property="og:title" content="Контакти">
     <meta property="og:description" content="Як можна зв'язатись з нами?">

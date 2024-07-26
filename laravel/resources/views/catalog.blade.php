@@ -8,10 +8,10 @@
 
 @section('seo-block')
     <meta name="description" content="@if(Route::currentRouteName() == "site.catalog"){{ 'Інтернет магазин медових товарів MedoBear: натуральний мед, пилок, віск та інші продукти бджільництва. Висока якість, швидка доставка, вигідні ціни. У нас в наявності багато бджолопродуктів, які підійдуть вам по смаку!'}}@else{{ 'У нас ви можете купити медові продукти, в наявності є: ' . implode(", ", $products->pluck("name")->toArray()) . "." }}@endif">
-    <meta name="keywords" content="@if(Route::currentRouteName() == "site.catalog"){{ '1, 2, 3'}}@else{{ $activeCategory->keywords }}@endif">
+    <meta name="keywords" content="@if(Route::currentRouteName() == "site.catalog"){{ 'інтернет магазин, інтернет магазин меду, магазин меду, магазин MedoBear, інтернет магазин MedoBear, MedoBear, медові продукти, бджолопродукти, інтернет каталог, мед, купити мед, купити солодощі, українські солодощі, перекус, солодощі для діабетиків, замовити їжу, здоровий перекус, здорові продукти, здорове харчування, мед онлайн, медові солодощі, здорова їжа, медок, солодощі для дітей, мед поштою, замовити мед, солодощі без цукру, магазин солодощів, натуральні солодощі, мед в сотах, мед ціна, мед соняшниковий, мед ріпаковий, мед різнотрав\'я' }}@else{{ $activeCategory->keywords }}@endif">
     <meta name="author" content="MedoBear">
 
-    <meta property="og:url" content="https://medo-bear.com">
+    <meta property="og:url" content="{{url()->current()}}">
     <meta property="og:type" content="Page">
     <meta property="og:title" content="Інтернет Магазин - MedoBear">
     <meta property="og:description" content="Інтернет магазин медових товарів MedoBear: натуральний мед, пилок, віск та інші продукти бджільництва. Висока якість, швидка доставка, вигідні ціни. У нас в наявності багато бджолопродуктів, які підійдуть вам по смаку!">
@@ -145,9 +145,12 @@
                         <div class="border rounded mt-3 pb-3 ps-3 pe-3 top-row">
                             <h5 class="text-center desc-title text-secondary fw-bold mt-3">Ключові запити:</h5>
                             <hr class="mb-2">
-                            @foreach(explode(', ', $activeCategory->keywords) as $keyword)
-                                <span class="text-secondary fw-bold"> {{ '#' . $keyword }} </span>
-                            @endforeach
+                            @if(Route::currentRouteName() == "site.catalog"){{ '#інтернет магазин #інтернет магазин меду #магазин меду #магазин MedoBear #інтернет магазин MedoBear #MedoBear #медові продукти #бджолопродукти #інтернет каталог #мед #купити мед #купити солодощі #українські солодощі #перекус #солодощі для діабетиків #замовити їжу #здоровий перекус #здорові продукти #здорове харчування #мед онлайн #медові солодощі #здорова їжа #медок #солодощі для дітей #мед поштою #замовити мед #солодощі без цукру #магазин солодощів #натуральні солодощі #мед в сотах #мед ціна #мед соняшниковий #мед ріпаковий #мед різнотрав\'я'}}
+                            @else
+                                @foreach(explode(', ', $activeCategory->keywords) as $keyword)
+                                    <span class="text-secondary fw-bold"> {{ '#' . $keyword }} </span>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                     <!-- End Header Slider -->

@@ -4,43 +4,43 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
         <loc>https://medo-bear.com</loc>
-        <lastmod>2024-26-07T11:27:54+00:00</lastmod>
+        <lastmod>2024-07-26T09:58:03+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.00</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/map</loc>
-        <lastmod>2024-26-07T11:27:54+00:00</lastmod>
+        <lastmod>2024-07-26T09:58:03+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.00</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/delivery</loc>
-        <lastmod>2024-26-07T11:27:54+00:00</lastmod>
+        <lastmod>2024-07-26T09:58:03+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/about-us</loc>
-        <lastmod>2024-26-07T11:27:54+00:00</lastmod>
+        <lastmod>2024-07-26T09:58:03+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/contacts</loc>
-        <lastmod>2024-26-07T11:27:54+00:00</lastmod>
+        <lastmod>2024-07-26T09:58:03+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/login</loc>
-        <lastmod>2024-26-07T11:27:54+00:00</lastmod>
+        <lastmod>2024-07-26T09:58:03+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/register</loc>
-        <lastmod>2024-26-07T11:27:54+00:00</lastmod>
+        <lastmod>2024-07-26T09:58:03+00:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>

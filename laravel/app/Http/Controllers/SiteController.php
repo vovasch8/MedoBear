@@ -15,7 +15,7 @@ class SiteController extends Controller
     public function showCatalog($categoryId = 1) {
 //        session()->forget("products");
         $category = Category::find($categoryId);
-        if (!$category) {
+        if (!$category || !$category->active) {
             return redirect("/404");
         } if (isset($_GET['partner'])) {
             $link = strtok(urldecode(\Request::fullUrl()),'?');

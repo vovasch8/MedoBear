@@ -62,6 +62,9 @@
                                     <span data-price="{{ $product->price4 }}" data-count="{{ $product->count4 }}" class="text-dark btn btn-sm @if($size === $product->count4) btn-warning @else btn-outline-warning @endif count-value">{{ $product->count4 }}</span>
                                 @endif
                             </span>
+                            @if(!$product->active)
+                                <div class="d-flex"><span class="count">Наявність:</span>&nbsp;<span class="text-muted">Немає в наявності</span></div>
+                            @endif
                             <hr>
                             <div class="pt-2 pb-2 btn-block">
                                 <span class="fw-bold title-price">Ціна:&nbsp;</span>
@@ -72,7 +75,7 @@
                                 </button>
                             </div>
                             <hr>
-                            <h5 class="desc-title text-center mt-3 mb-2 fw-semibold">Опис продукту</h5>
+                            <h2 class="desc-title text-center mt-3 h5 fw-semibold">Опис продукту</h2>
                             <div class="description">{!! $product->description !!}</div>
                             <hr class="mt-2 mb-2">
                             <nav class=" rounded mb-2" style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
@@ -84,9 +87,9 @@
                                 </ol>
                             </nav>
                         </div>
-                        <div class="border rounded mt-3 pb-3 ps-3 pe-3">
-                            <h5 class="text-center desc-title fw-bold mt-3">Ключові запити:</h5>
-                            <hr class="mb-2">
+                        <div class="border main-color rounded mt-3 pb-3 ps-3 pe-3">
+                            <h5 class="text-center desc-title text-warning fw-bold mt-3">Ключові запити:</h5>
+                            <hr class="mb-2 second-color">
                             @foreach(explode(', ', $product->keywords) as $keyword)
                                 <span class="text-warning fw-bold"> {{ '#' . $keyword }} </span>
                             @endforeach

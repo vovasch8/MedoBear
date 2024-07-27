@@ -11,8 +11,8 @@ class SiteMapController extends Controller
     public function index()
     {
         return response()->view("sitemap", [
-            'categories' => Category::pluck("updated_at", "id"),
-            'products' => Product::all()
+            'categories' => Category::pluck("updated_at", "id")->where("active", true),
+            'products' => Product::all()->where("active", true)
         ])->header("Content-Type", "text/xml");
     }
 }

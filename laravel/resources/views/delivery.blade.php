@@ -208,7 +208,8 @@
 
                     Терміни доставки 1-3 дні; <br>
                     Велика кількість відділень; <br>
-                    Вигідно для негабаритних замовлень. <br>
+                    Вигідно для негабаритних замовлень; <br>
+                    Тарифи відправлень: <a class="link-dark text-decoration-underline" href="https://novapost.com/uk-ua/shipping-cost/">Нова Пошта</a>
                 </div>
             </div>
             <div class="store-block bg-warning text-white card">
@@ -222,9 +223,8 @@
                     Строки доставки 2-4 дні; <br>
                     Велика кількість відділень; <br>
                     Міжнародна доставка; <br>
-                    Вигідно для дрібних та середніх; <br>
-                    Післяплата (додатково 1% від суми післяплати, + 10 грн.) <br>
-                    Безкоштовне зберігання 5 днів, кожний наступний день зберігання по 10 грн. <br>
+                    Вигідно для дрібних та середніх посилок; <br>
+                    Тарифи відправлень: <a class="link-dark text-decoration-underline" href="https://www.ukrposhta.ua/ua/taryfy-ukrposhta-standart">Укр Пошта</a>
                 </div>
             </div>
         </div>

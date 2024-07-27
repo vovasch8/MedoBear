@@ -24,7 +24,7 @@
                     <div class="alert alert-primary alert-link d-flex justify-content-between" role="alert">
                         <span>Виплата: При переході за партнерським посиланням партнеру начисляється 30% від всього замовлення!</span>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-flex partner-link-block">
                         <select name="parner-link" id="partner-link" class="form-select">
                             <option value="{{ route("site.catalog") . '?partner=' . $user->id}}">Каталог</option>
                             <optgroup label="Категорії:">
@@ -53,8 +53,10 @@
                                 @endforeach
                             </optgroup>
                         </select>
-                        <input type="text" value="{{ route('site.catalog') . '?partner=' . $user->id}}" class="form-control ms-1 copy-url" readonly>
-                        <button class="btn btn-warning ms-1 btn-copy"><i class="fas fa-copy"></i></button>
+                        <div class="copy-partner-link d-flex">
+                            <input type="text" value="{{ route('site.catalog') . '?partner=' . $user->id}}" class="form-control ms-1 copy-url" readonly>
+                            <button class="btn btn-warning ms-1 btn-copy"><i class="fas fa-copy"></i></button>
+                        </div>
                     </div>
                 </div>
                 <hr class="mt-3">
@@ -204,7 +206,7 @@
                                         </button>
                                     </h2>
                                     <div id="collapse{{$order->order_id}}" class="accordion-collapse collapse show" data-bs-parent="#accordionOrders{{$key}}">
-                                        <div class="info ps-2 pe-2">
+                                        <div class="info ps-2 pe-2 table-responsive">
                                             <table class="templateColumnContainer mt-3" role="presentation" width="100%">
                                                 <tr>
                                                     <td align="center" style="border: 2px solid black;">

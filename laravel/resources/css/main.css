@@ -566,6 +566,10 @@ footer li, footer p {
     width: 100%!important;
 }
 
+#partner-link, .copy-partner-link {
+    width: 50%!important;
+}
+
 @media (max-width: 1200px) {
     .about-image {
         margin-right: 0px!important;
@@ -631,6 +635,16 @@ footer li, footer p {
     }
     .partner-info-block {
         flex-direction: column !important;
+    }
+    .partner-link-block {
+        flex-direction: column!important;
+        width: 100%;
+    }
+    #partner-link, .copy-partner-link {
+        width: 100%!important;
+    }
+    .copy-partner-link {
+        margin-top: 15px;
     }
 }
 

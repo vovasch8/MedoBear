@@ -37,7 +37,7 @@
                                         </button>
                                     </h2>
                                     <div id="collapse{{$order->order_id}}" class="accordion-collapse collapse show" data-bs-parent="#accordionOrders{{$key}}">
-                                        <div class="info ps-2 pe-2">
+                                        <div class="info ps-2 pe-2 table-responsive">
                                             <table class="templateColumnContainer mt-3" role="presentation" width="100%">
                                                 <tr>
                                                     <td align="center" style="border: 2px solid black;">

@@ -1,6 +1,6 @@
 @extends("layouts.main")
 
-@section("title") {{ $activeCategory->name }} @endsection
+@section("title") @if(Route::currentRouteName() == "site.catalog") Інтернет Магазин - MedoBear @else {{ $activeCategory->name }} @endif @endsection
 
 @section("head")
     @vite([ 'resources/css/main.css', 'resources/js/main.js', 'resources/js/price-filter.js', 'resources/js/slider.js', 'resources/css/price-filter.css', 'resources/css/slider.css'])

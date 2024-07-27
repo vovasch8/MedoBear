@@ -107,7 +107,7 @@
                 <div class="main-color border rounded mt-3 pb-3 ps-3 pe-3 top-row text-center">
                     <h2 class="text-center h5 desc-title text-warning fw-bold mt-3">Пропозиція:</h2>
                     <hr class="mb-2 second-color">
-                    <p class="text-warning fw-bold">{{ 'У нас в наявності є: ' . implode(", ", $products->pluck("name")->toArray()) . "." }}</p>
+                    <p class="text-warning fw-bold">@if(!count($products->pluck("name")->toArray())){{ 'У нас в наявності є: Все що вам потрібно!' }} @else {{ 'У нас в наявності є: ' . implode(", ", $products->pluck("name")->toArray()) . "." }} @endif</p>
                 </div>
                 <div class="row pe-5 top-row">
                     <h3 class="text-center text-muted mt-3">ТОП товари</h3>
@@ -154,9 +154,13 @@
                             <hr class="mb-2 second-color">
                             @if(Route::currentRouteName() == "site.catalog") <span class="text-warning fw-bold">{{ '#інтернет магазин #інтернет магазин меду #магазин меду #магазин MedoBear #інтернет магазин MedoBear #MedoBear #медові продукти #бджолопродукти #інтернет каталог #мед #купити мед #купити солодощі #українські солодощі #перекус #солодощі для діабетиків #замовити їжу #здоровий перекус #здорові продукти #здорове харчування #мед онлайн #медові солодощі #здорова їжа #медок #солодощі для дітей #мед поштою #замовити мед #солодощі без цукру #магазин солодощів #натуральні солодощі #мед в сотах #мед ціна #мед соняшниковий #мед ріпаковий #мед різнотрав\'я'}}</span>
                             @else
-                                @foreach(explode(', ', $activeCategory->keywords) as $keyword)
-                                    <span class="text-warning fw-bold"> {{ '#' . $keyword }} </span>
-                                @endforeach
+                                @if(!$activeCategory->keywords)
+                                    <span class="text-warning fw-bold"> {{ '#' . $activeCategory->name }} </span>
+                                @else
+                                    @foreach(explode(', ', $activeCategory->keywords) as $keyword)
+                                        <span class="text-warning fw-bold"> {{ '#' . $keyword }} </span>
+                                    @endforeach
+                                @endif
                             @endif
                         </div>
                     </div>

@@ -104,10 +104,12 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="main-color border rounded mt-3 pb-3 ps-3 pe-3 top-row text-center">
-                    <h2 class="text-center h5 desc-title text-warning fw-bold mt-3">Пропозиція:</h2>
-                    <hr class="mb-2 second-color">
-                    <p class="text-warning fw-bold">@if(!count($products->pluck("name")->toArray())){{ 'У нас в наявності є: Все що вам потрібно!' }} @else {{ 'У нас в наявності є: ' . implode(", ", $products->pluck("name")->toArray()) . "." }} @endif</p>
+                <div class="row top-row pe-5">
+                    <div class="main-color border rounded mt-3 pb-3 ps-3 pe-3 text-center">
+                        <h2 class="text-center h5 desc-title text-warning fw-bold mt-3">Пропозиція:</h2>
+                        <hr class="mb-2 second-color">
+                        <p class="text-warning fw-bold">@if(!count($products->pluck("name")->toArray())){{ 'У нас в наявності є: Все що вам потрібно!' }} @else {{ 'У нас в наявності є: ' . implode(", ", $products->pluck("name")->toArray()) . "." }} @endif</p>
+                    </div>
                 </div>
                 <div class="row pe-5 top-row">
                     <h3 class="text-center text-muted mt-3">ТОП товари</h3>

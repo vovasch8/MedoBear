@@ -21,43 +21,45 @@
 @section("content")
     <div class="container-fluid category" data-category="{{ $activeCategory->id }}" data-category-name="{{ $activeCategory->name }}">
         <div class="row">
-            <button style="background: #2d3748;color: #ffc106;font-weight: bold;" class="btn-menu btn"><i
-                    class="fas fa-bars"></i></button>
+            <button class="btn-back-sidebar btn"><i class="fas fa-hand-point-left"></i>&nbsp;MedoBear</button>
             <div class="col-md-4 col-lg-3 col-sm-5 sidebar">
                 @include("layouts.aside")
             </div>
             <div class="col-md-8 col-lg-9 col-sm-7 product-content">
                 <div class="row pe-5 row-panel">
-                    <div class="d-flex flex-md-column flex-sm-column flex-column flex-lg-row mb-3 filter-url" data-url="{{ route('site.filters') }}">
-                        <div class="sort d-flex col-lg-3 col-xl-2 col-md-6 offset-md-3 offset-lg-0 mb-md-2 col-sm-8 offset-sm-2 mb-sm-2 col-xs-6 offset-3 mb-xs-2" data-sort="order">
-                            <span class="fw-bold text-muted mt-1">Сортування:&nbsp;</span>
-                            <i class="fas fa-sort-alpha-down me-1"></i>
-                            <i class="fas fa-sort-numeric-down me-1"></i>
-                        </div>
-                        <div class="col-lg-4 col-xl-5 col-md-8 offset-md-2 offset-lg-0 mb-md-2 col-sm-12 mb-sm-2 order-md-2 order-lg-1 col-xs-12 order-2">
-                            <div class="d-flex">
-                                <div class="vr me-2"></div>
-                                <div class="input-group">
-                                    <input type="search" class="form-control me-1 search-field" placeholder="Пошук">
-                                    <button class="btn btn-warning btn-search d-flex search-btn"><i class="fas fa-search"></i>&nbsp;<span>Знайти</span>
-                                    </button>
-                                </div>
-                                <div class="vr ms-2"></div>
+                    <div class="d-flex">
+                        <button class="btn-menu btn"><i class="fas fa-bars"></i></button>
+                        <div class="d-flex flex-md-column flex-sm-column flex-column flex-lg-row mb-3 filter-url" data-url="{{ route('site.filters') }}">
+                            <div class="sort justify-content-center d-flex col-lg-3 col-xl-2 col-md-6 offset-md-3 offset-lg-0 mb-md-2 col-sm-8 offset-sm-2 mb-sm-2 col-xs-6 mb-xs-2" data-sort="order">
+                                <span class="fw-bold text-muted mt-1 span-sort">Сортування:&nbsp;</span>
+                                <i class="fas fa-sort-alpha-down me-1"></i>
+                                <i class="fas fa-sort-numeric-down me-1"></i>
                             </div>
-                        </div>
-                        <div class="col-lg-5 d-flex col-md-8 offset-md-2 offset-lg-0 col-sm-12 offset-sm-0 order-md-1 order-lg-2 offset-1 col-11 mb-xs-2 order-1">
-                            <span class="fw-bold text-muted mt-1 ms-2 span-price">Ціна:&nbsp;</span>
-                            <main id="app" class="mt-0">
-                                <div id="slider"></div>
-                            </main>
+                            <div class="col-lg-4 col-xl-5 col-md-8 offset-md-2 offset-lg-0 mb-md-2 col-sm-12 mb-sm-2 order-md-2 order-lg-1 col-xs-12 order-2">
+                                <div class="d-flex">
+                                    <div class="vr me-2"></div>
+                                    <div class="input-group">
+                                        <input type="search" class="form-control me-1 search-field" placeholder="Пошук">
+                                        <button class="btn btn-warning btn-search d-flex search-btn"><i class="fas fa-search"></i>&nbsp;<span>Знайти</span>
+                                        </button>
+                                    </div>
+                                    <div class="vr ms-2"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 d-flex col-md-8 offset-md-2 offset-lg-0 col-sm-12 offset-sm-0 order-md-1 order-lg-2 col-12 mb-xs-2 order-1">
+                                <span class="fw-bold text-muted mt-1 ms-2 span-price">Ціна:&nbsp;</span>
+                                <main id="app" class="mt-0">
+                                    <div id="slider"></div>
+                                </main>
+                            </div>
                         </div>
                     </div>
                     <hr class="mb-2">
                     <div class="text-center d-flex justify-content-center">
-                        <span class="d-block">
-                            <span class="ps-5 pe-5 d-block"><h1 class="text-muted mt-0 h3 h-value">{{ $activeCategory->name }}</h1></span>
-                            <hr class="mt-0 mb-4 text-warning border-3">
-                        </span>
+                            <span class="d-block">
+                                <span class="ps-5 pe-5 d-block"><h1 class="text-muted mt-0 h3 h-value">{{ $activeCategory->name }}</h1></span>
+                                <hr class="mt-0 mb-4 text-warning border-3">
+                            </span>
                     </div>
                 </div>
 

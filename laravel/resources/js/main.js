@@ -591,17 +591,17 @@ $(document).ready(function () {
         $("#searchUkrPoshtaCourierCities").val("");
     });
 
-    $(".btn-menu").click(function () {
+    $(".btn-menu, .btn-back-sidebar").click(function () {
         if ($(".sidebar").css('display') == "none") {
             $(".sidebar").css("display", "block");
-            $(".btn-menu").html("<i class=\"fas fa-hand-point-left\"></i>&nbsp;MedoBear");
-            $(".btn-menu").css("width", "300px");
+            $(".btn-back-sidebar").css("display", "block");
+            $(".btn-back-menu").css("display", "none");
             $(".product-content").css("display", "none");
             $("body").css("background", "#2d3748");
         } else {
             $(".sidebar").css("display", "none");
-            $(".btn-menu").html("<i class=\"fas fa-bars\"></i>");
-            $(".btn-menu").css("width", "50px");
+            $(".btn-back-sidebar").css("display", "none");
+            $(".btn-back-menu").css("display", "block");
             $(".product-content").css("display", "block");
             $("body").css("background", "white");
         }

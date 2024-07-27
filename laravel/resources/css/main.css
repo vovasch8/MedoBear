@@ -40,11 +40,11 @@ hr {
 }
 
 .w-nav li {
-    border: 1px solid #2d3748;
+    border: 1px solid transparent!important;
 }
 
 .w-nav li:hover {
-    border: 1px solid #ffc106;
+    border: 1px solid #ffc106!important;
     color: #ffc106;
     border-radius: 5px;
 }
@@ -564,10 +564,6 @@ footer li, footer p {
 
 .filter-url {
     width: 100%!important;
-}
-
-.nav li {
-    border: none!important;
 }
 
 @media (max-width: 1200px) {

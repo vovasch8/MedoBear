@@ -4,50 +4,50 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
         <loc>https://medo-bear.com</loc>
-        <lastmod>2024-07-28T09:55:27+00:00</lastmod>
+        <lastmod>2024-07-28T12:30:40+02:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.00</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/map</loc>
-        <lastmod>2024-07-28T09:55:27+00:00</lastmod>
+        <lastmod>2024-07-28T12:30:40+02:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.00</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/delivery</loc>
-        <lastmod>2024-07-28T09:55:27+00:00</lastmod>
+        <lastmod>2024-07-28T12:30:40+02:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/about-us</loc>
-        <lastmod>2024-07-28T09:55:27+00:00</lastmod>
+        <lastmod>2024-07-28T12:30:40+02:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/contacts</loc>
-        <lastmod>2024-07-28T09:55:27+00:00</lastmod>
+        <lastmod>2024-07-28T12:30:40+02:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/login</loc>
-        <lastmod>2024-07-28T09:55:27+00:00</lastmod>
+        <lastmod>2024-07-28T12:30:40+02:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     <url>
         <loc>https://medo-bear.com/register</loc>
-        <lastmod>2024-07-28T09:55:27+00:00</lastmod>
+        <lastmod>2024-07-28T12:30:40+02:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.64</priority>
     </url>
     @foreach($categories as $key => $time)
         <url>
             <loc>https://medo-bear.com/categories/{{$key}}</loc>
-            <lastmod>{{$time->tz('UTC')->toAtomString()}}</lastmod>
+            <lastmod>{{$time->tz('+2')->toAtomString()}}</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.00</priority>
         </url>
@@ -55,7 +55,7 @@
     @foreach($products as $product)
         <url>
             <loc>https://medo-bear.com/product/{{$product->id}}/{{$product->count}}</loc>
-            <lastmod>{{$product->updated_at->tz('UTC')->toAtomString()}}</lastmod>
+            <lastmod>{{$product->updated_at->tz('+2')->toAtomString()}}</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.00</priority>
         </url>
